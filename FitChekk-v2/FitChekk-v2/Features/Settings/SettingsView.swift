@@ -9,10 +9,10 @@ struct SettingsView: View {
         NavigationStack {
             Form {
                 Section(header: Text("Preferences")) {
-                    Toggle(isOn: $store.notificationsEnabled.sending(SettingsFeature.Action.toggleNotifications)) {
+                    Toggle(isOn: $store.notificationsEnabled.sending(\.toggleNotifications)) {
                         Text("Notifications")
                     }
-                    Toggle(isOn: $store.useMetric.sending(SettingsFeature.Action.toggleMetric)) {
+                    Toggle(isOn: $store.useMetric.sending(\.toggleMetric)) {
                         Text("Use Metric Units")
                     }
                 }
