@@ -15,20 +15,21 @@ class WardrobeState {
     var selectedCategory: ItemCategory? = nil
     var searchQuery: String = ""
     var isLoading: Bool = false
-    
+    var selectedItem: MockWardrobeItem? = nil
+
     var filteredItems: [MockWardrobeItem] {
         var filtered = items
-        
+
         if let category = selectedCategory {
             filtered = filtered.filter { $0.category == category }
         }
-        
+
         if !searchQuery.isEmpty {
             filtered = filtered.filter { item in
                 item.name?.localizedCaseInsensitiveContains(searchQuery) ?? false
             }
         }
-        
+
         return filtered
     }
 }
@@ -67,7 +68,7 @@ struct WardrobeView: View {
                         ForEach(state.filteredItems) { item in
                             ItemCardView(item: item)
                                 .onTapGesture {
-                                    // Navigate to detail
+                                    state.selectedItem = item
                                 }
                         }
                     }
@@ -89,6 +90,9 @@ struct WardrobeView: View {
             }
             .sheet(isPresented: $showingAddItem) {
                 AddItemView()
+            }
+            .navigationDestination(item: $state.selectedItem) { item in
+                ItemDetailView(item: item)
             }
         }
     }

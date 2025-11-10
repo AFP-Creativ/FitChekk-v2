@@ -37,51 +37,48 @@ enum ItemDetailAction {
 
 struct ItemDetailView: View {
     @State private var state: ItemDetailState
-    @Environment(\.dismiss) var dismiss
-    
+
     init(item: MockWardrobeItem) {
         _state = State(initialValue: ItemDetailState(item: item))
     }
     
     var body: some View {
-        NavigationStack {
-            ScrollView {
-                VStack(spacing: Spacing.section) {
-                    // Large Item Image
-                    itemImageSection
-                    
-                    // Item Info
-                    itemInfoSection
-                    
-                    // Usage Stats
-                    usageStatsSection
-                    
-                    // Actions
-                    actionsSection
-                }
-                .padding(.horizontal, Spacing.screenMargin)
-                .padding(.top, Spacing.topSafeArea)
-                .padding(.bottom, Spacing.bottomSafeArea)
+        ScrollView {
+            VStack(spacing: Spacing.section) {
+                // Large Item Image
+                itemImageSection
+
+                // Item Info
+                itemInfoSection
+
+                // Usage Stats
+                usageStatsSection
+
+                // Actions
+                actionsSection
             }
-            .background(Color.backgroundPrimary)
-            .navigationTitle(state.item.name ?? "Item")
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .primaryAction) {
-                    Menu {
-                        Button(action: {}) {
-                            Label("Edit", systemImage: "pencil")
-                        }
-                        Button(action: {}) {
-                            Label("Archive", systemImage: "archivebox")
-                        }
-                        Button(role: .destructive, action: {}) {
-                            Label("Delete", systemImage: "trash")
-                        }
-                    } label: {
-                        Image(systemName: "ellipsis.circle")
-                            .foregroundColor(.accentPrimary)
+            .padding(.horizontal, Spacing.screenMargin)
+            .padding(.top, Spacing.topSafeArea)
+            .padding(.bottom, Spacing.bottomSafeArea)
+        }
+        .background(Color.backgroundPrimary)
+        .navigationTitle(state.item.name ?? "Item")
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .primaryAction) {
+                Menu {
+                    Button(action: {}) {
+                        Label("Edit", systemImage: "pencil")
                     }
+                    Button(action: {}) {
+                        Label("Archive", systemImage: "archivebox")
+                    }
+                    Button(role: .destructive, action: {}) {
+                        Label("Delete", systemImage: "trash")
+                    }
+                } label: {
+                    Image(systemName: "ellipsis.circle")
+                        .foregroundColor(.accentPrimary)
                 }
             }
         }
