@@ -57,7 +57,7 @@ struct PrimaryButton: View {
         )
         .accessibilityLabel(title)
         .accessibilityHint(isLoading ? "Loading" : "")
-        .accessibilityAddTraits(isDisabled ? [.isButton, .isNotEnabled] : .isButton)
+        .accessibilityAddTraits(.isButton)
     }
 
     private var buttonColor: Color {

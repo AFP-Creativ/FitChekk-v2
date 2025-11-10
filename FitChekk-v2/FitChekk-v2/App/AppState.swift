@@ -108,7 +108,7 @@ class AppState: ObservableObject {
         currentUser?.isPremium ?? false
     }
 
-    var canAccessTab(_ tab: Tab) -> Bool {
+    func canAccessTab(_ tab: Tab) -> Bool {
         if tab.requiresPremium {
             return isPremium
         }

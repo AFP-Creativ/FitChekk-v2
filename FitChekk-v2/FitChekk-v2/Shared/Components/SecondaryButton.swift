@@ -51,7 +51,7 @@ struct SecondaryButton: View {
                 }
         )
         .accessibilityLabel(title)
-        .accessibilityAddTraits(isDisabled ? [.isButton, .isNotEnabled] : .isButton)
+        .accessibilityAddTraits(.isButton)
     }
 
     private var backgroundColor: Color {

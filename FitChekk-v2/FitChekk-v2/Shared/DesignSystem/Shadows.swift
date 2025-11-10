@@ -106,15 +106,18 @@ extension View {
 
     /// Apply custom shadow style
     func customShadow(_ style: ShadowStyle) -> some View {
-        if style == .none {
-            return self
+        Group {
+            if style == .none {
+                self
+            } else {
+                self.shadow(
+                    color: style.color.opacity(style.opacity),
+                    radius: style.radius,
+                    x: 0,
+                    y: style.yOffset
+                )
+            }
         }
-        return self.shadow(
-            color: style.color.opacity(style.opacity),
-            radius: style.radius,
-            x: 0,
-            y: style.yOffset
-        )
     }
 }
 
@@ -134,10 +137,10 @@ struct ShadowsPreview: View {
 
                 // Shadow Examples
                 VStack(spacing: Spacing.xxxl) {
-                    shadowExample("Subtle Shadow", shadow: .subtleShadow())
-                    shadowExample("Card Shadow", shadow: .cardShadow())
-                    shadowExample("Floating Shadow", shadow: .floatingShadow())
-                    shadowExample("Elevated Shadow", shadow: .elevatedShadow())
+                    shadowExample("Subtle Shadow", style: .subtle)
+                    shadowExample("Card Shadow", style: .card)
+                    shadowExample("Floating Shadow", style: .floating)
+                    shadowExample("Elevated Shadow", style: .elevated)
                 }
 
                 Divider()
@@ -195,7 +198,7 @@ struct ShadowsPreview: View {
         .background(Color.backgroundPrimary)
     }
 
-    func shadowExample(_ title: String, shadow: some View) -> some View {
+    func shadowExample(_ title: String, style: ShadowStyle) -> some View {
         VStack(spacing: Spacing.sm) {
             Text(title)
                 .font(.callout)
@@ -204,17 +207,8 @@ struct ShadowsPreview: View {
             RoundedRectangle(cornerRadius: CornerRadius.lg)
                 .fill(Color.backgroundSecondary)
                 .frame(width: 200, height: 80)
-                .modifier(ShadowModifier(shadowView: shadow))
+                .customShadow(style)
         }
-    }
-}
-
-// Helper to apply shadows in preview
-struct ShadowModifier<ShadowView: View>: ViewModifier {
-    let shadowView: ShadowView
-
-    func body(content: Content) -> some View {
-        shadowView
     }
 }
 
