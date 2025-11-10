@@ -132,27 +132,27 @@ struct ChipButton: View {
 
 #Preview("Buttons") {
     VStack(spacing: Spacing.lg) {
-        PrimaryButton(title: "Primary Button") { }
-        PrimaryButton(title: "Loading", isLoading: true) { }
-        PrimaryButton(title: "Disabled", isDisabled: true) { }
+        PrimaryButton(title: "Primary Button", action: { })
+        PrimaryButton(title: "Loading", action: { }, isLoading: true)
+        PrimaryButton(title: "Disabled", action: { }, isDisabled: true)
         
-        SecondaryButton(title: "Secondary Button") { }
+        SecondaryButton(title: "Secondary Button", action: { })
         
-        TextButton(title: "Text Button") { }
+        TextButton(title: "Text Button", action: { })
         
         HStack {
-            IconButton(icon: "heart") { }
-            IconButton(icon: "star.fill") { }
-            IconButton(icon: "plus") { }
+            IconButton(icon: "heart", action: { })
+            IconButton(icon: "star.fill", action: { })
+            IconButton(icon: "plus", action: { })
         }
         
         HStack {
-            ChipButton(title: "Tops", isSelected: true) { }
-            ChipButton(title: "Bottoms", isSelected: false) { }
-            ChipButton(title: "Shoes", isSelected: false) { }
+            ChipButton(title: "Tops", isSelected: true, action: { })
+            ChipButton(title: "Bottoms", isSelected: false, action: { })
+            ChipButton(title: "Shoes", isSelected: false, action: { })
         }
         
-        FloatingActionButton(icon: "plus") { }
+        FloatingActionButton(icon: "plus", action: { })
     }
     .padding()
 }
