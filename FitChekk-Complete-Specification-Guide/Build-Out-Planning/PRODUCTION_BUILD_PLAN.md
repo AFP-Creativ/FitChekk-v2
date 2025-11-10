@@ -51,7 +51,6 @@ Before merging to `main`, we must have:
 - ✅ **Subscription System**: StoreKit 2 with paywall
 - ✅ **Wardrobe Analytics**: 
   - Wear frequency analysis
-  - Cost-per-wear calculations
   - Favorite items stats
   - Category distribution
   - Color palette analysis
@@ -73,14 +72,14 @@ The following refinements will be implemented during appropriate phases:
 - **Rationale**: Reduces API costs, cleaner UI, respects user preference
 
 **2. Language & Tone Update** *(Phase 9 - Week 11)*
-- Replace formal fashion terminology with casual college-student language
+- Replace formal fashion terminology with casual, conversational language for women 18-50
 - Examples of changes needed:
   - ❌ "Smart Casual" → ✅ "Dressed up but chill"
   - ❌ "Business Casual" → ✅ "Office appropriate"
   - ❌ "Formal" → ✅ "Fancy/dressed up"
   - ❌ "Formality Level" → ✅ "How fancy is it?"
 - Apply throughout: categories, AI responses, UI copy, empty states
-- **Rationale**: Speak the target audience's language (20-something college students)
+- **Rationale**: Speak the target audience's language (from 20-something college students to fashionable moms in thier 40s)
 
 **3. Date Added Field** *(Phase 3 - Week 3)*
 - Add "Date Added" to wardrobe item detail view
@@ -1379,11 +1378,6 @@ final class WardrobeItem {
     var displayName: String {
         name ?? "\(colors.first?.capitalized ?? "") \(subCategory.camelCaseToWords())"
     }
-    
-    var costPerWear: Decimal? {
-        guard let price = purchasePrice, timesWorn > 0 else { return nil }
-        return price / Decimal(timesWorn)
-    }
 }
 
 // MARK: - Extensions
@@ -2116,7 +2110,6 @@ jobs:
 5. **Usage statistics display**
    - Times worn
    - Last worn date
-   - Cost-per-wear (if purchase info available)
 
 ### Step 3.4: Background Removal (Day 5)
 
@@ -2276,23 +2269,20 @@ jobs:
 
 1. **Analytics Data Models**
    - Wear frequency calculations
-   - Cost-per-wear analysis
    - Category distribution
    - Color palette extraction
    - Season utilization
 
 2. **Wardrobe Analytics View**
    - "Your Wardrobe at a Glance" dashboard
-   - Visual charts (wear frequency, cost analysis)
+   - Visual charts (wear frequency)
    - "Most Worn Items" list
    - "Least Worn Items" (to encourage wearing or donating)
-   - "Best Value Items" (lowest cost-per-wear)
    - Color palette visualization
    - Category breakdown (pie chart)
 
 3. **Individual Item Insights**
    - Wear frequency compared to wardrobe average
-   - Cost-per-wear calculation
    - Last worn date
    - Suggested pairings based on past outfits
 
@@ -2333,7 +2323,6 @@ jobs:
    - (Remove "Total Wears" card per requirements)
 
 2. **Export Data** (Premium feature)
-   - Export analytics as PDF
    - Share year-in-review
    - Style report generation
 
@@ -2408,7 +2397,7 @@ jobs:
 
 ### Step 10.5: Language & Tone Update (Throughout Week 11)
 
-**Convert formal fashion language to casual, college-student-friendly tone**
+**Convert formal fashion language to casual, conversational tone for women 18-50**
 
 1. **Category & Formality Updates**
    - Replace "Smart Casual" → "Dressed up but chill"
@@ -2438,7 +2427,7 @@ jobs:
 - ✅ Robust error handling
 - ✅ Full accessibility support
 - ✅ Excellent performance
-- ✅ Casual, college-student tone throughout
+- ✅ Casual tone throughout
 - ✅ All formal terminology replaced
 
 ---
