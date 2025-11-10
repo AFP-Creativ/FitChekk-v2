@@ -42,6 +42,9 @@ extension Color {
     static func backgroundSecondary(for colorScheme: ColorScheme) -> Color {
         colorScheme == .dark ? AppColors.backgroundSecondaryDark : AppColors.backgroundSecondary
     }
+    static func backgroundElevated(for colorScheme: ColorScheme) -> Color {
+        colorScheme == .dark ? AppColors.backgroundElevatedDark : AppColors.backgroundElevated
+    }
     static func textPrimary(for colorScheme: ColorScheme) -> Color {
         colorScheme == .dark ? AppColors.textPrimaryDark : AppColors.textPrimary
     }
