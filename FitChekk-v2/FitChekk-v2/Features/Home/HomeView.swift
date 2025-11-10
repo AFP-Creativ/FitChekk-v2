@@ -106,7 +106,7 @@ struct HomeView: View {
                         .foregroundColor(.accentPrimary)
                         .frame(maxWidth: .infinity)
                         .padding(.vertical, 16)
-                        .background(Color.backgroundElevated)
+                        .background(Color.backgroundElevated(for: colorScheme))
                         .cornerRadius(12)
                         .padding(.bottom, 20)
                     }
