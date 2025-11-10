@@ -17,8 +17,8 @@ This document provides a **step-by-step guide** to building FitChekk from the gr
 - Clean architecture from day one (TCA + SwiftData + Supabase)
 - Test-driven development (85%+ coverage)
 - Vertical slices (complete features end-to-end)
-- Port proven UI/UX from mockup
-- AI-assisted development (~80% code generation)
+- Port proven UI/UX from mockup with strategic improvements
+- **100% AI code generation** (human reviews with AI assistance only)
 
 ---
 
@@ -35,6 +35,63 @@ Before merging to `main`, we must have:
 - ✅ CI/CD pipeline operational
 - ✅ No hardcoded secrets
 - ✅ App runs on physical device with real data
+
+---
+
+## 📱 MVP Feature Requirements
+
+### Core Features (Must-Have for v1.0)
+
+- ✅ **Authentication**: All three methods (Apple/Google/Email)
+- ✅ **Wardrobe Management**: Full CRUD with AI categorization
+- ✅ **Outfit Creation**: Manual creation with visual canvas
+- ✅ **AI Outfit Suggestions**: Claude-powered with reasoning
+- ✅ **Calendar Planner**: Schedule outfits, wear tracking
+- ✅ **Weather Integration**: Real WeatherKit data
+- ✅ **Subscription System**: StoreKit 2 with paywall
+- ✅ **Wardrobe Analytics**: 
+  - Wear frequency analysis
+  - Cost-per-wear calculations
+  - Favorite items stats
+  - Category distribution
+  - Color palette analysis
+- ✅ **Outfit Analytics**:
+  - Style preference insights
+  - Color combination analysis
+  - Occasion breakdown
+  - Seasonal trends
+  - Most successful outfits
+
+### UI/UX Improvements from Mockup
+
+The following refinements will be implemented during appropriate phases:
+
+**1. AI Explanation on Demand** *(Phase 5 - Week 6)*
+- Home screen AI reasoning should be hidden by default
+- Add "Why this works?" button/link
+- Clicking reveals the AI explanation
+- **Rationale**: Reduces API costs, cleaner UI, respects user preference
+
+**2. Language & Tone Update** *(Phase 9 - Week 11)*
+- Replace formal fashion terminology with casual college-student language
+- Examples of changes needed:
+  - ❌ "Smart Casual" → ✅ "Dressed up but chill"
+  - ❌ "Business Casual" → ✅ "Office appropriate"
+  - ❌ "Formal" → ✅ "Fancy/dressed up"
+  - ❌ "Formality Level" → ✅ "How fancy is it?"
+- Apply throughout: categories, AI responses, UI copy, empty states
+- **Rationale**: Speak the target audience's language (20-something college students)
+
+**3. Date Added Field** *(Phase 3 - Week 3)*
+- Add "Date Added" to wardrobe item detail view
+- Display format: "Added [relative date]" (e.g., "Added 2 weeks ago")
+- Include in item model from the start
+- **Rationale**: Helps users remember context of purchase/addition
+
+**4. Remove Total Wears Card** *(Phase 9 - Week 11)*
+- Remove "Total Wears" summary card from Settings screen
+- Keep individual item wear counts
+- **Rationale**: Number becomes meaningless at scale, doesn't provide actionable insight
 
 ---
 
@@ -2049,10 +2106,17 @@ jobs:
 ### Step 3.3: Item Detail & Edit (Day 4)
 
 1. **Item detail view**
+   - Display all item metadata
+   - **Add "Date Added" field** (format: "Added 2 weeks ago")
+   - Show image, category, brand, colors
+   - Display wear statistics
 2. **Edit functionality**
 3. **Delete with confirmation**
 4. **Favorite toggle**
 5. **Usage statistics display**
+   - Times worn
+   - Last worn date
+   - Cost-per-wear (if purchase info available)
 
 ### Step 3.4: Background Removal (Day 5)
 
@@ -2132,7 +2196,12 @@ jobs:
 2. **`OutfitService`** implementation
 3. **Build context** (wardrobe + weather + preferences)
 4. **Parse suggestions**
-5. **Display with reasoning**
+5. **Display with reasoning (click-to-reveal)**
+   - Show outfit suggestion prominently
+   - Add "Why this works?" button/link
+   - Reasoning hidden by default (saves API costs)
+   - Clicking reveals AI explanation
+   - Clean UI for users who don't need explanation
 6. **Accept/dismiss flow**
 
 **Week 6-7 Deliverables**:
@@ -2197,11 +2266,91 @@ jobs:
 
 ---
 
-## 💰 Phase 8: Monetization (Week 10)
+## 📊 Phase 8: Analytics & Insights (Week 9 - Days 6-10)
+
+**Goal**: Wardrobe and outfit analytics providing valuable user insights
+
+### Step 8.1: Wardrobe Analytics (Day 6-7)
+
+**Create Analytics Service and Views**
+
+1. **Analytics Data Models**
+   - Wear frequency calculations
+   - Cost-per-wear analysis
+   - Category distribution
+   - Color palette extraction
+   - Season utilization
+
+2. **Wardrobe Analytics View**
+   - "Your Wardrobe at a Glance" dashboard
+   - Visual charts (wear frequency, cost analysis)
+   - "Most Worn Items" list
+   - "Least Worn Items" (to encourage wearing or donating)
+   - "Best Value Items" (lowest cost-per-wear)
+   - Color palette visualization
+   - Category breakdown (pie chart)
+
+3. **Individual Item Insights**
+   - Wear frequency compared to wardrobe average
+   - Cost-per-wear calculation
+   - Last worn date
+   - Suggested pairings based on past outfits
+
+### Step 8.2: Outfit Analytics (Day 8-9)
+
+**Create Outfit Intelligence Views**
+
+1. **Style Insights**
+   - Your style profile (based on outfit history)
+   - Favorite color combinations
+   - Most common outfit formulas
+   - "Your vibe is..." summary with AI analysis
+
+2. **Occasion Analytics**
+   - Breakdown by occasion (work, casual, date, etc.)
+   - Most successful occasions
+   - Outfit rotation patterns
+
+3. **Seasonal Trends**
+   - What you wear most each season
+   - Seasonal color preferences
+   - Season-specific style patterns
+
+4. **Recommendations**
+   - "You might be missing..." suggestions
+   - Underutilized items reminders
+   - "Complete the look" suggestions for existing items
+
+### Step 8.3: Settings Analytics View (Day 10)
+
+**Add Analytics Section to Settings**
+
+1. **Stats Overview**
+   - Total wardrobe items
+   - Total outfits created
+   - Days with planned outfits
+   - Favorite style tags
+   - (Remove "Total Wears" card per requirements)
+
+2. **Export Data** (Premium feature)
+   - Export analytics as PDF
+   - Share year-in-review
+   - Style report generation
+
+**Week 9 (Extended) Deliverables**:
+- ✅ Comprehensive wardrobe analytics
+- ✅ Outfit insights and style analysis
+- ✅ Visual data representation (charts/graphs)
+- ✅ Actionable recommendations
+- ✅ Analytics integrated throughout app
+
+---
+
+## 💰 Phase 9: Monetization (Week 10)
 
 **Goal**: Subscriptions and paywall
 
-### Step 8.1: StoreKit 2 (Day 1-3)
+### Step 9.1: StoreKit 2 (Day 1-3)
 
 1. **Create subscription products** in App Store Connect
 2. **Implement `SubscriptionService`**
@@ -2209,7 +2358,7 @@ jobs:
 4. **Receipt validation**
 5. **Restore purchases**
 
-### Step 8.2: Paywall & Gating (Day 4-5)
+### Step 9.2: Paywall & Gating (Day 4-5)
 
 1. **Design paywall view**
 2. **Feature gates** throughout app
@@ -2225,58 +2374,87 @@ jobs:
 
 ---
 
-## 🎨 Phase 9: Polish & Testing (Week 11)
+## 🎨 Phase 10: Polish & Testing (Week 11)
 
 **Goal**: Production-ready quality
 
-### Step 9.1: Animations & Transitions (Day 1-2)
+### Step 10.1: Animations & Transitions (Day 1-2)
 
 1. **Smooth tab transitions**
 2. **Loading states**
 3. **Success animations**
 4. **Gesture feedback**
 
-### Step 9.2: Error Handling (Day 3)
+### Step 10.2: Error Handling (Day 3)
 
 1. **Comprehensive error messages**
 2. **Retry mechanisms**
 3. **Offline indicators**
 4. **Graceful degradation**
 
-### Step 9.3: Accessibility (Day 4)
+### Step 10.3: Accessibility (Day 4)
 
 1. **VoiceOver labels**
 2. **Dynamic Type support**
 3. **High Contrast mode**
 4. **Reduce Motion**
 
-### Step 9.4: Performance (Day 5)
+### Step 10.4: Performance (Day 5)
 
 1. **Profile with Instruments**
 2. **Optimize bottlenecks**
 3. **Image loading optimization**
 4. **60fps scrolling**
 
+### Step 10.5: Language & Tone Update (Throughout Week 11)
+
+**Convert formal fashion language to casual, college-student-friendly tone**
+
+1. **Category & Formality Updates**
+   - Replace "Smart Casual" → "Dressed up but chill"
+   - Replace "Business Casual" → "Office appropriate" 
+   - Replace "Formal" → "Fancy/dressed up"
+   - Replace "Formality Level" → "How fancy is it?"
+   - Update all enums and display strings
+
+2. **UI Copy Revision**
+   - Empty states: Make playful and encouraging
+   - Button labels: Use conversational language
+   - Onboarding: Speak like a friend, not a manual
+   - Error messages: Friendly and helpful, not technical
+
+3. **AI Response Tuning**
+   - Update prompts to generate casual language
+   - Outfit reasoning should sound like advice from a friend
+   - Remove overly formal fashion terminology
+
+4. **Settings Cleanup**
+   - Remove "Total Wears" card (gets too big, not actionable)
+   - Keep individual item wear counts
+   - Ensure all settings language is friendly
+
 **Week 11 Deliverables**:
 - ✅ Smooth, polished UI
 - ✅ Robust error handling
 - ✅ Full accessibility support
 - ✅ Excellent performance
+- ✅ Casual, college-student tone throughout
+- ✅ All formal terminology replaced
 
 ---
 
-## 🚀 Phase 10: Launch Preparation (Week 12)
+## 🚀 Phase 11: Launch Preparation (Week 12)
 
 **Goal**: App Store ready
 
-### Step 10.1: Testing (Day 1-3)
+### Step 11.1: Testing (Day 1-3)
 
 1. **Comprehensive manual testing**
 2. **Beta testing** (TestFlight)
 3. **Bug fixes**
 4. **Edge case handling**
 
-### Step 10.2: App Store Listing (Day 4-5)
+### Step 11.2: App Store Listing (Day 4-5)
 
 1. **Screenshots** (all devices)
 2. **App preview video**
