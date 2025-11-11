@@ -96,72 +96,57 @@ The following refinements will be implemented during appropriate phases:
 
 ## 📦 Phase 0: Pre-Development Setup (Week 0)
 
-### Step 0.1: Environment Configuration
+**Status**: ✅ Core Setup Complete | ⏸️ Deferred Items Scheduled
 
-**Supabase Project Setup** (Day 1 - Morning)
+### Step 0.1: Environment Configuration ✅ COMPLETE
+
+**Supabase Project Setup** ✅ 
 
 Your Supabase project: https://supabase.com/dashboard/project/paufghpcdsvspznnygxo
 
-1. **Get API Credentials**
-   - Navigate to Project Settings → API
-   - Copy `Project URL`: `https://paufghpcdsvspznnygxo.supabase.co`
-   - Copy `anon/public` key (for client-side auth)
-   - Copy `service_role` key (for admin operations - keep secret!)
+1. **Get API Credentials** ✅ DONE
+   - ✅ Project URL: `https://paufghpcdsvspznnygxo.supabase.co`
+   - ✅ Publishable key: Secured in Development.xcconfig
+   - ✅ Secret key: Secured in Development.xcconfig
 
-2. **Database Schema Deployment**
-   - Go to SQL Editor
-   - We'll create migration scripts in Step 1.2
+2. **Database Schema Deployment** ⏸️ DEFERRED TO STEP 1.2
+   - Will deploy complete schema at start of Week 1
+   - Includes all tables, RLS policies, triggers, and functions
 
-3. **Storage Buckets**
-   - Go to Storage
-   - Create bucket: `wardrobe-images` (private)
-   - Create bucket: `user-avatars` (public)
+3. **Storage Buckets** ⏸️ DEFERRED TO STEP 1.2
+   - Will create `wardrobe-images` bucket with database deployment
+   - Will create `user-avatars` bucket with database deployment
 
-4. **Auth Configuration**
-   - Go to Authentication → Providers
-   - Enable Email provider
-   - We'll configure Apple/Google in Step 2
+4. **Auth Configuration** ⏸️ DEFERRED TO PHASE 2 (WEEK 2)
+   - Email provider will be enabled when building auth feature
+   - Apple/Google configured when implementing Sign in with Apple/Google
 
-**Portkey Configuration** (Day 1 - Afternoon)
+**Portkey Configuration** ✅ 
 
-1. **Virtual Keys Setup**
-   - Log in to Portkey dashboard
-   - Go to Virtual Keys
-   - Create virtual key for Gemini 2.5 Pro:
-     - Name: "FitChekk-Gemini-Production"
-     - Add your Google AI Studio API key
-   - Create virtual key for Claude Sonnet 4:
-     - Name: "FitChekk-Claude-Production"  
-     - Add your Anthropic API key
-   - Copy virtual key IDs (we'll use in xcconfig)
+1. **Virtual Keys Setup** ⏸️ DEFERRED TO WEEK 5 (AI INTEGRATION)
+   - Main Portkey API key secured ✅
+   - Virtual keys for Gemini/Claude will be added when building AI features
+   - Allows us to start coding without AI provider dependencies
 
-2. **Cost Tracking**
-   - Set up cost alerts in Portkey
-   - Recommended: Alert at $50, $100, $200 monthly spend
-   - We'll implement rate limiting in code
+2. **Cost Tracking** ⏸️ DEFERRED TO WEEK 5
+   - Will set up cost alerts when activating AI services
+   - Rate limiting will be implemented in code during AI integration
 
-**Apple Developer Configuration** (Day 1 - Evening)
+**Apple Developer Configuration** ✅ 
 
-1. **Bundle Identifier**
-   - Decision needed: Choose format (recommend: `com.afpcreativ.fitchekk`)
-   - Go to Apple Developer Portal → Identifiers
-   - Create new App ID with chosen bundle identifier
-   - Enable capabilities:
-     - Sign in with Apple
-     - iCloud (for CloudKit if needed later)
-     - Push Notifications
+1. **Bundle Identifier** ✅ DONE
+   - ✅ Decided: `com.afpcreativ.fitchekk`
+   - ✅ Saved in Configuration/Shared.xcconfig
+   - ⏸️ Apple Developer Portal registration: Will do when creating Xcode project
+   - ⏸️ Capabilities (Sign in with Apple, Push Notifications): Will enable in Phase 2
 
-2. **App Store Connect**
-   - Go to App Store Connect
-   - Create new app
-   - Fill basic info (name, bundle ID, etc.)
-   - We'll complete listing in Week 10
+2. **App Store Connect** ⏸️ DEFERRED TO WEEK 10
+   - Will create App Store listing during launch preparation
+   - Bundle ID locked in and ready to use
 
-3. **WeatherKit**
-   - Go to Apple Developer Portal
-   - Services → WeatherKit
-   - Register for WeatherKit API
-   - Note: Free tier includes 500K API calls/month
+3. **WeatherKit** ⏸️ DEFERRED TO WEEK 9
+   - Will enable when building weather integration feature
+   - Free tier: 500K API calls/month
 
 **Local Development Setup** (Day 2)
 
@@ -197,12 +182,19 @@ Your Supabase project: https://supabase.com/dashboard/project/paufghpcdsvspznnyg
    PORTKEY_CLAUDE_VIRTUAL_KEY = [your-key-here]
    ```
 
-**Deliverables**:
-- ✅ All API keys documented and stored securely
-- ✅ Supabase project configured
-- ✅ Portkey virtual keys created
-- ✅ Apple Developer capabilities enabled
-- ✅ Local development environment ready
+**Phase 0 Deliverables**:
+- ✅ Supabase API keys secured (publishable + secret)
+- ✅ Portkey API key configured
+- ✅ Bundle identifier decided: `com.afpcreativ.fitchekk`
+- ✅ Configuration file structure created (.xcconfig files)
+- ✅ API keys protected by .gitignore
+- ⏸️ Database schema deployment → Moving to Step 1.2
+- ⏸️ Storage buckets → Moving to Step 1.2
+- ⏸️ Portkey virtual keys → Moving to Week 5 (when needed)
+- ⏸️ Apple Developer portal setup → Moving to Week 1 (with Xcode project)
+- ⏸️ Auth providers → Moving to Phase 2 (when building auth)
+
+**✅ READY TO START PHASE 1: FOUNDATION (WEEK 1)**
 
 ---
 
