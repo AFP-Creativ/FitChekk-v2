@@ -2,7 +2,7 @@ import Foundation
 import SwiftData
 
 @Model
-final class User {
+final class User: @unchecked Sendable {
     // MARK: - Identity
     @Attribute(.unique) var id: UUID
     var createdAt: Date
