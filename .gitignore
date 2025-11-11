@@ -92,3 +92,14 @@ iOSInjectionProject/
 # macOS
 .DS_Store
 
+# API Keys & Configuration
+# IMPORTANT: Never commit these files - they contain secret API keys
+Configuration/Development.xcconfig
+Configuration/Production.xcconfig
+# Keep Shared.xcconfig (no secrets)
+!Configuration/Shared.xcconfig
+
+# Environment files
+.env
+.env.*
+
