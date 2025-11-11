@@ -148,40 +148,6 @@ Your Supabase project: https://supabase.com/dashboard/project/paufghpcdsvspznnyg
    - Will enable when building weather integration feature
    - Free tier: 500K API calls/month
 
-**Local Development Setup** (Day 2)
-
-1. **Install Dependencies**
-   ```bash
-   # Install Homebrew (if not installed)
-   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-   
-   # Install SwiftLint
-   brew install swiftlint
-   
-   # Install xcov (code coverage)
-   brew install xcov
-   ```
-
-2. **Create Configuration Files Structure**
-   ```
-   FitChekk/
-   ├── Configuration/
-   │   ├── Development.xcconfig
-   │   ├── Production.xcconfig
-   │   └── Shared.xcconfig
-   └── .gitignore (update to exclude secrets)
-   ```
-
-3. **Environment Variables Template**
-   We'll create xcconfig files with structure:
-   ```
-   SUPABASE_URL = https://paufghpcdsvspznnygxo.supabase.co
-   SUPABASE_ANON_KEY = [your-key-here]
-   PORTKEY_API_KEY = [your-key-here]
-   PORTKEY_GEMINI_VIRTUAL_KEY = [your-key-here]
-   PORTKEY_CLAUDE_VIRTUAL_KEY = [your-key-here]
-   ```
-
 **Phase 0 Deliverables**:
 - ✅ Supabase API keys secured (publishable + secret)
 - ✅ Portkey API key configured
@@ -201,6 +167,34 @@ Your Supabase project: https://supabase.com/dashboard/project/paufghpcdsvspznnyg
 ## 🏗️ Phase 1: Foundation (Week 1)
 
 **Goal**: Establish production-grade project structure, dependencies, and core architecture
+
+### Step 1.0: Local Development Tools (Before Starting)
+
+**Install Required Development Tools**
+
+Before creating the Xcode project, ensure these tools are installed:
+
+```bash
+# Check if Homebrew is installed
+which brew
+
+# If not installed, install Homebrew
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+# Install SwiftLint (code quality)
+brew install swiftlint
+
+# Install xcov (code coverage reporting) - optional
+brew install xcov
+```
+
+**Verify Installation:**
+```bash
+swiftlint version  # Should show version number
+xcodebuild -version  # Should show Xcode 15.2+
+```
+
+---
 
 ### Step 1.1: New Xcode Project Setup (Day 1)
 
