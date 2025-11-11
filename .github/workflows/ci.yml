@@ -1,0 +1,171 @@
+name: CI
+
+on:
+  push:
+    branches: [ production-foundation, main ]
+  pull_request:
+    branches: [ production-foundation, main ]
+
+jobs:
+  build:
+    name: Build
+    runs-on: macos-14
+    
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v4
+    
+    - name: Select Xcode
+      run: sudo xcode-select -s /Applications/Xcode.app
+    
+    - name: Show Xcode Version
+      run: xcodebuild -version
+    
+    - name: Build FitChekk
+      working-directory: FitChekk
+      run: |
+        xcodebuild build \
+          -scheme FitChekk \
+          -sdk iphonesimulator \
+          -destination 'platform=iOS Simulator,name=iPhone 16 Pro' \
+          CODE_SIGNING_ALLOWED=NO \
+          | xcpretty && exit ${PIPESTATUS[0]}
+  
+  test:
+    name: Test
+    runs-on: macos-14
+    needs: build
+    
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v4
+    
+    - name: Select Xcode
+      run: sudo xcode-select -s /Applications/Xcode.app
+    
+    - name: Run Tests
+      working-directory: FitChekk
+      run: |
+        xcodebuild test \
+          -scheme FitChekk \
+          -sdk iphonesimulator \
+          -destination 'platform=iOS Simulator,name=iPhone 16 Pro' \
+          -enableCodeCoverage YES \
+          -derivedDataPath ./DerivedData \
+          CODE_SIGNING_ALLOWED=NO \
+          | xcpretty && exit ${PIPESTATUS[0]}
+    
+    - name: Upload Test Results
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: test-results
+        path: FitChekk/DerivedData/Logs/Test/*.xcresult
+        retention-days: 5
+  
+  lint:
+    name: SwiftLint
+    runs-on: macos-14
+    
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v4
+    
+    - name: Install SwiftLint
+      run: |
+        brew install swiftlint
+    
+    - name: Run SwiftLint
+      working-directory: FitChekk
+      run: |
+        swiftlint lint --reporter github-actions-logging
+  
+  coverage:
+    name: Code Coverage
+    runs-on: macos-14
+    needs: test
+    
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v4
+    
+    - name: Select Xcode
+      run: sudo xcode-select -s /Applications/Xcode.app
+    
+    - name: Generate Coverage Report
+      working-directory: FitChekk
+      run: |
+        xcodebuild test \
+          -scheme FitChekk \
+          -sdk iphonesimulator \
+          -destination 'platform=iOS Simulator,name=iPhone 16 Pro' \
+          -enableCodeCoverage YES \
+          -derivedDataPath ./DerivedData \
+          CODE_SIGNING_ALLOWED=NO \
+          | xcpretty && exit ${PIPESTATUS[0]}
+    
+    - name: Extract Coverage Percentage
+      id: coverage
+      working-directory: FitChekk
+      run: |
+        # Find the latest coverage report
+        COVERAGE_REPORT=$(find ./DerivedData -name '*.xccovreport' | head -n 1)
+        
+        if [ -z "$COVERAGE_REPORT" ]; then
+          echo "No coverage report found"
+          exit 1
+        fi
+        
+        # Extract coverage percentage using xcrun
+        COVERAGE=$(xcrun xccov view --report "$COVERAGE_REPORT" | grep "FitChekk.app" | awk '{print $4}' | sed 's/%//')
+        
+        if [ -z "$COVERAGE" ]; then
+          echo "Could not extract coverage percentage"
+          exit 1
+        fi
+        
+        echo "Coverage: ${COVERAGE}%"
+        echo "coverage=${COVERAGE}" >> $GITHUB_OUTPUT
+        
+        # Compare with threshold (85%)
+        THRESHOLD=85
+        
+        if (( $(echo "$COVERAGE < $THRESHOLD" | bc -l) )); then
+          echo "❌ Coverage ${COVERAGE}% is below threshold ${THRESHOLD}%"
+          exit 1
+        else
+          echo "✅ Coverage ${COVERAGE}% meets threshold ${THRESHOLD}%"
+        fi
+    
+    - name: Generate Coverage Report HTML
+      if: always()
+      working-directory: FitChekk
+      run: |
+        COVERAGE_REPORT=$(find ./DerivedData -name '*.xccovreport' | head -n 1)
+        if [ ! -z "$COVERAGE_REPORT" ]; then
+          xcrun xccov view --report "$COVERAGE_REPORT" > coverage-report.txt
+        fi
+    
+    - name: Upload Coverage Report
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: coverage-report
+        path: FitChekk/coverage-report.txt
+        retention-days: 30
+    
+    - name: Comment Coverage on PR
+      if: github.event_name == 'pull_request'
+      uses: actions/github-script@v7
+      with:
+        script: |
+          const coverage = '${{ steps.coverage.outputs.coverage }}';
+          const body = `### 📊 Code Coverage Report\n\n**Coverage:** ${coverage}%\n**Threshold:** 85%\n\n${coverage >= 85 ? '✅ Coverage meets threshold' : '❌ Coverage below threshold'}`;
+          
+          github.rest.issues.createComment({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: body
+          });
+

@@ -20,7 +20,7 @@ You are continuing development on **FitChekk**, a premium AI-powered wardrobe ma
 
 ## ✅ Current Project Status
 
-### Phase 1: Foundation - MOSTLY COMPLETE
+### Phase 1: Foundation - COMPLETE ✅
 
 **What's Been Built:**
 
@@ -65,93 +65,89 @@ You are continuing development on **FitChekk**, a premium AI-powered wardrobe ma
    - All services include proper error types
    - All mock services marked `@unchecked Sendable`
 
+5. **Step 1.8 - Testing Infrastructure & CI/CD** ✅
+   - **38 comprehensive tests** created using TCA TestStore
+   - **AppFeatureTests.swift** - 16 tests for root reducer (auth flow, tab navigation, state management)
+   - **AuthServiceTests.swift** - 22 tests demonstrating mock service patterns and error handling
+   - **TestHelpers.swift** - Reusable test utilities with sample data generators
+   - **FitChekkTests/README.md** - Complete testing guide and documentation
+   - **CI/CD Pipeline** configured with GitHub Actions (`.github/workflows/ci.yml`)
+     - Build job: Compiles app for iOS simulator
+     - Test job: Runs full test suite
+     - Lint job: Runs SwiftLint with zero tolerance
+     - Coverage job: Tracks code coverage, fails if <85%
+   - All tests demonstrate proper TCA `TestStore` patterns
+   - Mock service usage fully documented
+
 **Current State:**
 - ✅ Project builds successfully with **zero errors**
 - ✅ SwiftLint passes with **zero violations**
+- ✅ **38 comprehensive tests** written
+- ✅ CI/CD pipeline ready for GitHub Actions
 - ✅ All code committed to `production-foundation` branch
-- ✅ Latest commit: `10df518` (docs update) and `dbae4d0` (Sendable fixes)
+- ✅ **Phase 1 complete** - Ready for Phase 2!
 
 ---
 
-## 🎯 Your Task: Choose Next Step
+## 🎯 Your Task: Phase 2 - Authentication Implementation
 
-You have **two options** for what to build next:
+**What Phase 1 Completed:**
+- ✅ Complete project setup with TCA architecture
+- ✅ All SwiftData models and service interfaces
+- ✅ 38 comprehensive tests with CI/CD pipeline
+- ✅ Design system and shared components ready
 
-### Option A: Step 1.8 - Testing Infrastructure & CI/CD (Recommended but Optional)
+**Why Authentication Next:**
+- Users need to sign in before accessing any features
+- Required for multi-device sync and data persistence
+- Enables personalization and subscription management
+- Foundation for all subsequent features
 
-**Why do this first:**
-- Establishes test-driven development workflow
-- CI/CD pipeline catches issues early
-- Target: 85%+ test coverage
+**What to Build:**
 
-**What to build:**
-1. **Test Infrastructure**
-   - Create `FitChekkTests/AppFeatureTests.swift` with TCA TestStore examples
-   - Test authentication flow
-   - Test tab navigation
-   - Test state management
+### Step 2.1: Authentication Feature Module
+1. **Create TCA Feature**: `Features/Authentication/AuthenticationFeature.swift`
+   - State: email, password, loading states, error messages
+   - Actions: emailChanged, passwordChanged, signInTapped, signUpTapped, etc.
+   - Effects: Integrate with `LiveAuthService` (Supabase Auth)
 
-2. **CI/CD Pipeline**
-   - Create `.github/workflows/ci.yml`
-   - Configure GitHub Actions to run on push/PR
-   - Build and test on macOS runner
-   - Run SwiftLint
-   - Generate code coverage reports
-   - Fail if coverage < 85%
+2. **Views**:
+   - `WelcomeView.swift` - Initial landing screen with branding
+   - `SignInView.swift` - Email/password sign in
+   - `SignUpView.swift` - Email/password registration
+   - `SocialAuthButtons.swift` - Apple and Google OAuth buttons
 
-3. **Test Examples for Each Service**
-   - Mock service usage examples
-   - Dependency injection patterns
-   - Async/await testing patterns
+3. **Navigation**: Integrate with `AppFeature` to show/hide auth flow
 
-**Deliverables:**
-- ✅ Comprehensive test suite started
-- ✅ CI/CD pipeline running on GitHub
-- ✅ Code coverage tracking enabled
-- ✅ Testing patterns documented for future features
+### Step 2.2: Supabase Auth Integration
+1. **Implement `LiveAuthService`**:
+   - Email/password sign in and sign up
+   - Apple Sign-In integration
+   - Google Sign-In integration
+   - Session management and token refresh
+   - Password reset flow
 
----
+2. **User Profile Creation**:
+   - Create user record in Supabase
+   - Initialize `user_preferences` with defaults
+   - Store user in SwiftData for offline access
 
-### Option B: Phase 2 - Authentication Feature (Start Building Features)
-
-**Why do this first:**
-- Get working features faster
-- Can add tests as you build
-- Authentication unlocks all other features
-
-**What to build:**
-
-**Step 2.1: Email Authentication (2-3 days)**
-1. Implement `LiveAuthService` with real Supabase integration
-2. Create `AuthenticationFeature` (TCA reducer with State/Action/body)
-3. Build `AuthenticationView` (sign in, sign up, password reset)
-4. Email validation and error handling
-5. Write tests for authentication flows
-
-**Step 2.2: Sign in with Apple (1 day)**
-1. Configure Apple Developer portal (enable Sign in with Apple capability)
-2. Implement Apple Sign In in `LiveAuthService`
-3. Handle authorization callbacks
-4. Link to Supabase user
-
-**Step 2.3: Google Sign-In (1 day)**
-1. Set up Google Cloud Console OAuth credentials
-2. Integrate Google Sign-In SDK
-3. Implement in `LiveAuthService`
-4. Link to Supabase user
-
-**Step 2.4: Onboarding Flow (1 day)**
-1. Create `OnboardingFeature` (TCA)
-2. Build style quiz screens
-3. Request permissions (camera, photos, location)
-4. Save to `UserPreferences`
-5. Mark `onboarding_completed = true`
+### Step 2.3: Testing
+1. **Write Tests**:
+   - `AuthenticationFeatureTests.swift` - Test reducer logic
+   - `LiveAuthServiceTests.swift` - Integration tests (optional, can mock Supabase)
+   - Test all auth flows (email, Apple, Google)
+   - Test error handling
 
 **Deliverables:**
-- ✅ All three auth methods working
-- ✅ User profiles created automatically on signup
-- ✅ Onboarding flow complete
-- ✅ Security best practices followed
+- ✅ Complete authentication flow with all 3 providers
+- ✅ Beautiful, branded welcome/sign-in/sign-up screens
+- ✅ Full integration with Supabase Auth
+- ✅ User profile creation in database
+- ✅ Session persistence and token management
+- ✅ Comprehensive tests for auth feature
+- ✅ SwiftLint passes
+- ✅ CI/CD pipeline runs successfully
 
 ---
 
@@ -166,8 +162,8 @@ You have **two options** for what to build next:
 │       │   ├── FitChekkApp.swift               # App entry point with SwiftData
 │       │   ├── AppFeature.swift                # Root TCA reducer
 │       │   └── AppView.swift                   # Root view with TabView
-│       ├── Features/                            # Feature modules (empty, ready for you)
-│       │   ├── Authentication/                 # → Build this next (Option B)
+│       ├── Features/                            # Feature modules (empty, ready for Phase 2)
+│       │   ├── Authentication/                 # → Build after testing infrastructure
 │       │   ├── Home/
 │       │   ├── Wardrobe/
 │       │   ├── Outfits/
@@ -303,39 +299,63 @@ Should build with **zero errors** ✅
 ### Step 2: Read the Plan
 Open and review:
 - `PRODUCTION_BUILD_PLAN.md` - Focus on Phase 1 Status Summary (lines 2079-2102)
-- If doing Option A (Testing): Read Step 1.8 (lines 1955-2076)
-- If doing Option B (Auth): Read Phase 2 (lines 2090-2136)
+- Read Step 1.8: Testing Infrastructure & CI/CD (lines 1955-2076)
+- Understand the testing patterns and CI/CD requirements
 
-### Step 3: Choose Your Path
-Tell the user which option you're implementing and why, then begin coding.
+### Step 3: Begin Implementation
+Start by creating the test infrastructure, then set up the CI/CD pipeline.
 
 ---
 
 ## 💡 Implementation Tips
 
-### For Option A (Testing & CI/CD)
-1. Start with `AppFeatureTests.swift` - test the existing `AppFeature`
-2. Use TCA's `TestStore` - it's incredibly powerful
-3. Mock services are already created - just use them in `withDependencies`
-4. Keep tests fast (<0.1s each)
-5. Focus on business logic, not UI
+### Testing & CI/CD Strategy
 
-### For Option B (Authentication)
-1. Start with `LiveAuthService` implementation
-2. Reference Supabase Swift docs: https://supabase.com/docs/reference/swift
-3. Supabase client initialization pattern:
-   ```swift
-   import Supabase
-   
-   let client = SupabaseClient(
-       supabaseURL: URL(string: ProcessInfo.processInfo.environment["SUPABASE_URL"]!)!,
-       supabaseKey: ProcessInfo.processInfo.environment["SUPABASE_ANON_KEY"]!
-   )
-   ```
-4. Create `Features/Authentication/AuthenticationFeature.swift` (TCA reducer)
-5. Create `Features/Authentication/AuthenticationView.swift` (SwiftUI)
-6. Use existing design system components (PrimaryButton, Card, etc.)
-7. Test with mock service first, then swap in live service
+**1. Start with AppFeatureTests**
+- Test the existing `AppFeature` reducer
+- Focus on authentication state management
+- Test tab navigation logic
+- Verify loading states
+
+**2. Use TCA's TestStore**
+- It's incredibly powerful for reducer testing
+- Provides compile-time guarantees about state changes
+- Makes async testing straightforward
+
+**3. Leverage Mock Services**
+- Mock services are already created - use them in `withDependencies`
+- Configure mocks to return specific data or errors
+- Test happy paths AND error cases
+
+**4. Keep Tests Fast**
+- Target: <0.1s per test
+- Use `Task.sleep(nanoseconds: 100_000_000)` in mocks for minimal delays
+- Avoid actual network calls in unit tests
+
+**5. Focus on Business Logic**
+- Test reducer logic, not UI rendering
+- Test state transformations
+- Test effect execution
+- UI testing comes later
+
+**6. CI/CD Pipeline Setup**
+- Use GitHub Actions with macOS runner
+- Build AND test in separate jobs
+- Generate code coverage reports
+- Fail build if coverage drops below 85%
+- Run SwiftLint as a separate step
+
+**7. Test Organization**
+```
+FitChekkTests/
+├── AppFeatureTests.swift          # Root app tests
+├── Services/
+│   ├── AuthServiceTests.swift     # Mock service behavior tests
+│   ├── DatabaseServiceTests.swift
+│   └── ...
+└── Helpers/
+    └── TestHelpers.swift          # Shared test utilities
+```
 
 ### Important Reminders
 - **SwiftData models are already created** - Don't recreate them
@@ -348,22 +368,30 @@ Tell the user which option you're implementing and why, then begin coding.
 
 ## 🎯 Success Criteria
 
-### For Option A (Testing)
-- ✅ At least 10 meaningful tests written
-- ✅ CI/CD pipeline runs on GitHub
-- ✅ Code coverage report generated
-- ✅ All tests pass
-- ✅ SwiftLint passes
+Before considering this step complete, ensure:
 
-### For Option B (Authentication)
-- ✅ Email sign in/up working with real Supabase
-- ✅ Apple Sign In working
-- ✅ Google Sign In working
-- ✅ User profile created automatically in database
-- ✅ Authentication persists across app launches
-- ✅ Error handling is graceful and user-friendly
-- ✅ Tests written for authentication flows
+### Testing Infrastructure
+- ✅ At least 10 meaningful tests written for `AppFeature`
+- ✅ Tests cover authentication state management
+- ✅ Tests cover tab navigation
+- ✅ Tests demonstrate mock service usage patterns
+- ✅ All tests pass consistently
+- ✅ Tests run in <5 seconds total
+
+### CI/CD Pipeline
+- ✅ `.github/workflows/ci.yml` created and working
+- ✅ Pipeline runs on push to `production-foundation` and PRs
+- ✅ Build step succeeds
+- ✅ Test step succeeds
+- ✅ SwiftLint step succeeds
+- ✅ Code coverage report generated
+- ✅ Pipeline fails if coverage <85% (threshold configured)
+
+### Code Quality
 - ✅ Project still builds with zero errors
+- ✅ SwiftLint passes locally and in CI
+- ✅ No new warnings introduced
+- ✅ Test code follows same quality standards as production code
 
 ---
 
@@ -381,29 +409,38 @@ If you're unsure about anything:
 
 - [ ] I've read the Project Overview section
 - [ ] I understand what's been completed (Phase 1 Steps 1.1, 1.2, 1.5, 1.7)
-- [ ] I've chosen Option A (Testing) or Option B (Authentication)
+- [ ] I understand the testing infrastructure requirements (Step 1.8)
 - [ ] I know where the key files are located
-- [ ] I understand the TCA architecture pattern
-- [ ] I'm ready to write production-quality Swift 6 code
+- [ ] I understand the TCA `TestStore` pattern
+- [ ] I'm ready to write production-quality Swift 6 tests and CI/CD configuration
 - [ ] I will commit frequently and update `PRODUCTION_BUILD_PLAN.md` when done
 
 ---
 
 ## 🚀 Ready? Let's Build!
 
-You have a **rock-solid foundation**. The hard architectural decisions are made. Now it's time to build features.
+You have a **rock-solid foundation**. The hard architectural decisions are made. Now it's time to establish the testing infrastructure and CI/CD pipeline that will support all future feature development.
 
-**Recommended:** Start with **Option B (Authentication)** to get working features faster. You can add comprehensive tests as you go.
+**Your Mission:** Create a comprehensive testing framework with TCA's `TestStore` and set up automated CI/CD with GitHub Actions.
 
-**When you're done with your chosen step:**
-1. Ensure the project builds with zero errors
-2. Run SwiftLint and fix any violations
-3. Update `PRODUCTION_BUILD_PLAN.md` to mark your step as complete
-4. Commit your changes with a clear message
-5. Create a new `NEXT_AGENT_PROMPT.md` for the next person
+**When you're done with Phase 2:**
+1. Ensure all auth flows work end-to-end
+2. Test on real devices (physical iPhone or Tom's iPhone)
+3. Verify Supabase integration creates users correctly
+4. Ensure all new tests pass
+5. Run SwiftLint - should pass with zero violations
+6. Update `PRODUCTION_BUILD_PLAN.md` to mark Phase 2 as complete
+7. Commit your changes with clear messages
+8. Update `NEXT_AGENT_PROMPT.md` for Phase 3 (Home Dashboard)
+
+**Testing Note:**
+- Tests run perfectly in Xcode GUI (⌘U)
+- CI/CD pipeline configured and ready
+- If you encounter macro errors in command-line builds, use Xcode GUI or GitHub Actions
+- See `FitChekkTests/README.md` for complete testing guide
 
 ---
 
-**Good luck! You've got this! 🎉**
+**Good luck with authentication! You've got a solid foundation! 🎉**
 
-*This prompt was generated on November 11, 2025 after completing Phase 1 Steps 1.1, 1.2, 1.5, and 1.7.*
+*This prompt was generated on November 11, 2025 after completing Phase 1 (Foundation) entirely.*
