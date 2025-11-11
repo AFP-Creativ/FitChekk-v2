@@ -1,0 +1,41 @@
+# SwiftLint Configuration for FitChekk
+# Based on PRODUCTION_BUILD_PLAN.md specifications
+
+disabled_rules:
+  - trailing_whitespace
+  - todo  # Allow TODOs during development
+
+opt_in_rules:
+  - empty_count
+  - force_unwrapping
+
+line_length: 120
+
+function_body_length:
+  warning: 60
+  error: 100
+
+type_body_length:
+  warning: 300
+  error: 500
+
+file_length:
+  warning: 500
+  error: 1000
+
+# Allow short names for design system constants
+identifier_name:
+  min_length:
+    warning: 2
+    error: 1
+  allowed_symbols: ["_"]
+  validates_start_with_lowercase: true
+
+excluded:
+  - Pods
+  - .build
+  - Tests
+  - FitChekkTests
+  - FitChekkUITests
+  - Package.swift
+

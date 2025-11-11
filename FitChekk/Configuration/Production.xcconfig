@@ -1,0 +1,15 @@
+#include "Shared.xcconfig"
+
+// Supabase Configuration
+SUPABASE_URL = https:/​/paufghpcdsvspznnygxo.supabase.co
+SUPABASE_ANON_KEY = sb_publishable_eYABDmEAH4P7ntB9r_snUQ_dIQre9qB
+SUPABASE_SERVICE_ROLE_KEY = sb_secret_EzX-lyIy5Imm4gpgMOCf3Q_yQmBA_Ek
+
+// Portkey Configuration
+PORTKEY_API_KEY = cW36otME8/6CNKouExvjy+YqOF2z
+PORTKEY_GEMINI_VIRTUAL_KEY = [TO_BE_CONFIGURED_WHEN_NEEDED]
+PORTKEY_CLAUDE_VIRTUAL_KEY = [TO_BE_CONFIGURED_WHEN_NEEDED]
+
+// Environment indicator
+ENVIRONMENT = Production
+

@@ -1,0 +1,112 @@
+name: FitChekk
+options:
+  bundleIdPrefix: com.afpcreativ
+  deploymentTarget:
+    iOS: "17.0"
+  developmentLanguage: en
+  createIntermediateGroups: true
+  generateEmptyDirectories: true
+
+packages:
+  ComposableArchitecture:
+    url: https://github.com/pointfreeco/swift-composable-architecture
+    from: 1.15.0
+  Supabase:
+    url: https://github.com/supabase/supabase-swift
+    from: 2.5.0
+  Dependencies:
+    url: https://github.com/pointfreeco/swift-dependencies
+    from: 1.0.0
+
+settings:
+  base:
+    MARKETING_VERSION: $(MARKETING_VERSION)
+    CURRENT_PROJECT_VERSION: $(CURRENT_PROJECT_VERSION)
+    IPHONEOS_DEPLOYMENT_TARGET: $(IPHONEOS_DEPLOYMENT_TARGET)
+    SWIFT_VERSION: $(SWIFT_VERSION)
+    PRODUCT_BUNDLE_IDENTIFIER: com.afpcreativ.fitchekk
+  configs:
+    Debug:
+      MARKETING_VERSION: 1.0.0
+      CURRENT_PROJECT_VERSION: 1
+      IPHONEOS_DEPLOYMENT_TARGET: 17.0
+      SWIFT_VERSION: 6.0
+    Release:
+      MARKETING_VERSION: 1.0.0
+      CURRENT_PROJECT_VERSION: 1
+      IPHONEOS_DEPLOYMENT_TARGET: 17.0
+      SWIFT_VERSION: 6.0
+
+configFiles:
+  Debug: Configuration/Development.xcconfig
+  Release: Configuration/Production.xcconfig
+
+targets:
+  FitChekk:
+    type: application
+    platform: iOS
+    deploymentTarget: "17.0"
+    sources:
+      - FitChekk
+    resources:
+      - FitChekk/Resources
+    info:
+      path: FitChekk/Resources/Info.plist
+      properties:
+        CFBundleDisplayName: FitChekk
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
+        UILaunchScreen: {}
+        UISupportedInterfaceOrientations:
+          - UIInterfaceOrientationPortrait
+        NSCameraUsageDescription: "FitChekk needs access to your camera to photograph clothing items for your wardrobe."
+        NSPhotoLibraryUsageDescription: "FitChekk needs access to your photo library to add existing photos of clothing items to your wardrobe."
+        NSLocationWhenInUseUsageDescription: "FitChekk uses your location to provide accurate weather-based outfit suggestions."
+    dependencies:
+      - package: ComposableArchitecture
+        product: ComposableArchitecture
+      - package: Supabase
+        product: Supabase
+      - package: Dependencies
+        product: Dependencies
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.afpcreativ.fitchekk
+        INFOPLIST_FILE: FitChekk/Resources/Info.plist
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
+        ENABLE_PREVIEWS: YES
+        SWIFT_VERSION: "6"
+        IPHONEOS_DEPLOYMENT_TARGET: "17.0"
+    preBuildScripts:
+      - name: SwiftLint
+        script: |
+          if which swiftlint >/dev/null; then
+            swiftlint lint --strict
+          else
+            echo "warning: SwiftLint not installed"
+          fi
+
+  FitChekkTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources:
+      - FitChekkTests
+    dependencies:
+      - target: FitChekk
+    settings:
+      base:
+        BUNDLE_LOADER: $(TEST_HOST)
+        TEST_HOST: $(BUILT_PRODUCTS_DIR)/FitChekk.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/FitChekk
+
+  FitChekkUITests:
+    type: bundle.ui-testing
+    platform: iOS
+    sources:
+      - FitChekkUITests
+    dependencies:
+      - target: FitChekk
+    settings:
+      base:
+        TEST_TARGET_NAME: FitChekk
+
