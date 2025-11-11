@@ -85,7 +85,7 @@ final class LiveOutfitService: OutfitService {
 
 // MARK: - Mock Implementation
 
-final class MockOutfitService: OutfitService {
+final class MockOutfitService: OutfitService, @unchecked Sendable {
     var mockSuggestions: [OutfitSuggestion]?
     var mockExplanation: String?
     var shouldThrowError = false

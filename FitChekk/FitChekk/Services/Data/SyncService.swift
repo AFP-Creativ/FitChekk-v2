@@ -89,7 +89,7 @@ final class LiveSyncService: SyncService {
 
 // MARK: - Mock Implementation
 
-final class MockSyncService: SyncService {
+final class MockSyncService: SyncService, @unchecked Sendable {
     var pendingChanges = false
     var shouldThrowError = false
     var errorToThrow: SyncError = .networkError

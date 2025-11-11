@@ -115,7 +115,7 @@ final class LiveDatabaseService: DatabaseService {
 
 // MARK: - Mock Implementation
 
-final class MockDatabaseService: DatabaseService {
+final class MockDatabaseService: DatabaseService, @unchecked Sendable {
     var wardrobeItems: [WardrobeItem] = []
     var outfits: [Outfit] = []
     var plannerEntries: [PlannerEntry] = []

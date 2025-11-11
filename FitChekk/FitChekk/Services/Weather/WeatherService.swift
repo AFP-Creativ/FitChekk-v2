@@ -93,7 +93,7 @@ final class LiveWeatherService: WeatherService {
 
 // MARK: - Mock Implementation
 
-final class MockWeatherService: WeatherService {
+final class MockWeatherService: WeatherService, @unchecked Sendable {
     var mockLocation: CLLocation?
     var mockWeather: WeatherCondition?
     var mockForecast: [WeatherCondition]?

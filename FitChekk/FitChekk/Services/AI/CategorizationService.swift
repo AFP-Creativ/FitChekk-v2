@@ -64,7 +64,7 @@ final class LiveCategorizationService: CategorizationService {
 
 // MARK: - Mock Implementation
 
-final class MockCategorizationService: CategorizationService {
+final class MockCategorizationService: CategorizationService, @unchecked Sendable {
     var mockResult: CategorizationResult?
     var shouldThrowError = false
     var errorToThrow: CategorizationError = .networkError

@@ -80,7 +80,7 @@ final class LiveAuthService: AuthService {
 
 // MARK: - Mock Implementation
 
-final class MockAuthService: AuthService {
+final class MockAuthService: AuthService, @unchecked Sendable {
     var mockUser: User?
     var shouldThrowError = false
     var errorToThrow: AuthError = .invalidCredentials

@@ -68,7 +68,7 @@ final class LiveStorageService: StorageService {
 
 // MARK: - Mock Implementation
 
-final class MockStorageService: StorageService {
+final class MockStorageService: StorageService, @unchecked Sendable {
     var storedImages: [String: Data] = [:]
     var shouldThrowError = false
     var errorToThrow: StorageError = .networkError
