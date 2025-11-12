@@ -140,6 +140,24 @@ struct AddItemView: View {
                     }
                 }
 
+                // Auto-Categorize Button
+                if !store.isCategorizingWithAI {
+                    PrimaryButton(
+                        title: "✨ Auto-Categorize with AI",
+                        action: { store.send(.autoCategorizeTapped) }
+                    )
+                    .padding(.horizontal, Spacing.md)
+                } else {
+                    HStack(spacing: Spacing.xs) {
+                        ProgressView()
+                        Text("Analyzing item...")
+                            .font(Font.bodyMedium)
+                            .foregroundColor(Color.textSecondary)
+                    }
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, Spacing.sm)
+                }
+                
                 // Change Photo Button
                 SecondaryButton(
                     title: "Change Photo",
@@ -202,10 +220,28 @@ struct AddItemView: View {
 
     private var categorySection: some View {
         VStack(alignment: .leading, spacing: Spacing.sm) {
-            Text("Category")
-                .font(Font.headlineSmall)
-                .foregroundColor(Color.textPrimary)
-                .padding(.horizontal, Spacing.md)
+            HStack {
+                Text("Category")
+                    .font(Font.headlineSmall)
+                    .foregroundColor(Color.textPrimary)
+                
+                if let confidence = store.aiConfidence {
+                    HStack(spacing: 4) {
+                        Image(systemName: "sparkles")
+                            .font(.system(size: 10))
+                        Text("\(Int(confidence * 100))% confident")
+                            .font(Font.captionRegular)
+                    }
+                    .padding(.horizontal, Spacing.xs)
+                    .padding(.vertical, 2)
+                    .background(confidenceColor(for: confidence))
+                    .foregroundColor(.white)
+                    .clipShape(Capsule())
+                }
+                
+                Spacer()
+            }
+            .padding(.horizontal, Spacing.md)
 
             // Category Picker
             ScrollView(.horizontal, showsIndicators: false) {
@@ -396,6 +432,19 @@ struct AddItemView: View {
             .padding(.horizontal, Spacing.md)
         }
     }
+    
+    // MARK: - Helper Functions
+    
+    private func confidenceColor(for confidence: Double) -> Color {
+        switch confidence {
+        case 0.8...1.0:
+            return .green
+        case 0.5..<0.8:
+            return .orange
+        default:
+            return .red
+        }
+    }
 }
 
 // MARK: - AddItemFeature
@@ -420,6 +469,11 @@ struct AddItemFeature {
         var selectedSeasons: Set<Season> = []
         var formality: FormalityLevel = .casual
         var notes = ""
+
+        // AI Categorization
+        var isCategorizingWithAI = false
+        var aiConfidence: Double?
+        var aiGenerated = false
 
         // State
         var isSaving = false
@@ -447,7 +501,7 @@ struct AddItemFeature {
         }
     }
 
-    enum Action: Equatable {
+    enum Action {
         case selectPhotoTapped
         case photoItemChanged(PhotosPickerItem?)
         case dismissPhotosPicker
@@ -465,6 +519,9 @@ struct AddItemFeature {
         case formalityChanged(FormalityLevel)
         case notesChanged(String)
 
+        case autoCategorizeTapped
+        case categorizationResponse(Result<CategorizationResult, Error>)
+
         case saveTapped
         case saveComplete(WardrobeItem)
         case cancelTapped
@@ -475,6 +532,7 @@ struct AddItemFeature {
     }
 
     @Dependency(\.backgroundRemovalService) var backgroundRemovalService
+    @Dependency(\.categorizationService) var categorizationService
     @Dependency(\.dismiss) var dismiss
 
     var body: some ReducerOf<Self> {
@@ -575,6 +633,71 @@ struct AddItemFeature {
                 state.notes = notes
                 return .none
 
+            case .autoCategorizeTapped:
+                guard let image = state.selectedImage,
+                      let imageData = image.jpegData(compressionQuality: 0.8) else {
+                    return .send(.setError("Please select an image first"))
+                }
+                
+                state.isCategorizingWithAI = true
+                state.errorMessage = nil
+                
+                return .run { send in
+                    do {
+                        let result = try await categorizationService.categorizeItem(image: imageData)
+                        await send(.categorizationResponse(.success(result)))
+                    } catch {
+                        await send(.categorizationResponse(.failure(error)))
+                    }
+                }
+            
+            case let .categorizationResponse(.success(result)):
+                state.isCategorizingWithAI = false
+                
+                // Update form fields with AI results
+                state.category = result.category
+                state.subCategory = result.subCategory
+                state.selectedColors = Set(result.colors)
+                state.formality = result.formality
+                state.selectedSeasons = Set(result.seasons)
+                state.aiConfidence = result.confidence
+                state.aiGenerated = true
+                
+                // Set material if available
+                if let material = result.materialType {
+                    state.notes = state.notes.isEmpty ? "Material: \(material)" : "\(state.notes)\nMaterial: \(material)"
+                }
+                
+                // Show warning if confidence is low
+                if result.needsHumanReview {
+                    return .send(.setError("AI is \(Int(result.confidence * 100))% confident. Please review and adjust if needed."))
+                }
+                
+                return .none
+            
+            case let .categorizationResponse(.failure(error)):
+                state.isCategorizingWithAI = false
+                
+                let errorMessage: String
+                if let categorizationError = error as? CategorizationError {
+                    switch categorizationError {
+                    case .invalidImage:
+                        errorMessage = "Couldn't analyze this image. Try a different photo."
+                    case .networkError:
+                        errorMessage = "Network error. Check your connection and try again."
+                    case .apiLimitReached:
+                        errorMessage = "AI limit reached. Please try again later."
+                    case .timeout:
+                        errorMessage = "Request timed out. Please try again."
+                    default:
+                        errorMessage = "Couldn't categorize item. You can still add it manually."
+                    }
+                } else {
+                    errorMessage = "Couldn't categorize item. You can still add it manually."
+                }
+                
+                return .send(.setError(errorMessage))
+
             case .saveTapped:
                 guard state.selectedImage != nil else { return .none }
 
@@ -585,9 +708,11 @@ struct AddItemFeature {
                     category: state.category,
                     subCategory: state.subCategory,
                     brand: state.brand.isEmpty ? nil : state.brand,
+                    aiGenerated: state.aiGenerated,
                     colors: Array(state.selectedColors),
                     formality: state.formality,
                     seasons: Array(state.selectedSeasons),
+                    aiConfidence: state.aiConfidence ?? 0.0,
                     notes: state.notes.isEmpty ? nil : state.notes
                 )
 

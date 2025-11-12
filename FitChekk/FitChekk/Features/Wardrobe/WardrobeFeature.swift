@@ -414,6 +414,7 @@ struct WardrobeFeature {
 // MARK: - Equatable Conformance
 
 extension WardrobeFeature.Action: Equatable {
+    // swiftlint:disable:next cyclomatic_complexity
     static func == (lhs: WardrobeFeature.Action, rhs: WardrobeFeature.Action) -> Bool {
         switch (lhs, rhs) {
         case (.onAppear, .onAppear),

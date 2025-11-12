@@ -32,6 +32,8 @@
 	<string>$(SUPABASE_ANON_KEY)</string>
 	<key>GOOGLE_CLIENT_ID</key>
 	<string>$(GOOGLE_CLIENT_ID)</string>
+	<key>PORTKEY_API_KEY</key>
+	<string>$(PORTKEY_API_KEY)</string>
 	<key>UILaunchScreen</key>
 	<dict/>
 	<key>UISupportedInterfaceOrientations</key>

@@ -189,6 +189,214 @@ enum MockDataGenerator {
     }
 }
 
+// MARK: - Sample CategorizationResult Instances
+
+extension CategorizationResult {
+    /// Creates a sample high-confidence categorization result
+    static func sampleHighConfidence() -> CategorizationResult {
+        CategorizationResult(
+            category: .tops,
+            subCategory: .basicTees,
+            colors: ["Blue", "Navy"],
+            pattern: "solid",
+            formality: .casual,
+            seasons: [.spring, .summer, .fall],
+            materialType: "cotton",
+            confidence: 0.92
+        )
+    }
+    
+    /// Creates a sample low-confidence categorization result
+    static func sampleLowConfidence() -> CategorizationResult {
+        CategorizationResult(
+            category: .accessories,
+            subCategory: .bags,
+            colors: ["Brown"],
+            pattern: nil,
+            formality: .smartCasual,
+            seasons: [.spring, .summer, .fall, .winter],
+            materialType: "leather",
+            confidence: 0.55
+        )
+    }
+    
+    /// Creates a sample categorization result with custom properties
+    static func sample(
+        category: ItemCategory = .tops,
+        subCategory: ItemSubCategory = .basicTees,
+        colors: [String] = ["Blue"],
+        pattern: String? = "solid",
+        formality: FormalityLevel = .casual,
+        seasons: [Season] = [.spring, .summer],
+        materialType: String? = "cotton",
+        confidence: Double = 0.85
+    ) -> CategorizationResult {
+        CategorizationResult(
+            category: category,
+            subCategory: subCategory,
+            colors: colors,
+            pattern: pattern,
+            formality: formality,
+            seasons: seasons,
+            materialType: materialType,
+            confidence: confidence
+        )
+    }
+}
+
+// MARK: - Sample OutfitSuggestion Instances
+
+extension OutfitSuggestion {
+    /// Creates a sample outfit suggestion
+    static func sampleSuggestion(
+        name: String = "Casual Day Look",
+        itemIds: [UUID]? = nil,
+        occasion: String = "casual",
+        reasoning: String = "Perfect for a relaxed day with great weather",
+        styleScore: Double = 0.85,
+        weatherAppropriate: Bool = true
+    ) -> OutfitSuggestion {
+        let ids = itemIds ?? [
+            TestConstants.testItemId1,
+            TestConstants.testItemId2
+        ]
+        
+        return OutfitSuggestion(
+            id: UUID(),
+            name: name,
+            itemIds: ids,
+            occasion: occasion,
+            reasoning: reasoning,
+            styleScore: styleScore,
+            weatherAppropriate: weatherAppropriate
+        )
+    }
+    
+    /// Creates multiple sample outfit suggestions
+    static func sampleSuggestions(count: Int = 3) -> [OutfitSuggestion] {
+        let occasions = ["casual", "work", "date night", "brunch", "evening out"]
+        
+        return (0..<count).map { index in
+            OutfitSuggestion(
+                id: UUID(),
+                name: "Outfit Idea \(index + 1)",
+                itemIds: [TestConstants.testItemId1, TestConstants.testItemId2],
+                occasion: occasions[index % occasions.count],
+                reasoning: "This outfit works great for \(occasions[index % occasions.count])",
+                styleScore: Double.random(in: 0.75...0.95),
+                weatherAppropriate: true
+            )
+        }
+    }
+}
+
+// MARK: - Sample WeatherCondition Instances
+
+extension WeatherCondition {
+    /// Creates a sample weather condition
+    static func sampleWeather(
+        date: Date = Date(),
+        tempHigh: Int = 72,
+        tempLow: Int = 58,
+        condition: String = "Partly Cloudy",
+        feelsLike: Int = 68,
+        humidity: Int = 55,
+        precipitation: Int = 10
+    ) -> WeatherCondition {
+        WeatherCondition(
+            date: date,
+            tempHigh: tempHigh,
+            tempLow: tempLow,
+            condition: condition,
+            feelsLike: feelsLike,
+            humidity: humidity,
+            precipitation: precipitation
+        )
+    }
+    
+    /// Creates a sample sunny weather condition
+    static func sampleSunny() -> WeatherCondition {
+        WeatherCondition(
+            date: Date(),
+            tempHigh: 78,
+            tempLow: 62,
+            condition: "Sunny",
+            feelsLike: 75,
+            humidity: 45,
+            precipitation: 0
+        )
+    }
+    
+    /// Creates a sample rainy weather condition
+    static func sampleRainy() -> WeatherCondition {
+        WeatherCondition(
+            date: Date(),
+            tempHigh: 65,
+            tempLow: 55,
+            condition: "Rainy",
+            feelsLike: 60,
+            humidity: 80,
+            precipitation: 70
+        )
+    }
+    
+    /// Creates a sample weather forecast
+    static func sampleForecast(days: Int = 5) -> WeatherForecast {
+        let current = sampleWeather()
+        var daily: [WeatherCondition] = []
+        
+        for day in 0..<days {
+            let date = Calendar.current.date(byAdding: .day, value: day, to: Date()) ?? Date()
+            let condition = WeatherCondition(
+                date: date,
+                tempHigh: Int.random(in: 65...80),
+                tempLow: Int.random(in: 50...65),
+                condition: ["Sunny", "Partly Cloudy", "Cloudy", "Rainy"].randomElement() ?? "Sunny",
+                feelsLike: Int.random(in: 55...75),
+                humidity: Int.random(in: 40...70),
+                precipitation: Int.random(in: 0...60)
+            )
+            daily.append(condition)
+        }
+        
+        return WeatherForecast(current: current, daily: daily)
+    }
+}
+
+// MARK: - Sample OutfitContext Instances
+
+extension OutfitContext {
+    /// Creates a sample outfit context for testing
+    static func sampleContext(
+        wardrobeItems: [WardrobeItem]? = nil,
+        weather: WeatherCondition? = nil,
+        occasion: String? = nil,
+        stylePreferences: [String] = ["casual", "comfortable"],
+        favoriteColors: [String] = ["Blue", "Black", "White"]
+    ) -> OutfitContext {
+        let items = wardrobeItems ?? [
+            WardrobeItem(
+                userId: TestConstants.testUserId1,
+                category: .tops,
+                subCategory: .basicTees
+            ),
+            WardrobeItem(
+                userId: TestConstants.testUserId1,
+                category: .bottoms,
+                subCategory: .jeans
+            )
+        ]
+        
+        return OutfitContext(
+            wardrobeItems: items,
+            weather: weather ?? WeatherCondition.sampleWeather(),
+            occasion: occasion,
+            stylePreferences: stylePreferences,
+            favoriteColors: favoriteColors
+        )
+    }
+}
+
 // MARK: - XCTest Extensions
 
 import XCTest
