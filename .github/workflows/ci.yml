@@ -21,6 +21,12 @@ jobs:
     - name: Show Xcode Version
       run: xcodebuild -version
     
+    - name: Resolve Swift Package Dependencies
+      working-directory: FitChekk
+      run: |
+        xcodebuild -resolvePackageDependencies \
+          -scheme FitChekk
+    
     - name: Build FitChekk
       working-directory: FitChekk
       run: |
@@ -42,6 +48,12 @@ jobs:
     
     - name: Select Xcode 16
       run: sudo xcode-select -s /Applications/Xcode_16.1.app
+    
+    - name: Resolve Swift Package Dependencies
+      working-directory: FitChekk
+      run: |
+        xcodebuild -resolvePackageDependencies \
+          -scheme FitChekk
     
     - name: Run Tests
       working-directory: FitChekk
@@ -91,6 +103,12 @@ jobs:
     
     - name: Select Xcode 16
       run: sudo xcode-select -s /Applications/Xcode_16.1.app
+    
+    - name: Resolve Swift Package Dependencies
+      working-directory: FitChekk
+      run: |
+        xcodebuild -resolvePackageDependencies \
+          -scheme FitChekk
     
     - name: Generate Coverage Report
       working-directory: FitChekk
