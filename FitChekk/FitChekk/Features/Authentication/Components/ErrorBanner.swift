@@ -10,19 +10,19 @@ import SwiftUI
 struct ErrorBanner: View {
     let message: String
     let onDismiss: () -> Void
-    
+
     var body: some View {
         HStack(spacing: Spacing.sm) {
             Image(systemName: "exclamationmark.circle.fill")
                 .foregroundStyle(Color.error)
-            
+
             Text(message)
                 .font(.footnote)
                 .foregroundStyle(Color.textPrimary)
                 .multilineTextAlignment(.leading)
-            
+
             Spacer()
-            
+
             Button(action: onDismiss) {
                 Image(systemName: "xmark")
                     .font(.system(size: 12, weight: .semibold))

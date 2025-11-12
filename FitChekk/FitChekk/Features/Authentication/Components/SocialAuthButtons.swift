@@ -10,7 +10,7 @@ import SwiftUI
 
 struct SocialAuthButtons: View {
     let store: StoreOf<AuthenticationFeature>
-    
+
     var body: some View {
         VStack(spacing: Spacing.md) {
             // Apple Sign In
@@ -25,7 +25,7 @@ struct SocialAuthButtons: View {
                         Image(systemName: "apple.logo")
                             .font(.system(size: 20))
                     }
-                    
+
                     Text("Continue with Apple")
                         .font(.bodyLarge.weight(.semibold))
                 }
@@ -37,7 +37,7 @@ struct SocialAuthButtons: View {
             }
             .buttonShadow()
             .disabled(store.isAppleSignInLoading || store.isGoogleSignInLoading)
-            
+
             // Google Sign In
             Button {
                 store.send(.signInWithGoogleTapped)
@@ -64,7 +64,7 @@ struct SocialAuthButtons: View {
                             )
                             .clipShape(Circle())
                     }
-                    
+
                     Text("Continue with Google")
                         .font(.bodyLarge.weight(.semibold))
                 }
@@ -92,7 +92,7 @@ struct SocialAuthButtons: View {
                 AuthenticationFeature()
             }
         )
-        
+
         // Loading states
         SocialAuthButtons(
             store: Store(

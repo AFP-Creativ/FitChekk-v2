@@ -13,7 +13,7 @@ struct CategorizationResult: Equatable, Sendable {
     let seasons: [Season]
     let materialType: String?
     let confidence: Double // 0.0-1.0
-    
+
     var needsHumanReview: Bool {
         confidence < 0.7
     }
@@ -25,7 +25,7 @@ struct CategorizationResult: Equatable, Sendable {
 protocol CategorizationService: Sendable {
     /// Analyze a clothing item image and extract attributes
     func categorizeItem(image: Data) async throws -> CategorizationResult
-    
+
     /// Validate if categorization results need human review
     func validateCategories(_ result: CategorizationResult) -> Bool
 }
@@ -55,7 +55,7 @@ final class LiveCategorizationService: CategorizationService {
         // 4. Return structured result
         throw CategorizationError.notImplemented
     }
-    
+
     func validateCategories(_ result: CategorizationResult) -> Bool {
         // Check if confidence is high enough
         !result.needsHumanReview
@@ -69,15 +69,15 @@ final class MockCategorizationService: CategorizationService, @unchecked Sendabl
     var shouldThrowError = false
     var errorToThrow: CategorizationError = .networkError
     var processingDelay: UInt64 = 1_000_000_000 // 1s default to simulate AI processing
-    
+
     func categorizeItem(image: Data) async throws -> CategorizationResult {
         try await Task.sleep(nanoseconds: processingDelay)
         if shouldThrowError { throw errorToThrow }
-        
+
         if let result = mockResult {
             return result
         }
-        
+
         // Return realistic mock categorization
         let categories: [(ItemCategory, ItemSubCategory)] = [
             (.tops, .basicTees),
@@ -87,9 +87,9 @@ final class MockCategorizationService: CategorizationService, @unchecked Sendabl
             (.outerwear, .jackets),
             (.shoes, .sneakers)
         ]
-        
+
         let (category, subCategory) = categories.randomElement() ?? (.tops, .basicTees)
-        
+
         return CategorizationResult(
             category: category,
             subCategory: subCategory,
@@ -101,7 +101,7 @@ final class MockCategorizationService: CategorizationService, @unchecked Sendabl
             confidence: Double.random(in: 0.75...0.95)
         )
     }
-    
+
     func validateCategories(_ result: CategorizationResult) -> Bool {
         !result.needsHumanReview
     }

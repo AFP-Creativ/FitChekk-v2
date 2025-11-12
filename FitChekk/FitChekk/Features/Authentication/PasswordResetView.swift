@@ -11,7 +11,7 @@ import SwiftUI
 struct PasswordResetView: View {
     @Bindable var store: StoreOf<AuthenticationFeature>
     @FocusState private var emailFieldFocused: Bool
-    
+
     var body: some View {
         ScrollView {
             VStack(spacing: Spacing.xl) {
@@ -20,7 +20,7 @@ struct PasswordResetView: View {
                     Text("Reset password")
                         .font(.displayMedium)
                         .foregroundStyle(Color.textPrimary)
-                    
+
                     Text("We'll send you a link to reset your password")
                         .font(.bodyLarge)
                         .foregroundStyle(Color.textSecondary)
@@ -28,13 +28,13 @@ struct PasswordResetView: View {
                 }
                 .padding(.top, Spacing.xxl)
                 .padding(.horizontal, Spacing.md)
-                
+
                 // Email Field
                 VStack(alignment: .leading, spacing: Spacing.xs) {
                     Text("Email")
                         .font(.footnote.weight(.medium))
                         .foregroundStyle(Color.textSecondary)
-                    
+
                     TextField("your@email.com", text: $store.email.sending(\.emailChanged))
                         .textFieldStyle(FitChekkTextFieldStyle())
                         .textContentType(.emailAddress)
@@ -45,7 +45,7 @@ struct PasswordResetView: View {
                         .onSubmit {
                             store.send(.resetPasswordTapped)
                         }
-                    
+
                     if let error = store.emailError {
                         Text(error)
                             .font(.footnote)
@@ -53,14 +53,14 @@ struct PasswordResetView: View {
                     }
                 }
                 .padding(.top, Spacing.md)
-                
+
                 // Error Message
                 if let error = store.errorMessage {
                     ErrorBanner(message: error) {
                         store.send(.clearError)
                     }
                 }
-                
+
                 // Reset Button
                 PrimaryButton(
                     title: "Send Reset Link",
@@ -71,7 +71,7 @@ struct PasswordResetView: View {
                     isDisabled: !store.canResetPassword
                 )
                 .padding(.top, Spacing.md)
-                
+
                 // Back to Sign In
                 Button {
                     store.send(.showSignIn)

@@ -25,7 +25,7 @@ struct FitChekkTextFieldStyle: TextFieldStyle {
     VStack(spacing: Spacing.md) {
         TextField("Email", text: .constant(""))
             .textFieldStyle(FitChekkTextFieldStyle())
-        
+
         SecureField("Password", text: .constant(""))
             .textFieldStyle(FitChekkTextFieldStyle())
     }

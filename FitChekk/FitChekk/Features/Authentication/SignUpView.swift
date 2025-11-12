@@ -11,11 +11,11 @@ import SwiftUI
 struct SignUpView: View {
     @Bindable var store: StoreOf<AuthenticationFeature>
     @FocusState private var focusedField: Field?
-    
+
     enum Field {
         case displayName, email, password, confirmPassword
     }
-    
+
     var body: some View {
         ScrollView {
             VStack(spacing: Spacing.xl) {
@@ -24,13 +24,13 @@ struct SignUpView: View {
                     Text("Create your account")
                         .font(.displayMedium)
                         .foregroundStyle(Color.textPrimary)
-                    
+
                     Text("Let's get you styled")
                         .font(.bodyLarge)
                         .foregroundStyle(Color.textSecondary)
                 }
                 .padding(.top, Spacing.xxl)
-                
+
                 // Form Fields
                 VStack(spacing: Spacing.lg) {
                     // Display Name Field
@@ -38,7 +38,7 @@ struct SignUpView: View {
                         Text("Name")
                             .font(.footnote.weight(.medium))
                             .foregroundStyle(Color.textSecondary)
-                        
+
                         TextField("What should we call you?", text: $store.displayName.sending(\.displayNameChanged))
                             .textFieldStyle(FitChekkTextFieldStyle())
                             .textContentType(.name)
@@ -47,20 +47,20 @@ struct SignUpView: View {
                             .onSubmit {
                                 focusedField = .email
                             }
-                        
+
                         if let error = store.displayNameError {
                             Text(error)
                                 .font(.footnote)
                                 .foregroundStyle(Color.error)
                         }
                     }
-                    
+
                     // Email Field
                     VStack(alignment: .leading, spacing: Spacing.xs) {
                         Text("Email")
                             .font(.footnote.weight(.medium))
                             .foregroundStyle(Color.textSecondary)
-                        
+
                         TextField("your@email.com", text: $store.email.sending(\.emailChanged))
                             .textFieldStyle(FitChekkTextFieldStyle())
                             .textContentType(.emailAddress)
@@ -71,20 +71,20 @@ struct SignUpView: View {
                             .onSubmit {
                                 focusedField = .password
                             }
-                        
+
                         if let error = store.emailError {
                             Text(error)
                                 .font(.footnote)
                                 .foregroundStyle(Color.error)
                         }
                     }
-                    
+
                     // Password Field
                     VStack(alignment: .leading, spacing: Spacing.xs) {
                         Text("Password")
                             .font(.footnote.weight(.medium))
                             .foregroundStyle(Color.textSecondary)
-                        
+
                         SecureField("At least 8 characters", text: $store.password.sending(\.passwordChanged))
                             .textFieldStyle(FitChekkTextFieldStyle())
                             .textContentType(.newPassword)
@@ -93,32 +93,32 @@ struct SignUpView: View {
                             .onSubmit {
                                 focusedField = .confirmPassword
                             }
-                        
+
                         if let error = store.passwordError {
                             Text(error)
                                 .font(.footnote)
                                 .foregroundStyle(Color.error)
                         }
                     }
-                    
+
                     // Confirm Password Field
                     VStack(alignment: .leading, spacing: Spacing.xs) {
                         Text("Confirm Password")
                             .font(.footnote.weight(.medium))
                             .foregroundStyle(Color.textSecondary)
-                        
+
                         SecureField(
                             "Re-enter your password",
                             text: $store.confirmPassword.sending(\.confirmPasswordChanged)
                         )
-                            .textFieldStyle(FitChekkTextFieldStyle())
-                            .textContentType(.newPassword)
-                            .focused($focusedField, equals: .confirmPassword)
-                            .submitLabel(.go)
-                            .onSubmit {
-                                store.send(.signUpTapped)
-                            }
-                        
+                        .textFieldStyle(FitChekkTextFieldStyle())
+                        .textContentType(.newPassword)
+                        .focused($focusedField, equals: .confirmPassword)
+                        .submitLabel(.go)
+                        .onSubmit {
+                            store.send(.signUpTapped)
+                        }
+
                         if let error = store.confirmPasswordError {
                             Text(error)
                                 .font(.footnote)
@@ -127,14 +127,14 @@ struct SignUpView: View {
                     }
                 }
                 .padding(.top, Spacing.md)
-                
+
                 // Error Message
                 if let error = store.errorMessage {
                     ErrorBanner(message: error) {
                         store.send(.clearError)
                     }
                 }
-                
+
                 // Sign Up Button
                 PrimaryButton(
                     title: "Create Account",
@@ -145,26 +145,26 @@ struct SignUpView: View {
                     isDisabled: !store.canSignUp
                 )
                 .padding(.top, Spacing.md)
-                
+
                 // Divider
                 HStack(spacing: Spacing.md) {
                     Rectangle()
                         .fill(Color.borderDefault)
                         .frame(height: 1)
-                    
+
                     Text("or")
                         .font(.footnote)
                         .foregroundStyle(Color.textTertiary)
-                    
+
                     Rectangle()
                         .fill(Color.borderDefault)
                         .frame(height: 1)
                 }
                 .padding(.vertical, Spacing.md)
-                
+
                 // Social Auth Buttons
                 SocialAuthButtons(store: store)
-                
+
                 // Sign In Link
                 Button {
                     store.send(.showSignIn)

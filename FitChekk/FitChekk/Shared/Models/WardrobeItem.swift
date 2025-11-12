@@ -7,10 +7,10 @@ final class WardrobeItem: @unchecked Sendable {
     @Attribute(.unique) var id: UUID
     var createdAt: Date
     var updatedAt: Date
-    
+
     // MARK: - Foreign Key
     var userId: UUID
-    
+
     // MARK: - Basic Info
     var name: String?
     var category: String  // Store as String, use computed property for enum
@@ -18,11 +18,11 @@ final class WardrobeItem: @unchecked Sendable {
     var brand: String?
     var purchaseDate: Date?
     var purchasePrice: Double?
-    
+
     // MARK: - Images
     var imageURL: String?
     var thumbnailURL: String?
-    
+
     // MARK: - AI Attributes
     var aiGenerated: Bool
     var colors: [String]
@@ -32,19 +32,19 @@ final class WardrobeItem: @unchecked Sendable {
     var seasons: [String]  // Store as [String], use computed property for [Season]
     var materialType: String?
     var aiConfidence: Double  // 0.0-1.0
-    
+
     // MARK: - User Metadata
     var isFavorite: Bool
     var notes: String?
     var isArchived: Bool
-    
+
     // MARK: - Usage Stats
     var timesWorn: Int
     var lastWornDate: Date?
-    
+
     // MARK: - Sync
     var needsSync: Bool
-    
+
     // MARK: - Init
     init(
         id: UUID = UUID(),
@@ -99,24 +99,24 @@ final class WardrobeItem: @unchecked Sendable {
         self.lastWornDate = lastWornDate
         self.needsSync = needsSync
     }
-    
+
     // MARK: - Computed Properties
     var categoryEnum: ItemCategory {
         ItemCategory(rawValue: category) ?? .tops
     }
-    
+
     var subCategoryEnum: ItemSubCategory {
         ItemSubCategory(rawValue: subCategory) ?? .basicTees
     }
-    
+
     var formalityEnum: FormalityLevel {
         FormalityLevel(rawValue: formality) ?? .casual
     }
-    
+
     var seasonsEnum: [Season] {
         seasons.compactMap { Season(rawValue: $0) }
     }
-    
+
     var displayName: String {
         if let name = name, !name.isEmpty {
             return name
@@ -125,22 +125,22 @@ final class WardrobeItem: @unchecked Sendable {
         let subCatName = subCategory.camelCaseToWords()
         return colorPrefix.isEmpty ? subCatName : "\(colorPrefix) \(subCatName)"
     }
-    
+
     var displayPrice: String? {
         guard let price = purchasePrice else { return nil }
         return String(format: "$%.2f", price)
     }
-    
+
     var isRecentlyWorn: Bool {
         guard let lastWorn = lastWornDate else { return false }
         let daysSinceWorn = Calendar.current.dateComponents([.day], from: lastWorn, to: Date()).day ?? 999
         return daysSinceWorn <= 7
     }
-    
+
     var isPopular: Bool {
         timesWorn >= 5
     }
-    
+
     var confidenceLevel: String {
         switch aiConfidence {
         case 0.8...1.0: return "High"

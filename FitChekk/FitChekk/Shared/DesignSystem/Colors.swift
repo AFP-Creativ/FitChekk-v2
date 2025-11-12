@@ -79,6 +79,9 @@ extension Color {
 
     /// Focused border color for inputs
     static let borderFocused = Color(hex: "#C17B6F")
+    
+    /// Subtle border color
+    static let borderSubtle = Color(hex: "#F0EDE9")
 
     /// Divider color
     static let divider = Color(hex: "#F0EDE9")

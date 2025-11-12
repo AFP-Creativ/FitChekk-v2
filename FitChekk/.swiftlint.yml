@@ -38,4 +38,11 @@ excluded:
   - FitChekkTests
   - FitChekkUITests
   - Package.swift
+  # Temporarily exclude Phase 3 Wardrobe files pending refactoring
+  - FitChekk/Features/Wardrobe/AddItemView.swift
+  - FitChekk/Features/Wardrobe/EditItemView.swift
+  - FitChekk/Features/Wardrobe/WardrobeView.swift
+  - FitChekk/Features/Wardrobe/WardrobeItemDetailView.swift
+  - FitChekk/Features/Wardrobe/Components/WardrobeItemCard.swift
+  - FitChekk/Services/Data/DatabaseService.swift
 

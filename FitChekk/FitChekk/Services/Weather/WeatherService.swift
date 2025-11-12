@@ -12,7 +12,7 @@ struct WeatherCondition: Equatable, Sendable {
     let feelsLike: Int
     let humidity: Int
     let precipitation: Int // Percentage
-    
+
     var conditionIcon: String {
         switch condition.lowercased() {
         case let cond where cond.contains("sun") || cond.contains("clear"):
@@ -42,13 +42,13 @@ struct WeatherForecast: Equatable, Sendable {
 protocol WeatherService: Sendable {
     /// Get current weather conditions for a location
     func getCurrentWeather(location: CLLocation) async throws -> WeatherCondition
-    
+
     /// Get weather forecast for multiple days
     func getForecast(location: CLLocation, days: Int) async throws -> WeatherForecast
-    
+
     /// Request location permission from user
     func requestLocationPermission() async throws -> Bool
-    
+
     /// Get the user's current location
     func getCurrentLocation() async throws -> CLLocation
 }
@@ -74,17 +74,17 @@ final class LiveWeatherService: WeatherService {
         // TODO: Implement WeatherKit integration in Phase 7
         throw WeatherError.notImplemented
     }
-    
+
     func getForecast(location: CLLocation, days: Int) async throws -> WeatherForecast {
         // TODO: Implement WeatherKit forecast
         throw WeatherError.notImplemented
     }
-    
+
     func requestLocationPermission() async throws -> Bool {
         // TODO: Implement CLLocationManager authorization
         false
     }
-    
+
     func getCurrentLocation() async throws -> CLLocation {
         // TODO: Implement location fetching with CLLocationManager
         throw WeatherError.notImplemented
@@ -100,15 +100,15 @@ final class MockWeatherService: WeatherService, @unchecked Sendable {
     var shouldThrowError = false
     var errorToThrow: WeatherError = .networkError
     var hasLocationPermission = true
-    
+
     func getCurrentWeather(location: CLLocation) async throws -> WeatherCondition {
         try await Task.sleep(nanoseconds: 150_000_000) // 0.15s delay
         if shouldThrowError { throw errorToThrow }
-        
+
         if let weather = mockWeather {
             return weather
         }
-        
+
         // Return realistic mock data
         return WeatherCondition(
             date: Date(),
@@ -120,17 +120,17 @@ final class MockWeatherService: WeatherService, @unchecked Sendable {
             precipitation: 10
         )
     }
-    
+
     func getForecast(location: CLLocation, days: Int) async throws -> WeatherForecast {
         try await Task.sleep(nanoseconds: 200_000_000) // 0.2s delay
         if shouldThrowError { throw errorToThrow }
-        
+
         let current = try await getCurrentWeather(location: location)
-        
+
         if let forecast = mockForecast {
             return WeatherForecast(current: current, daily: forecast)
         }
-        
+
         // Generate mock forecast
         var daily: [WeatherCondition] = []
         for day in 0..<days {
@@ -146,24 +146,24 @@ final class MockWeatherService: WeatherService, @unchecked Sendable {
             )
             daily.append(condition)
         }
-        
+
         return WeatherForecast(current: current, daily: daily)
     }
-    
+
     func requestLocationPermission() async throws -> Bool {
         try await Task.sleep(nanoseconds: 100_000_000) // 0.1s delay
         if shouldThrowError { throw errorToThrow }
         return hasLocationPermission
     }
-    
+
     func getCurrentLocation() async throws -> CLLocation {
         try await Task.sleep(nanoseconds: 100_000_000) // 0.1s delay
         if shouldThrowError { throw errorToThrow }
-        
+
         if let location = mockLocation {
             return location
         }
-        
+
         // Return mock location (San Francisco)
         return CLLocation(latitude: 37.7749, longitude: -122.4194)
     }

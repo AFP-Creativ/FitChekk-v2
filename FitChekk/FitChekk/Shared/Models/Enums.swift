@@ -8,7 +8,7 @@ enum ItemCategory: String, Codable, CaseIterable {
     case outerwear
     case shoes
     case accessories
-    
+
     var displayName: String {
         switch self {
         case .tops: return "Tops"
@@ -19,7 +19,7 @@ enum ItemCategory: String, Codable, CaseIterable {
         case .accessories: return "Accessories"
         }
     }
-    
+
     var icon: String {
         switch self {
         case .tops: return "tshirt"
@@ -33,30 +33,30 @@ enum ItemCategory: String, Codable, CaseIterable {
 }
 
 // MARK: - Item Sub-Category
-enum ItemSubCategory: String, Codable {
+enum ItemSubCategory: String, Codable, CaseIterable {
     // Tops
     case graphicTees, basicTees, dressedUpTops, sweaters, bodysuits
     case activewear, buttonDowns, tanks, croppedTops
-    
+
     // Bottoms
     case jeans, shorts, skirts, leggings, dressPants, casualPants
-    
+
     // Dresses
     case dayDresses, partyDresses, rompers, maxiDresses, casualDresses
-    
+
     // Outerwear
     case jackets, coats, blazers, rainJackets, vests
-    
+
     // Shoes
     case heels, flats, sneakers, boots, sandals
-    
+
     // Accessories
     case hats, bags, belts, sunglasses, scarves, jewelry
-    
+
     var displayName: String {
         rawValue.camelCaseToWords()
     }
-    
+
     var category: ItemCategory {
         // Map each subcategory to its parent category
         switch self {
@@ -84,7 +84,7 @@ enum FormalityLevel: Int, Codable, CaseIterable {
     case smartCasual = 3
     case business = 4
     case formal = 5
-    
+
     var displayName: String {
         switch self {
         case .veryCasual: return "Super casual"
@@ -102,9 +102,9 @@ enum Season: String, Codable, CaseIterable {
     case summer
     case fall
     case winter
-    
+
     var displayName: String { rawValue.capitalized }
-    
+
     var icon: String {
         switch self {
         case .spring: return "leaf"
@@ -119,7 +119,7 @@ enum Season: String, Codable, CaseIterable {
 enum SubscriptionTier: String, Codable, CaseIterable {
     case free
     case premium
-    
+
     var displayName: String { rawValue.capitalized }
 }
 
@@ -129,7 +129,7 @@ enum SubscriptionStatus: String, Codable, CaseIterable {
     case canceled
     case expired
     case trial
-    
+
     var displayName: String { rawValue.capitalized }
 }
 

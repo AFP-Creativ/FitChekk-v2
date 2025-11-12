@@ -11,11 +11,11 @@ import SwiftUI
 struct SignInView: View {
     @Bindable var store: StoreOf<AuthenticationFeature>
     @FocusState private var focusedField: Field?
-    
+
     enum Field {
         case email, password
     }
-    
+
     var body: some View {
         ScrollView {
             VStack(spacing: Spacing.xl) {
@@ -24,13 +24,13 @@ struct SignInView: View {
                     Text("Welcome back")
                         .font(.displayMedium)
                         .foregroundStyle(Color.textPrimary)
-                    
+
                     Text("Sign in to continue")
                         .font(.bodyLarge)
                         .foregroundStyle(Color.textSecondary)
                 }
                 .padding(.top, Spacing.xxl)
-                
+
                 // Form Fields
                 VStack(spacing: Spacing.lg) {
                     // Email Field
@@ -38,7 +38,7 @@ struct SignInView: View {
                         Text("Email")
                             .font(.footnote.weight(.medium))
                             .foregroundStyle(Color.textSecondary)
-                        
+
                         TextField("your@email.com", text: $store.email.sending(\.emailChanged))
                             .textFieldStyle(FitChekkTextFieldStyle())
                             .textContentType(.emailAddress)
@@ -49,20 +49,20 @@ struct SignInView: View {
                             .onSubmit {
                                 focusedField = .password
                             }
-                        
+
                         if let error = store.emailError {
                             Text(error)
                                 .font(.footnote)
                                 .foregroundStyle(Color.error)
                         }
                     }
-                    
+
                     // Password Field
                     VStack(alignment: .leading, spacing: Spacing.xs) {
                         Text("Password")
                             .font(.footnote.weight(.medium))
                             .foregroundStyle(Color.textSecondary)
-                        
+
                         SecureField("••••••••", text: $store.password.sending(\.passwordChanged))
                             .textFieldStyle(FitChekkTextFieldStyle())
                             .textContentType(.password)
@@ -71,14 +71,14 @@ struct SignInView: View {
                             .onSubmit {
                                 store.send(.signInTapped)
                             }
-                        
+
                         if let error = store.passwordError {
                             Text(error)
                                 .font(.footnote)
                                 .foregroundStyle(Color.error)
                         }
                     }
-                    
+
                     // Forgot Password
                     HStack {
                         Spacer()
@@ -92,14 +92,14 @@ struct SignInView: View {
                     }
                 }
                 .padding(.top, Spacing.md)
-                
+
                 // Error Message
                 if let error = store.errorMessage {
                     ErrorBanner(message: error) {
                         store.send(.clearError)
                     }
                 }
-                
+
                 // Sign In Button
                 PrimaryButton(
                     title: "Sign In",
@@ -110,26 +110,26 @@ struct SignInView: View {
                     isDisabled: !store.canSignIn
                 )
                 .padding(.top, Spacing.md)
-                
+
                 // Divider
                 HStack(spacing: Spacing.md) {
                     Rectangle()
                         .fill(Color.borderDefault)
                         .frame(height: 1)
-                    
+
                     Text("or")
                         .font(.footnote)
                         .foregroundStyle(Color.textTertiary)
-                    
+
                     Rectangle()
                         .fill(Color.borderDefault)
                         .frame(height: 1)
                 }
                 .padding(.vertical, Spacing.md)
-                
+
                 // Social Auth Buttons
                 SocialAuthButtons(store: store)
-                
+
                 // Sign Up Link
                 Button {
                     store.send(.showSignUp)

@@ -27,6 +27,9 @@ extension Font {
 
     /// 16pt Regular - Secondary content
     static let bodyMedium: Font = .system(size: 16, weight: .regular, design: .default)
+    
+    /// 15pt Regular - Regular body text
+    static let bodyRegular: Font = .system(size: 15, weight: .regular, design: .default)
 
     // MARK: - Supporting
 
@@ -46,9 +49,18 @@ extension Font {
 
     /// 15pt Semibold - Emphasized labels
     static let headlineMedium: Font = .system(size: 15, weight: .semibold, design: .default)
+    
+    /// 13pt Semibold - Small headlines
+    static let headlineSmall: Font = .system(size: 13, weight: .semibold, design: .default)
 
     /// 13pt Regular - Footnotes, disclaimers
     static let footnote: Font = .system(size: 13, weight: .regular, design: .default)
+    
+    /// 12pt Regular - Captions
+    static let captionRegular: Font = .system(size: 12, weight: .regular, design: .default)
+    
+    /// 11pt Medium - Medium captions
+    static let captionMedium: Font = .system(size: 11, weight: .medium, design: .default)
 }
 
 // MARK: - Text Styles (Convenience)

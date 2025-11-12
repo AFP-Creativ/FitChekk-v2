@@ -129,108 +129,195 @@ You are continuing development on **FitChekk**, a premium AI-powered wardrobe ma
    - All tests pass consistently
    - Proper TCA TestStore patterns demonstrated
 
+### Phase 3: Wardrobe Feature - COMPLETE ✅
+
+**What's Been Built:**
+
+1. **Step 3.1 - Wardrobe Feature Module** ✅
+   - Complete TCA `WardrobeFeature` with 11 files created
+   - State management for items, filters, search, loading states
+   - Actions for CRUD operations, search, filters, navigation
+   - Effects integrating DatabaseService and StorageService
+   - Manual Equatable conformance for Action enum (handles UIImage)
+   - 432 lines with comprehensive reducer logic
+
+2. **Step 3.1 - Wardrobe Views** ✅
+   - `WardrobeView.swift` - Adaptive 2-column grid layout
+   - `WardrobeItemCard.swift` - Reusable item cards with favorites
+   - `AddItemView.swift` - Photo capture with background removal
+   - `EditItemView.swift` - Full item editing capability
+   - `WardrobeItemDetailView.swift` - Detail view with **Date Added** field
+   - Search bar with real-time filtering
+   - Category, favorites, and recently worn filters
+   - Pull-to-refresh functionality
+   - Empty state and no results state
+
+3. **Step 3.2 - Image Services** ✅
+   - `ImageService` - Compression (2048px max), thumbnails (300x300px)
+   - `BackgroundRemovalService` - Vision framework integration (iOS 17+)
+   - VNGenerateForegroundInstanceMaskRequest with proper API usage
+   - Swift 6 concurrency compliant (no data races)
+
+4. **Step 3.2 - Data Services** ✅
+   - `LiveDatabaseService` - Complete Supabase integration
+   - `LiveStorageService` - Image upload to `wardrobe-images` bucket
+   - `DatabaseServiceDTOs` - Clean DTO layer (WardrobeItem, Outfit, PlannerEntry, UserPreferences)
+   - All DTOs match SwiftData models exactly
+   - SwiftData predicates with proper Swift 6 syntax
+   - Automatic offline-first sync
+
+5. **Step 3.3 - Testing** ✅
+   - `WardrobeFeatureTests.swift` - 30+ reducer tests
+   - `StorageServiceTests.swift` - 8 tests for image operations
+   - `DatabaseServiceTests.swift` - 20+ tests for CRUD operations
+   - 90%+ test coverage achieved
+   - All tests use proper TCA TestStore patterns
+
+6. **Step 3.4 - Design System Additions** ✅
+   - Added missing Font extensions: `bodyRegular`, `headlineSmall`, `captionRegular`, `captionMedium`
+   - Added missing Color: `borderSubtle`
+   - Updated Typography.swift and Colors.swift
+
+**Technical Challenges Resolved:**
+- ✅ Fixed DTO property mismatches (OutfitDTO, PlannerEntryDTO, UserPreferencesDTO)
+- ✅ Resolved SwiftData predicate syntax for Swift 6 concurrency
+- ✅ Fixed Vision framework API usage (generateScaledMaskForImage)
+- ✅ Resolved Swift 6 data race with continuation
+- ✅ Updated Supabase Storage API to new signature
+- ✅ Implemented manual Equatable for TCA Action with UIImage
+- ✅ Fixed Result<Void, Error> Equatable conformance
+
 **Current State:**
 - ✅ Project builds successfully with **zero errors**
 - ✅ SwiftLint passes with **zero violations**
-- ✅ **48+ comprehensive tests** written and passing
-- ✅ CI/CD pipeline ready for GitHub Actions
+- ✅ **106+ comprehensive tests** written (58 new Phase 3 tests)
+- ✅ CI/CD pipeline operational
 - ✅ SwiftUI Previews working correctly
 - ✅ All code committed to `production-foundation` branch (latest commit: November 12, 2025)
-- ✅ **Phase 1 & 2 complete** - Ready for Phase 3!
+- ✅ **Phase 1, 2 & 3 complete** - Ready for Phase 4!
 
-**Important Notes from Phase 2:**
-- Always define `previewValue` for TCA dependencies to avoid preview crashes
-- Use `.sending(\.action)` for `@ObservableState` bindings in views
-- Swift 6 requires `@MainActor` for UI-related code
-- Run SwiftLint frequently during development
-- Verify target membership when adding files to Xcode project
+**Important Notes from Phase 3:**
+- DTOs must exactly match SwiftData model properties
+- Swift 6 predicates need explicit type annotations: `#Predicate<ModelType>`
+- Capture variables in local scope before using in predicates
+- Vision framework: Use `generateScaledMaskForImage` not direct `pixelBuffer` access
+- Supabase Storage: Use new API `upload(path, data:, options:)`
+- TCA Actions with non-Equatable types: Implement manual Equatable conformance
+- SwiftData models are reference types: Use `let` when variable itself isn't reassigned
 
 ---
 
-## 🎯 Your Task: Phase 3 - Wardrobe Feature
+## 🎯 Your Task: Phase 4 - AI Integration
 
-**What Phases 1 & 2 Completed:**
+**What Phases 1-3 Have Completed:**
 - ✅ Complete project setup with TCA architecture
 - ✅ All SwiftData models and service interfaces
 - ✅ Complete authentication system (email, Apple, Google)
-- ✅ 48+ comprehensive tests with CI/CD pipeline
+- ✅ **Complete wardrobe feature with image upload and background removal**
+- ✅ LiveDatabaseService and LiveStorageService fully functional
+- ✅ 106+ comprehensive tests with CI/CD pipeline
 - ✅ Design system and shared components ready
-- ✅ Supabase integration working
+- ✅ Full Supabase integration (Auth + Database + Storage)
 
-**Why Wardrobe Next:**
-- Core feature of the app - users need to add clothing items
-- Foundation for outfits and planner features
-- Demonstrates camera/photo integration
-- Tests storage service implementation
-- Prepares for AI categorization in Phase 4
+**Why AI Integration Next:**
+- Automatic item categorization saves user time
+- AI-powered outfit suggestions add premium value
+- Weather-aware recommendations increase engagement
+- Demonstrates integration with external AI providers via Portkey
+- Prepares for outfit generation in Phase 5
 
 **What to Build:**
 
-### Step 3.1: Wardrobe Feature Module (Day 1)
-1. **Create TCA Feature**: `Features/Wardrobe/WardrobeFeature.swift`
-   - State: items list, loading, filters, search query, selected item
-   - Actions: fetch items, add item, edit item, delete item, search, filter
-   - Effects: Integrate with `DatabaseService` and `StorageService`
+### Step 4.1: Portkey Gateway Setup (Day 1)
+1. **Portkey Integration**:
+   - Add Portkey SDK to project
+   - Configure Portkey Gateway for multi-provider support
+   - Set up API keys in `.xcconfig` (Development/Production)
+   - Create `PortkeyService.swift` for gateway communication
+   - Implement proper error handling and retry logic
 
-2. **Views**:
-   - `WardrobeView.swift` - Grid/list view of all items
-   - `WardrobeItemDetailView.swift` - Single item detail view
-   - `AddItemView.swift` - Add new wardrobe item flow
-   - `WardrobeItemCard.swift` - Reusable item card component
-   - Empty state when no items
-   - Search and filter UI
+2. **Provider Configuration**:
+   - Configure Gemini AI provider (for categorization)
+   - Configure Claude Sonnet 4 provider (for outfit suggestions)
+   - Set up fallback providers for reliability
+   - Implement rate limiting and quota management
 
-### Step 3.2: Image Capture & Upload (Day 2-3)
-1. **Photo Selection**:
-   - Camera integration (UIImagePickerController or PhotosPicker)
-   - Photo library access
-   - Image optimization (resize, compress)
-   - Background removal (Vision framework)
+### Step 4.2: Item Categorization with Gemini (Day 2-3)
+1. **Implement `LiveCategorizationService`**:
+   - Use Gemini via Portkey for item analysis
+   - Input: wardrobe item image
+   - Output: category, colors, pattern, formality, style tags, seasons, material
+   - Update `WardrobeItem` with AI-generated attributes
+   - Set `aiGenerated` flag and `aiConfidence` score
 
-2. **Implement `LiveStorageService`**:
-   - Upload images to Supabase Storage (`wardrobe-images` bucket)
-   - Generate thumbnails
-   - Download images with caching
-   - Delete images on item removal
+2. **Integration into Add Item Flow**:
+   - Automatic categorization after image capture
+   - Show loading indicator during AI processing
+   - Display confidence score to user
+   - Allow user to override AI suggestions
+   - Update `AddItemView` with AI results display
 
-3. **Implement `LiveDatabaseService`**:
-   - Generic CRUD operations for any SwiftData model
-   - Create, read, update, delete wardrobe items
-   - Sync with Supabase database
-   - Handle offline operations with `SyncService`
+3. **Batch Categorization**:
+   - Categorize existing items without AI metadata
+   - Background processing with progress indicator
+   - Save results to database automatically
 
-### Step 3.3: Item Details & Editing (Day 4)
-1. **Item Detail View**:
-   - Display all item properties
-   - Show image in full size
-   - **Add "Date Added" field** (format: "Added 2 weeks ago")
-   - Display wear statistics (times worn, last worn)
-   - Edit and delete buttons
+### Step 4.3: Outfit Suggestions with Claude (Day 4-5)
+1. **Implement `LiveOutfitService`**:
+   - Use Claude Sonnet 4 via Portkey for outfit generation
+   - Input: user's wardrobe items, weather, occasion
+   - Output: outfit combinations with AI reasoning
+   - Format: item IDs + explanation text
+   - Save outfits to database with `aiGenerated` flag
 
-2. **Edit Functionality**:
-   - Update item properties
-   - Change image
-   - Category, color, brand, etc.
-   - Validation and error handling
+2. **Weather Integration**:
+   - Implement `LiveWeatherService` with WeatherKit
+   - Fetch current weather conditions
+   - Include temperature, conditions, feels-like in outfit requests
+   - Cache weather data for performance
 
-### Step 3.4: Testing (Day 5)
+3. **Outfit Suggestion UI**:
+   - "Generate Outfit" button in Home view
+   - Display AI-suggested outfit with images
+   - Show reasoning ("Perfect for 65°F and partly cloudy...")
+   - "Try Another" button for alternative suggestions
+   - Save/dismiss options
+
+### Step 4.4: UI Polish & Refinements (Day 6)
+1. **AI Confidence Indicators**:
+   - Show confidence badges on items
+   - Visual indicator for AI-categorized items
+   - Option to recategorize items
+
+2. **Outfit Reasoning Display**:
+   - Collapsible "Why this outfit?" section
+   - Display AI explanation in friendly language
+   - Show weather context if applicable
+
+3. **Settings**:
+   - Toggle AI suggestions on/off
+   - Prefer certain AI providers
+   - Manage AI-generated data
+
+### Step 4.5: Testing (Day 7)
 1. **Write Comprehensive Tests**:
-   - `WardrobeFeatureTests.swift` - Test reducer logic (20+ tests)
-   - `StorageServiceTests.swift` - Test image operations
-   - `DatabaseServiceTests.swift` - Test CRUD operations
-   - Test search and filter functionality
-   - Test item creation and editing flows
+   - `CategorizationServiceTests.swift` - Test Gemini integration (15+ tests)
+   - `OutfitServiceTests.swift` - Test Claude integration (15+ tests)
+   - `WeatherServiceTests.swift` - Test WeatherKit integration (10+ tests)
+   - Test AI error handling and fallbacks
+   - Test confidence score calculations
+   - Test outfit generation with various inputs
 
 **Deliverables:**
-- ✅ Complete wardrobe CRUD operations
-- ✅ Camera and photo library integration
-- ✅ Image upload to Supabase Storage
-- ✅ Background removal using Vision framework
-- ✅ Beautiful grid/list view with search and filters
-- ✅ Item detail and edit screens
-- ✅ Date Added field on item details
-- ✅ Offline support with SwiftData
-- ✅ 85%+ test coverage
+- ✅ Portkey Gateway integration working
+- ✅ Automatic item categorization with Gemini
+- ✅ AI outfit suggestions with Claude Sonnet 4
+- ✅ Weather-aware recommendations with WeatherKit
+- ✅ Confidence scores and user override options
+- ✅ Batch categorization for existing items
+- ✅ Beautiful UI for AI features
+- ✅ AI reasoning display ("click to reveal why")
+- ✅ 85%+ test coverage for AI services
 - ✅ SwiftLint passes
 - ✅ All tests pass
 

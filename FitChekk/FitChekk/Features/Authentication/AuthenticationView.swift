@@ -10,7 +10,7 @@ import SwiftUI
 
 struct AuthenticationView: View {
     let store: StoreOf<AuthenticationFeature>
-    
+
     var body: some View {
         NavigationStack {
             Group {

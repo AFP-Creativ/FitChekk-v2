@@ -7,10 +7,10 @@ final class UserPreferences: @unchecked Sendable {
     @Attribute(.unique) var id: UUID
     var createdAt: Date
     var updatedAt: Date
-    
+
     // MARK: - Foreign Key
     var userId: UUID
-    
+
     // MARK: - Style Preferences
     var stylePreferences: [String]
     var favoriteColors: [String]
@@ -18,18 +18,18 @@ final class UserPreferences: @unchecked Sendable {
     var activityLevel: String?
     var occasions: [String]
     var climateType: String?
-    
+
     // MARK: - App Settings
     var measurementSystem: String  // 'imperial' or 'metric'
     var enableNotifications: Bool
     var notificationTime: Date?  // Store as Date, extract time component when needed
-    
+
     // MARK: - Onboarding
     var onboardingCompleted: Bool
-    
+
     // MARK: - Sync
     var needsSync: Bool
-    
+
     // MARK: - Init
     init(
         id: UUID = UUID(),
@@ -62,20 +62,20 @@ final class UserPreferences: @unchecked Sendable {
         self.onboardingCompleted = onboardingCompleted
         self.needsSync = needsSync
     }
-    
+
     // MARK: - Computed Properties
     var isMetric: Bool {
         measurementSystem == "metric"
     }
-    
+
     var hasStylePreferences: Bool {
         !stylePreferences.isEmpty || !favoriteColors.isEmpty
     }
-    
+
     var displayLifestyleType: String {
         lifestyleType?.capitalized ?? "Not set"
     }
-    
+
     var displayActivityLevel: String {
         activityLevel?.capitalized ?? "Not set"
     }

@@ -7,25 +7,25 @@ final class PlannerEntry: @unchecked Sendable {
     @Attribute(.unique) var id: UUID
     var createdAt: Date
     var updatedAt: Date
-    
+
     // MARK: - Foreign Keys
     var userId: UUID
     var outfitId: UUID?  // Optional reference to Outfit
-    
+
     // MARK: - Basic Info
     var date: Date  // The planned date (unique per user in database)
-    
+
     // MARK: - Status
     var isWorn: Bool
     var markedWornAt: Date?
-    
+
     // MARK: - Cached Weather
     var weatherTempHigh: Int?
     var weatherTempLow: Int?
     var weatherCondition: String?
     var weatherFeelsLike: Int?
     var weatherHumidity: Int?
-    
+
     // MARK: - Init
     init(
         id: UUID = UUID(),
@@ -54,49 +54,49 @@ final class PlannerEntry: @unchecked Sendable {
         self.weatherFeelsLike = weatherFeelsLike
         self.weatherHumidity = weatherHumidity
     }
-    
+
     // MARK: - Computed Properties
     var hasOutfit: Bool {
         outfitId != nil
     }
-    
+
     var hasWeatherData: Bool {
         weatherTempHigh != nil || weatherTempLow != nil || weatherCondition != nil
     }
-    
+
     var weatherSummary: String? {
         guard hasWeatherData else { return nil }
-        
+
         var parts: [String] = []
         if let high = weatherTempHigh, let low = weatherTempLow {
             parts.append("\(high)°/\(low)°")
         } else if let high = weatherTempHigh {
             parts.append("\(high)°")
         }
-        
+
         if let condition = weatherCondition {
             parts.append(condition)
         }
-        
+
         if let feelsLike = weatherFeelsLike {
             parts.append("Feels like \(feelsLike)°")
         }
-        
+
         return parts.isEmpty ? nil : parts.joined(separator: ", ")
     }
-    
+
     var isToday: Bool {
         Calendar.current.isDateInToday(date)
     }
-    
+
     var isFuture: Bool {
         Calendar.current.compare(date, to: Date(), toGranularity: .day) == .orderedDescending
     }
-    
+
     var isPast: Bool {
         Calendar.current.compare(date, to: Date(), toGranularity: .day) == .orderedAscending
     }
-    
+
     var displayDate: String {
         let formatter = DateFormatter()
         if isToday {
@@ -110,7 +110,7 @@ final class PlannerEntry: @unchecked Sendable {
             return formatter.string(from: date)
         }
     }
-    
+
     var dayOfWeek: String {
         let formatter = DateFormatter()
         formatter.dateFormat = "EEEE"  // Full day name

@@ -19,7 +19,7 @@ struct UserDTO: Codable {
     let subscriptionTier: String
     let subscriptionStatus: String?
     let trialEndsAt: Date?
-    
+
     enum CodingKeys: String, CodingKey {
         case id
         case createdAt = "created_at"
@@ -30,7 +30,7 @@ struct UserDTO: Codable {
         case subscriptionStatus = "subscription_status"
         case trialEndsAt = "trial_ends_at"
     }
-    
+
     func toUser() -> User {
         User(
             id: id,
@@ -40,19 +40,5 @@ struct UserDTO: Codable {
             subscriptionStatus: subscriptionStatus.flatMap { SubscriptionStatus(rawValue: $0) },
             trialEndsAt: trialEndsAt
         )
-    }
-}
-
-struct UserPreferencesDTO: Codable {
-    let id: UUID
-    let userId: UUID
-    let createdAt: Date
-    let updatedAt: Date
-    
-    enum CodingKeys: String, CodingKey {
-        case id
-        case userId = "user_id"
-        case createdAt = "created_at"
-        case updatedAt = "updated_at"
     }
 }

@@ -10,23 +10,23 @@ import SwiftUI
 
 struct WelcomeView: View {
     let store: StoreOf<AuthenticationFeature>
-    
+
     var body: some View {
         VStack(spacing: 0) {
             Spacer()
-            
+
             // Branding Section
             VStack(spacing: Spacing.md) {
                 // Logo or App Icon
                 Image(systemName: "tshirt.fill")
                     .font(.system(size: 80))
                     .foregroundStyle(Color.accentPrimary)
-                
+
                 // App Name
                 Text("FitChekk")
                     .font(.displayLarge)
                     .foregroundStyle(Color.textPrimary)
-                
+
                 // Tagline
                 Text("Your personal wardrobe stylist")
                     .font(.bodyLarge)
@@ -34,10 +34,10 @@ struct WelcomeView: View {
                     .multilineTextAlignment(.center)
             }
             .padding(.horizontal, Spacing.xl)
-            
+
             Spacer()
             Spacer()
-            
+
             // CTA Section
             VStack(spacing: Spacing.md) {
                 // Primary CTA
@@ -47,7 +47,7 @@ struct WelcomeView: View {
                         store.send(.showSignUp)
                     }
                 )
-                
+
                 // Secondary CTA
                 Button {
                     store.send(.showSignIn)

@@ -34,10 +34,10 @@ protocol OutfitService: Sendable {
         preferences: UserPreferences?,
         occasion: String?
     ) async throws -> [OutfitSuggestion]
-    
+
     /// Get detailed reasoning for why an outfit works
     func explainOutfit(outfit: Outfit) async throws -> String
-    
+
     /// Record user feedback on outfit suggestions
     func rateOutfit(outfit: Outfit, rating: Int) async throws
 }
@@ -72,12 +72,12 @@ final class LiveOutfitService: OutfitService {
         // 4. Return structured suggestions with reasoning
         []
     }
-    
+
     func explainOutfit(outfit: Outfit) async throws -> String {
         // TODO: Implement Claude explanation for existing outfit
         throw OutfitError.notImplemented
     }
-    
+
     func rateOutfit(outfit: Outfit, rating: Int) async throws {
         // TODO: Store rating for future ML improvements
     }
@@ -92,7 +92,7 @@ final class MockOutfitService: OutfitService, @unchecked Sendable {
     var errorToThrow: OutfitError = .networkError
     var processingDelay: UInt64 = 2_000_000_000 // 2s default to simulate AI processing
     var recordedRatings: [(Outfit, Int)] = []
-    
+
     func suggestOutfits(
         wardrobe: [WardrobeItem],
         weather: WeatherCondition?,
@@ -101,26 +101,26 @@ final class MockOutfitService: OutfitService, @unchecked Sendable {
     ) async throws -> [OutfitSuggestion] {
         try await Task.sleep(nanoseconds: processingDelay)
         if shouldThrowError { throw errorToThrow }
-        
+
         if let suggestions = mockSuggestions {
             return suggestions
         }
-        
+
         // Generate realistic mock suggestions
         guard !wardrobe.isEmpty else {
             return []
         }
-        
+
         let numberOfSuggestions = min(3, wardrobe.count / 2)
         var suggestions: [OutfitSuggestion] = []
-        
+
         for index in 0..<numberOfSuggestions {
             let itemCount = min(Int.random(in: 2...4), wardrobe.count)
             let selectedItems = Array(wardrobe.shuffled().prefix(itemCount))
-            
+
             let occasions = ["casual", "work", "date night", "brunch", "evening out"]
             let selectedOccasion = occasion ?? occasions.randomElement() ?? "casual"
-            
+
             let suggestion = OutfitSuggestion(
                 id: UUID(),
                 name: "Outfit Idea \(index + 1)",
@@ -132,49 +132,49 @@ final class MockOutfitService: OutfitService, @unchecked Sendable {
             )
             suggestions.append(suggestion)
         }
-        
+
         return suggestions
     }
-    
+
     func explainOutfit(outfit: Outfit) async throws -> String {
         try await Task.sleep(nanoseconds: processingDelay / 2)
         if shouldThrowError { throw errorToThrow }
-        
+
         if let explanation = mockExplanation {
             return explanation
         }
-        
+
         return """
         This outfit works well because the pieces complement each other nicely. \
         The color combination is balanced and the formality levels match perfectly. \
         It's a great choice for \(outfit.occasion ?? "any occasion")!
         """
     }
-    
+
     func rateOutfit(outfit: Outfit, rating: Int) async throws {
         try await Task.sleep(nanoseconds: 100_000_000) // 0.1s delay
         if shouldThrowError { throw errorToThrow }
         recordedRatings.append((outfit, rating))
     }
-    
+
     // MARK: - Helpers
-    
+
     private func generateMockReasoning(items: [WardrobeItem], weather: WeatherCondition?, occasion: String) -> String {
         var reasons: [String] = []
-        
+
         reasons.append("This combo brings together \(items.count) pieces that work great together")
-        
+
         if let weather = weather {
             reasons.append("Perfect for \(weather.tempHigh)° weather")
         }
-        
+
         let colors = items.flatMap { $0.colors }
         if !colors.isEmpty {
             reasons.append("Love how the \(colors.prefix(2).joined(separator: " and ")) coordinate")
         }
-        
+
         reasons.append("Great for \(occasion)")
-        
+
         return reasons.joined(separator: ". ") + "."
     }
 }

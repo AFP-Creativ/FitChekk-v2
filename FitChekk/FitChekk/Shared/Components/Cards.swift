@@ -63,7 +63,7 @@ struct ItemCard: View {
                         .fill(Color.backgroundSecondary)
                         .aspectRatio(1, contentMode: .fit)
 
-                    if let imageURL = imageURL {
+                    if imageURL != nil {
                         // AsyncImage will go here when we have real images
                         Image(systemName: "photo")
                             .font(.system(size: 40))

@@ -90,7 +90,7 @@ struct AppFeature {
     }
 
     // MARK: - Dependencies
-    
+
     @Dependency(\.authService) var authService
 
     // MARK: - Reducer
@@ -117,18 +117,18 @@ struct AppFeature {
                 state.currentUser = user
                 state.currentUserId = user?.id
                 state.isAuthenticated = user != nil
-                
+
                 // Present authentication if not authenticated
                 if user == nil {
                     state.authentication = AuthenticationFeature.State()
                 }
-                
+
                 return .none
-                
+
             case .presentAuthentication:
                 state.authentication = AuthenticationFeature.State()
                 return .none
-                
+
             case .authentication(.presented(.dismissAuth)):
                 // Auth flow dismissed - check status again
                 return .send(.checkAuthStatus)

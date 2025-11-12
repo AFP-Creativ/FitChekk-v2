@@ -10,27 +10,27 @@ import Foundation
 
 @MainActor
 final class AppleSignInManager: NSObject,
-    ASAuthorizationControllerDelegate,
-    ASAuthorizationControllerPresentationContextProviding {
+                                ASAuthorizationControllerDelegate,
+                                ASAuthorizationControllerPresentationContextProviding {
     private var continuation: CheckedContinuation<ASAuthorizationAppleIDCredential, Error>?
-    
+
     func signIn() async throws -> ASAuthorizationAppleIDCredential {
         return try await withCheckedThrowingContinuation { continuation in
             self.continuation = continuation
-            
+
             let appleIDProvider = ASAuthorizationAppleIDProvider()
             let request = appleIDProvider.createRequest()
             request.requestedScopes = [.fullName, .email]
-            
+
             let authorizationController = ASAuthorizationController(authorizationRequests: [request])
             authorizationController.delegate = self
             authorizationController.presentationContextProvider = self
             authorizationController.performRequests()
         }
     }
-    
+
     // MARK: - ASAuthorizationControllerDelegate
-    
+
     func authorizationController(
         controller: ASAuthorizationController,
         didCompleteWithAuthorization authorization: ASAuthorization
@@ -39,11 +39,11 @@ final class AppleSignInManager: NSObject,
             continuation?.resume(throwing: AuthError.unknown)
             return
         }
-        
+
         continuation?.resume(returning: appleIDCredential)
         continuation = nil
     }
-    
+
     func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
         if let authError = error as? ASAuthorizationError {
             switch authError.code {
@@ -59,14 +59,14 @@ final class AppleSignInManager: NSObject,
         }
         continuation = nil
     }
-    
+
     // MARK: - ASAuthorizationControllerPresentationContextProviding
-    
+
     func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
         // Get the first window scene
         let activeScene = UIApplication.shared.connectedScenes
             .first(where: { $0.activationState == .foregroundActive })
-        
+
         guard let scene = activeScene as? UIWindowScene,
               let window = scene.windows.first(where: { $0.isKeyWindow }) else {
             // Fallback to any window

@@ -10,22 +10,22 @@ import AuthenticationServices
 protocol AuthService: Sendable {
     /// Get the currently authenticated user
     func getCurrentUser() async throws -> User?
-    
+
     /// Sign in with email and password
     func signInWithEmail(email: String, password: String) async throws -> User
-    
+
     /// Sign up with email, password, and display name
     func signUpWithEmail(email: String, password: String, displayName: String) async throws -> User
-    
+
     /// Sign in with Apple
     func signInWithApple() async throws -> User
-    
+
     /// Sign in with Google
     func signInWithGoogle() async throws -> User
-    
+
     /// Sign out the current user
     func signOut() async throws
-    
+
     /// Send password reset email
     func resetPassword(email: String) async throws
 }
@@ -50,7 +50,7 @@ extension DependencyValues {
 final class LiveAuthService: AuthService, @unchecked Sendable {
     private let client: SupabaseClient
     private var modelContext: ModelContext?
-    
+
     init() {
         // Read Supabase configuration from Info.plist (populated from xcconfig)
         guard let supabaseURL = Bundle.main.infoDictionary?["SUPABASE_URL"] as? String,
@@ -58,26 +58,26 @@ final class LiveAuthService: AuthService, @unchecked Sendable {
               let url = URL(string: supabaseURL) else {
             fatalError("Supabase configuration missing. Check Development.xcconfig and Info.plist.")
         }
-        
+
         self.client = SupabaseClient(
             supabaseURL: url,
             supabaseKey: supabaseKey
         )
     }
-    
+
     /// Configure ModelContext for SwiftData operations
     func configure(modelContext: ModelContext) {
         self.modelContext = modelContext
     }
-    
+
     func getCurrentUser() async throws -> User? {
         do {
             // Check if we have an active session
             let session = try await client.auth.session
-            
+
             // Fetch user data from Supabase
             let authUser = session.user
-            
+
             // Try to fetch from database
             let response: [UserDTO] = try await client
                 .from("users")
@@ -85,7 +85,7 @@ final class LiveAuthService: AuthService, @unchecked Sendable {
                 .eq("id", value: authUser.id.uuidString)
                 .execute()
                 .value
-            
+
             guard let userDTO = response.first else {
                 // User exists in auth but not in database - create profile
                 return try await createUserProfile(
@@ -94,15 +94,15 @@ final class LiveAuthService: AuthService, @unchecked Sendable {
                     displayName: authUser.userMetadata["display_name"]?.stringValue
                 )
             }
-            
+
             // Convert DTO to User model
             let user = userDTO.toUser()
-            
+
             // Save to SwiftData if available
             if let context = modelContext {
                 try saveUserToSwiftData(user, context: context)
             }
-            
+
             return user
         } catch let error as AuthError {
             throw error
@@ -110,16 +110,16 @@ final class LiveAuthService: AuthService, @unchecked Sendable {
             throw AuthError.networkError
         }
     }
-    
+
     func signInWithEmail(email: String, password: String) async throws -> User {
         do {
             let session = try await client.auth.signIn(
                 email: email,
                 password: password
             )
-            
+
             let authUser = session.user
-            
+
             // Fetch user profile from database
             let response: [UserDTO] = try await client
                 .from("users")
@@ -127,18 +127,18 @@ final class LiveAuthService: AuthService, @unchecked Sendable {
                 .eq("id", value: authUser.id.uuidString)
                 .execute()
                 .value
-            
+
             guard let userDTO = response.first else {
                 throw AuthError.userNotFound
             }
-            
+
             let user = userDTO.toUser()
-            
+
             // Save to SwiftData
             if let context = modelContext {
                 try saveUserToSwiftData(user, context: context)
             }
-            
+
             return user
         } catch let error as AuthError {
             throw error
@@ -152,7 +152,7 @@ final class LiveAuthService: AuthService, @unchecked Sendable {
             throw AuthError.networkError
         }
     }
-    
+
     func signUpWithEmail(email: String, password: String, displayName: String) async throws -> User {
         do {
             // Sign up with Supabase Auth
@@ -161,16 +161,16 @@ final class LiveAuthService: AuthService, @unchecked Sendable {
                 password: password,
                 data: ["display_name": .string(displayName)]
             )
-            
+
             let authUser = session.user
-            
+
             // Create user profile in database
             let user = try await createUserProfile(
                 authUserId: authUser.id,
                 email: email,
                 displayName: displayName
             )
-            
+
             return user
         } catch let error as AuthError {
             throw error
@@ -186,21 +186,21 @@ final class LiveAuthService: AuthService, @unchecked Sendable {
             throw AuthError.networkError
         }
     }
-    
+
     func signInWithApple() async throws -> User {
         do {
             // Create Apple Sign-In manager on main actor
             let manager = await MainActor.run { AppleSignInManager() }
-            
+
             // Get Apple credential
             let credential = try await manager.signIn()
-            
+
             // Extract identity token
             guard let identityTokenData = credential.identityToken,
                   let identityToken = String(data: identityTokenData, encoding: .utf8) else {
                 throw AuthError.unknown
             }
-            
+
             // Sign in with Supabase using Apple token
             let session = try await client.auth.signInWithIdToken(
                 credentials: .init(
@@ -208,9 +208,9 @@ final class LiveAuthService: AuthService, @unchecked Sendable {
                     idToken: identityToken
                 )
             )
-            
+
             let authUser = session.user
-            
+
             // Check if user profile exists
             let response: [UserDTO] = try await client
                 .from("users")
@@ -218,16 +218,16 @@ final class LiveAuthService: AuthService, @unchecked Sendable {
                 .eq("id", value: authUser.id.uuidString)
                 .execute()
                 .value
-            
+
             if let userDTO = response.first {
                 // Existing user
                 let user = userDTO.toUser()
-                
+
                 // Save to SwiftData
                 if let context = modelContext {
                     try saveUserToSwiftData(user, context: context)
                 }
-                
+
                 return user
             } else {
                 // New user - create profile
@@ -240,7 +240,7 @@ final class LiveAuthService: AuthService, @unchecked Sendable {
                     }
                     return nil
                 }()
-                
+
                 return try await createUserProfile(
                     authUserId: authUser.id,
                     email: authUser.email ?? credential.email ?? "",
@@ -253,7 +253,7 @@ final class LiveAuthService: AuthService, @unchecked Sendable {
             throw AuthError.unknown
         }
     }
-    
+
     func signInWithGoogle() async throws -> User {
         // TODO: Implement Google Sign-In when GoogleSignIn SDK is added
         // For now, this is not implemented to avoid build errors
@@ -265,11 +265,11 @@ final class LiveAuthService: AuthService, @unchecked Sendable {
         // 5. Implement the full flow here
         throw AuthError.notImplemented
     }
-    
+
     func signOut() async throws {
         do {
             try await client.auth.signOut()
-            
+
             // Clear SwiftData user
             if let context = modelContext {
                 let descriptor = FetchDescriptor<User>()
@@ -283,7 +283,7 @@ final class LiveAuthService: AuthService, @unchecked Sendable {
             throw AuthError.networkError
         }
     }
-    
+
     func resetPassword(email: String) async throws {
         do {
             try await client.auth.resetPasswordForEmail(email)
@@ -291,9 +291,9 @@ final class LiveAuthService: AuthService, @unchecked Sendable {
             throw AuthError.networkError
         }
     }
-    
+
     // MARK: - Helper Methods
-    
+
     private func createUserProfile(
         authUserId: UUID,
         email: String,
@@ -310,7 +310,7 @@ final class LiveAuthService: AuthService, @unchecked Sendable {
             subscriptionStatus: "trial",
             trialEndsAt: Date().addingTimeInterval(7 * 24 * 60 * 60) // 7 days
         )
-        
+
         let _: UserDTO = try await client
             .from("users")
             .insert(userDTO)
@@ -318,30 +318,26 @@ final class LiveAuthService: AuthService, @unchecked Sendable {
             .single()
             .execute()
             .value
-        
+
         // Create default preferences
-        let preferencesDTO = UserPreferencesDTO(
-            id: UUID(),
-            userId: authUserId,
-            createdAt: Date(),
-            updatedAt: Date()
-        )
-        
+        let defaultPreferences = UserPreferences(userId: authUserId)
+        let preferencesDTO = UserPreferencesDTO(from: defaultPreferences)
+
         try await client
             .from("user_preferences")
             .insert(preferencesDTO)
             .execute()
-        
+
         let user = userDTO.toUser()
-        
+
         // Save to SwiftData
         if let context = modelContext {
             try saveUserToSwiftData(user, context: context)
         }
-        
+
         return user
     }
-    
+
     private func saveUserToSwiftData(_ user: User, context: ModelContext) throws {
         // Check if user already exists
         let userId = user.id
@@ -351,12 +347,12 @@ final class LiveAuthService: AuthService, @unchecked Sendable {
             }
         )
         let existingUsers = try context.fetch(descriptor)
-        
+
         // Remove existing users
         for existingUser in existingUsers {
             context.delete(existingUser)
         }
-        
+
         // Insert new user
         context.insert(user)
         try context.save()
@@ -369,17 +365,17 @@ final class MockAuthService: AuthService, @unchecked Sendable {
     var mockUser: User?
     var shouldThrowError = false
     var errorToThrow: AuthError = .invalidCredentials
-    
+
     func getCurrentUser() async throws -> User? {
         try await Task.sleep(nanoseconds: 100_000_000) // 0.1s delay
         if shouldThrowError { throw errorToThrow }
         return mockUser
     }
-    
+
     func signInWithEmail(email: String, password: String) async throws -> User {
         try await Task.sleep(nanoseconds: 200_000_000) // 0.2s delay
         if shouldThrowError { throw errorToThrow }
-        
+
         let user = User(
             id: UUID(),
             email: email,
@@ -390,11 +386,11 @@ final class MockAuthService: AuthService, @unchecked Sendable {
         mockUser = user
         return user
     }
-    
+
     func signUpWithEmail(email: String, password: String, displayName: String) async throws -> User {
         try await Task.sleep(nanoseconds: 200_000_000) // 0.2s delay
         if shouldThrowError { throw errorToThrow }
-        
+
         let user = User(
             id: UUID(),
             email: email,
@@ -406,11 +402,11 @@ final class MockAuthService: AuthService, @unchecked Sendable {
         mockUser = user
         return user
     }
-    
+
     func signInWithApple() async throws -> User {
         try await Task.sleep(nanoseconds: 200_000_000) // 0.2s delay
         if shouldThrowError { throw errorToThrow }
-        
+
         let user = User(
             id: UUID(),
             email: "apple@test.com",
@@ -421,11 +417,11 @@ final class MockAuthService: AuthService, @unchecked Sendable {
         mockUser = user
         return user
     }
-    
+
     func signInWithGoogle() async throws -> User {
         try await Task.sleep(nanoseconds: 200_000_000) // 0.2s delay
         if shouldThrowError { throw errorToThrow }
-        
+
         let user = User(
             id: UUID(),
             email: "google@test.com",
@@ -436,13 +432,13 @@ final class MockAuthService: AuthService, @unchecked Sendable {
         mockUser = user
         return user
     }
-    
+
     func signOut() async throws {
         try await Task.sleep(nanoseconds: 100_000_000) // 0.1s delay
         if shouldThrowError { throw errorToThrow }
         mockUser = nil
     }
-    
+
     func resetPassword(email: String) async throws {
         try await Task.sleep(nanoseconds: 200_000_000) // 0.2s delay
         if shouldThrowError { throw errorToThrow }
