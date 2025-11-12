@@ -7,6 +7,7 @@
 
 import ComposableArchitecture
 import SwiftUI
+import SwiftData
 
 @Reducer
 struct AppFeature {
@@ -17,6 +18,7 @@ struct AppFeature {
         // Authentication
         var isAuthenticated = false
         var currentUserId: UUID?
+        var currentUser: User?
 
         // Navigation
         var selectedTab: Tab = .home
@@ -29,7 +31,7 @@ struct AppFeature {
         // var settings: SettingsFeature.State = .init()
 
         // Authentication flow
-        // @Presents var authentication: AuthenticationFeature.State?
+        @Presents var authentication: AuthenticationFeature.State?
 
         // Loading state
         var isLoading = false
@@ -43,8 +45,9 @@ struct AppFeature {
         case checkAuthStatus
 
         // Authentication
-        case authStatusChecked(UUID?)
-        // case authentication(PresentationAction<AuthenticationFeature.Action>)
+        case authStatusChecked(User?)
+        case authentication(PresentationAction<AuthenticationFeature.Action>)
+        case presentAuthentication
         case signOut
 
         // Navigation
@@ -86,8 +89,9 @@ struct AppFeature {
         }
     }
 
-    // MARK: - Dependencies (will be configured later)
-    // @Dependency(\.authService) var authService
+    // MARK: - Dependencies
+    
+    @Dependency(\.authService) var authService
 
     // MARK: - Reducer
 
@@ -99,28 +103,52 @@ struct AppFeature {
 
             case .checkAuthStatus:
                 state.isLoading = true
-                // TODO: Implement auth check when AuthService is ready
                 return .run { send in
-                    // Simulate auth check for now
-                    try await Task.sleep(for: .seconds(0.5))
-                    await send(.authStatusChecked(nil))
+                    do {
+                        let user = try await authService.getCurrentUser()
+                        await send(.authStatusChecked(user))
+                    } catch {
+                        await send(.authStatusChecked(nil))
+                    }
                 }
 
-            case let .authStatusChecked(userId):
+            case let .authStatusChecked(user):
                 state.isLoading = false
-                state.currentUserId = userId
-                state.isAuthenticated = userId != nil
+                state.currentUser = user
+                state.currentUserId = user?.id
+                state.isAuthenticated = user != nil
+                
+                // Present authentication if not authenticated
+                if user == nil {
+                    state.authentication = AuthenticationFeature.State()
+                }
+                
+                return .none
+                
+            case .presentAuthentication:
+                state.authentication = AuthenticationFeature.State()
+                return .none
+                
+            case .authentication(.presented(.dismissAuth)):
+                // Auth flow dismissed - check status again
+                return .send(.checkAuthStatus)
+
+            case .authentication:
                 return .none
 
             case .signOut:
-                state.isAuthenticated = false
-                state.currentUserId = nil
-                return .none
+                return .run { send in
+                    try await authService.signOut()
+                    await send(.checkAuthStatus)
+                }
 
             case let .tabSelected(tab):
                 state.selectedTab = tab
                 return .none
             }
+        }
+        .ifLet(\.$authentication, action: \.authentication) {
+            AuthenticationFeature()
         }
     }
 }

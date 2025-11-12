@@ -18,9 +18,17 @@ struct AppView: View {
             } else if store.isAuthenticated {
                 mainTabView
             } else {
-                // Show authentication view when ready
-                placeholderAuthView
+                // Loading or waiting for auth presentation
+                LoadingView()
             }
+        }
+        .fullScreenCover(
+            item: $store.scope(
+                state: \.authentication,
+                action: \.authentication
+            )
+        ) { authStore in
+            AuthenticationView(store: authStore)
         }
         .onAppear {
             store.send(.onAppear)
@@ -83,26 +91,6 @@ struct AppView: View {
         .tint(Color.accentPrimary)
     }
 
-    private var placeholderAuthView: some View {
-        VStack(spacing: 20) {
-            Text("🎨 FitChekk")
-                .font(.displayLarge)
-                .foregroundColor(.textPrimary)
-
-            Text("AI-Powered Wardrobe Management")
-                .font(.bodyMedium)
-                .foregroundColor(.textSecondary)
-
-            Button("Continue") {
-                // Temporary: Skip auth for development
-                store.send(.authStatusChecked(UUID()))
-            }
-            .buttonStyle(.borderedProminent)
-            .tint(.accentPrimary)
-        }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(Color.backgroundPrimary)
-    }
 }
 
 // MARK: - Loading View

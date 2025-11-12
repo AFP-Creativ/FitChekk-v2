@@ -19,15 +19,21 @@ final class AppFeatureTests: XCTestCase {
         
         XCTAssertFalse(state.isAuthenticated)
         XCTAssertNil(state.currentUserId)
+        XCTAssertNil(state.currentUser)
         XCTAssertEqual(state.selectedTab, .home)
         XCTAssertFalse(state.isLoading)
+        XCTAssertNil(state.authentication)
     }
     
     // MARK: - App Lifecycle Tests
     
     func testOnAppearTriggersAuthCheck() async {
+        let mockService = MockAuthService()
+        
         let store = TestStore(initialState: AppFeature.State()) {
             AppFeature()
+        } withDependencies: {
+            $0.authService = mockService
         }
         
         // When app appears, it should immediately send checkAuthStatus
@@ -39,16 +45,22 @@ final class AppFeatureTests: XCTestCase {
         // Should receive auth status checked with nil (no user)
         await store.receive(.authStatusChecked(nil)) {
             $0.isLoading = false
+            $0.currentUser = nil
             $0.currentUserId = nil
             $0.isAuthenticated = false
+            $0.authentication = AuthenticationFeature.State()
         }
     }
     
     // MARK: - Authentication Flow Tests
     
     func testAuthCheckSetsLoadingState() async {
+        let mockService = MockAuthService()
+        
         let store = TestStore(initialState: AppFeature.State()) {
             AppFeature()
+        } withDependencies: {
+            $0.authService = mockService
         }
         
         // Verify loading state is set when checking auth
@@ -58,8 +70,10 @@ final class AppFeatureTests: XCTestCase {
         
         await store.receive(.authStatusChecked(nil)) {
             $0.isLoading = false
+            $0.currentUser = nil
             $0.currentUserId = nil
             $0.isAuthenticated = false
+            $0.authentication = AuthenticationFeature.State()
         }
     }
     
@@ -68,48 +82,91 @@ final class AppFeatureTests: XCTestCase {
             AppFeature()
         }
         
-        // When auth check returns nil, user should be unauthenticated
+        // When auth check returns nil, user should be unauthenticated and auth flow presented
         await store.send(.authStatusChecked(nil)) {
             $0.isLoading = false
+            $0.currentUser = nil
             $0.currentUserId = nil
             $0.isAuthenticated = false
+            $0.authentication = AuthenticationFeature.State()
         }
     }
     
     func testAuthStatusCheckedWithValidUser() async {
-        let testUserId = UUID()
+        let testUser = User(
+            id: UUID(),
+            email: "test@example.com",
+            displayName: "Test User",
+            subscriptionTier: .free,
+            subscriptionStatus: .active
+        )
+        
         let store = TestStore(initialState: AppFeature.State()) {
             AppFeature()
         }
         
-        // When auth check returns a user ID, user should be authenticated
-        await store.send(.authStatusChecked(testUserId)) {
+        // When auth check returns a user, user should be authenticated
+        await store.send(.authStatusChecked(testUser)) {
             $0.isLoading = false
-            $0.currentUserId = testUserId
+            $0.currentUser = testUser
+            $0.currentUserId = testUser.id
             $0.isAuthenticated = true
+            // Auth flow should NOT be presented for authenticated users
         }
     }
     
     func testSignOutClearsUserState() async {
-        let testUserId = UUID()
+        let testUser = User(
+            id: UUID(),
+            email: "test@example.com",
+            displayName: "Test User",
+            subscriptionTier: .free,
+            subscriptionStatus: .active
+        )
+        
+        let mockService = MockAuthService()
+        mockService.mockUser = testUser
+        
         let store = TestStore(
             initialState: AppFeature.State(
                 isAuthenticated: true,
-                currentUserId: testUserId
+                currentUserId: testUser.id,
+                currentUser: testUser
             )
         ) {
             AppFeature()
+        } withDependencies: {
+            $0.authService = mockService
         }
         
-        // Sign out should clear authentication state
-        await store.send(.signOut) {
+        // Sign out should call auth service and then check status
+        await store.send(.signOut)
+        
+        await store.receive(.checkAuthStatus) {
+            $0.isLoading = true
+        }
+        
+        // After sign out, getCurrentUser returns nil
+        mockService.mockUser = nil
+        
+        await store.receive(.authStatusChecked(nil)) {
+            $0.isLoading = false
             $0.isAuthenticated = false
             $0.currentUserId = nil
+            $0.currentUser = nil
+            $0.authentication = AuthenticationFeature.State()
         }
     }
     
     func testAuthenticationFromUnauthenticatedState() async {
-        let testUserId = UUID()
+        let testUser = User(
+            id: UUID(),
+            email: "test@example.com",
+            displayName: "Test User",
+            subscriptionTier: .free,
+            subscriptionStatus: .active
+        )
+        
         var initialState = AppFeature.State()
         initialState.isAuthenticated = false
         initialState.currentUserId = nil
@@ -119,9 +176,57 @@ final class AppFeatureTests: XCTestCase {
         }
         
         // Authenticate user
-        await store.send(.authStatusChecked(testUserId)) {
+        await store.send(.authStatusChecked(testUser)) {
             $0.isLoading = false
-            $0.currentUserId = testUserId
+            $0.currentUser = testUser
+            $0.currentUserId = testUser.id
+            $0.isAuthenticated = true
+        }
+    }
+    
+    // MARK: - Authentication Flow Integration Tests
+    
+    func testPresentAuthenticationFlow() async {
+        let store = TestStore(initialState: AppFeature.State()) {
+            AppFeature()
+        }
+        
+        await store.send(.presentAuthentication) {
+            $0.authentication = AuthenticationFeature.State()
+        }
+    }
+    
+    func testAuthenticationDismissalTriggersRecheck() async {
+        let mockService = MockAuthService()
+        let testUser = User(
+            id: UUID(),
+            email: "test@example.com",
+            displayName: "Test User",
+            subscriptionTier: .free,
+            subscriptionStatus: .active
+        )
+        mockService.mockUser = testUser
+        
+        var initialState = AppFeature.State()
+        initialState.authentication = AuthenticationFeature.State()
+        
+        let store = TestStore(initialState: initialState) {
+            AppFeature()
+        } withDependencies: {
+            $0.authService = mockService
+        }
+        
+        // When auth flow dismisses, it should trigger auth status check
+        await store.send(.authentication(.presented(.dismissAuth)))
+        
+        await store.receive(.checkAuthStatus) {
+            $0.isLoading = true
+        }
+        
+        await store.receive(.authStatusChecked(testUser)) {
+            $0.isLoading = false
+            $0.currentUser = testUser
+            $0.currentUserId = testUser.id
             $0.isAuthenticated = true
         }
     }

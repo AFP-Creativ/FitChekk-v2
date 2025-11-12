@@ -26,6 +26,12 @@
 	<string>FitChekk uses your location to provide accurate weather-based outfit suggestions.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>FitChekk needs access to your photo library to add existing photos of clothing items to your wardrobe.</string>
+	<key>SUPABASE_URL</key>
+	<string>$(SUPABASE_URL)</string>
+	<key>SUPABASE_ANON_KEY</key>
+	<string>$(SUPABASE_ANON_KEY)</string>
+	<key>GOOGLE_CLIENT_ID</key>
+	<string>$(GOOGLE_CLIENT_ID)</string>
 	<key>UILaunchScreen</key>
 	<dict/>
 	<key>UISupportedInterfaceOrientations</key>

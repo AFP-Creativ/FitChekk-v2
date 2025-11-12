@@ -72,6 +72,17 @@ extension Color {
     /// Contrast ratio: 4.2:1 ✅ WCAG AA
     static let info = Color(hex: "#7A8A9E")
 
+    // MARK: - Borders & Dividers
+
+    /// Default border color for inputs and cards
+    static let borderDefault = Color(hex: "#E0DCD8")
+
+    /// Focused border color for inputs
+    static let borderFocused = Color(hex: "#C17B6F")
+
+    /// Divider color
+    static let divider = Color(hex: "#F0EDE9")
+
     // MARK: - Dark Mode (Future)
     // Note: These are defined for future dark mode support
 
