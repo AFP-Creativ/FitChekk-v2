@@ -1,0 +1,948 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		56A8F7308E42FEAD911DDA86 /* OutfitsFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78D1FA161D69BEEE55FB9F1F /* OutfitsFeature.swift */; };
+		58BBBC89EDBC4FA50FF12130 /* OutfitsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E5EFB76173C7D48BB7C19C /* OutfitsView.swift */; };
+		C221FDFA09893C8AD77C9A7D /* OutfitCreationFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73A8AB032F83BCF3C150725E /* OutfitCreationFeature.swift */; };
+		A39F0A852E2667F5F6FC15DE /* OutfitCreationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6FDE5DC4BBB02277CC5A999 /* OutfitCreationView.swift */; };
+		0F33B69AC842C63AB957CC3B /* OutfitDetailFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078CBF4CEA5CC498DC448B2D /* OutfitDetailFeature.swift */; };
+		7D3A3E044F5DA09AD1C40738 /* OutfitDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B7042F7AF49AD5EF40E706 /* OutfitDetailView.swift */; };
+		C6DC5D8A5C13EDE09799B7EC /* OutfitEditFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523B514D094CDBBA85481591 /* OutfitEditFeature.swift */; };
+		DFF322A29AC4EC3D0BFBDE75 /* OutfitEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C327947C31B06DC25B59FF4 /* OutfitEditView.swift */; };
+		012E49AB700618C752E58976 /* OutfitCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E02333ACB9FB9C0BAC9F34 /* OutfitCard.swift */; };
+		823F167B69DA2F7C2477C159 /* WardrobeItemPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF3AE184EBD03E686E9D23F0 /* WardrobeItemPickerView.swift */; };
+		0347AE81E96B8E825846AD69 /* AppleSignInManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B623CBFE5AAC73D283B8A556 /* AppleSignInManager.swift */; };
+		0B345065C758FCF9BD6BB1A3 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 5A4136087E41C9687E15FFBE /* ComposableArchitecture */; };
+		17FEC92C6E330F0D64C98BC1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B5E2C08B3696C711FF0A8535 /* Assets.xcassets */; };
+		1FA585B87ECADAF8BEFA4AA1 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86EE3FF38C37D7DD679EB04E /* Colors.swift */; };
+		2849374732E4BF15BB9C538B /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460C836B739F3C9DD3945D72 /* WelcomeView.swift */; };
+		3264D1FEE9E799AE746D2174 /* AppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BBDD30E2259BCCF60BA4CE1 /* AppView.swift */; };
+		38C2164CFFE423EBBE5A6F53 /* Dependencies in Frameworks */ = {isa = PBXBuildFile; productRef = 0F277097ECB188CAF4FCC1CB /* Dependencies */; };
+		3D12426207690793FD20A657 /* AuthenticationFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADBE7E72594E494DC843624E /* AuthenticationFeature.swift */; };
+		4F599569FDBECEA773852E53 /* SocialAuthButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3C364C6C1E397CAEDC022F /* SocialAuthButtons.swift */; };
+		5ACB99F5099DA1AAF716BB58 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = A301E7BA56CAFC55F7FABEEC /* Enums.swift */; };
+		5B21C187B3C1C812CA0FE8BE /* FitChekkTextFieldStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE20B526618A4654F897FCBE /* FitChekkTextFieldStyle.swift */; };
+		5DB938202835F1FB8F20D36D /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C5A4FD9EA06BC78177B2618 /* AuthService.swift */; };
+		6E971470BAD771DCA94EE0E9 /* EmptyStates.swift in Sources */ = {isa = PBXBuildFile; fileRef = A69A956CF53F7E8C6007C13E /* EmptyStates.swift */; };
+		7B5AD6A9DF27DA77231EFD60 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9379529175FFDF4BC9F5147 /* SignUpView.swift */; };
+		85645C3BB34A00A21FB4FDC2 /* ErrorBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3A263C5AFE2A92FE0D6143 /* ErrorBanner.swift */; };
+		86DE775218DB28FAC1791966 /* Spacing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A4C501E99D7440E14FDE315 /* Spacing.swift */; };
+		994B4CDF475B7ED136852542 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E38855DCE859530F28596C8 /* User.swift */; };
+		AB3546E6CD5C22EE880F8CA1 /* WardrobeItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8BE2904279CAE4BC437ECB0 /* WardrobeItem.swift */; };
+		B291BBA6682B64379B2E023A /* Typography.swift in Sources */ = {isa = PBXBuildFile; fileRef = D638796769BAA9C425984004 /* Typography.swift */; };
+		BFB59BD841D8832AD943A273 /* PlannerEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB16AF001031552EC58F21AE /* PlannerEntry.swift */; };
+		C04D7D35329F1F06FE9FC63D /* Buttons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34DB691255077AA6637B4471 /* Buttons.swift */; };
+		C05862B06478C6AF4DBEA339 /* FitChekkApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CD535BC6ED675DC54A7081D /* FitChekkApp.swift */; };
+		C1BAB2F7B2790D07E868ECC9 /* PasswordResetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00976939BD80D6B6209E8CEF /* PasswordResetView.swift */; };
+		C25516D1425DD5FCDBC2A6E9 /* Outfit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B42E8B1B30F8BC2618EDCE9 /* Outfit.swift */; };
+		C2C5F1D1407BDBABA23CF508 /* AuthenticationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4012D7A9F90B242F1E9FEE45 /* AuthenticationView.swift */; };
+		D4DB38F6A4F880A2763A7425 /* UserPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 492C93F2A08F4422795871BA /* UserPreferences.swift */; };
+		D8A4745257E5B1350ED55D8D /* SignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 641114131F6DC2395D0652CB /* SignInView.swift */; };
+		E93A927C64269A712FE1CEA1 /* AppFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6A6C1A96E238726F96AD397 /* AppFeature.swift */; };
+		E989B6DC5E97B87216C9A12B /* Cards.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79A67E0D9BCC941710307D43 /* Cards.swift */; };
+		F4BC835D69944D898AC43020 /* Supabase in Frameworks */ = {isa = PBXBuildFile; productRef = 72150B5C4E30BE1E412F2C6E /* Supabase */; };
+		F8131676BF25C322FBE4ACB3 /* AuthServiceDTOs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82F6A1A7A2DDC32D3D80281E /* AuthServiceDTOs.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		30DA63B9E00A8FEA7541BA89 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9C7E555D4818B261A7392B13 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A0A63375418D1E6A443F3E93;
+			remoteInfo = FitChekk;
+		};
+		7DF23FB51FDC4A6C6377D18B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9C7E555D4818B261A7392B13 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A0A63375418D1E6A443F3E93;
+			remoteInfo = FitChekk;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		78D1FA161D69BEEE55FB9F1F /* OutfitsFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutfitsFeature.swift; sourceTree = "<group>"; };
+		B5E5EFB76173C7D48BB7C19C /* OutfitsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutfitsView.swift; sourceTree = "<group>"; };
+		73A8AB032F83BCF3C150725E /* OutfitCreationFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutfitCreationFeature.swift; sourceTree = "<group>"; };
+		D6FDE5DC4BBB02277CC5A999 /* OutfitCreationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutfitCreationView.swift; sourceTree = "<group>"; };
+		078CBF4CEA5CC498DC448B2D /* OutfitDetailFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutfitDetailFeature.swift; sourceTree = "<group>"; };
+		85B7042F7AF49AD5EF40E706 /* OutfitDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutfitDetailView.swift; sourceTree = "<group>"; };
+		523B514D094CDBBA85481591 /* OutfitEditFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutfitEditFeature.swift; sourceTree = "<group>"; };
+		7C327947C31B06DC25B59FF4 /* OutfitEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutfitEditView.swift; sourceTree = "<group>"; };
+		99E02333ACB9FB9C0BAC9F34 /* OutfitCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutfitCard.swift; sourceTree = "<group>"; };
+		DF3AE184EBD03E686E9D23F0 /* WardrobeItemPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WardrobeItemPickerView.swift; sourceTree = "<group>"; };
+		00976939BD80D6B6209E8CEF /* PasswordResetView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PasswordResetView.swift; path = FitChekk/Features/Authentication/PasswordResetView.swift; sourceTree = SOURCE_ROOT; };
+		0A3C364C6C1E397CAEDC022F /* SocialAuthButtons.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SocialAuthButtons.swift; path = FitChekk/Features/Authentication/Components/SocialAuthButtons.swift; sourceTree = SOURCE_ROOT; };
+		1A095644C5B261AE5B5AB420 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		1CD535BC6ED675DC54A7081D /* FitChekkApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitChekkApp.swift; sourceTree = "<group>"; };
+		34DB691255077AA6637B4471 /* Buttons.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Buttons.swift; path = FitChekk/Shared/Components/Buttons.swift; sourceTree = SOURCE_ROOT; };
+		3B3A263C5AFE2A92FE0D6143 /* ErrorBanner.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ErrorBanner.swift; path = FitChekk/Features/Authentication/Components/ErrorBanner.swift; sourceTree = SOURCE_ROOT; };
+		3E38855DCE859530F28596C8 /* User.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = User.swift; path = FitChekk/Shared/Models/User.swift; sourceTree = SOURCE_ROOT; };
+		4012D7A9F90B242F1E9FEE45 /* AuthenticationView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AuthenticationView.swift; path = FitChekk/Features/Authentication/AuthenticationView.swift; sourceTree = SOURCE_ROOT; };
+		460C836B739F3C9DD3945D72 /* WelcomeView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = WelcomeView.swift; path = FitChekk/Features/Authentication/WelcomeView.swift; sourceTree = SOURCE_ROOT; };
+		462467CA3900AEFEF05BA8C5 /* FitChekkTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = FitChekkTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		492C93F2A08F4422795871BA /* UserPreferences.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = UserPreferences.swift; path = FitChekk/Shared/Models/UserPreferences.swift; sourceTree = SOURCE_ROOT; };
+		4FC8F676C6A2DC577C8884CB /* FitChekk.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = FitChekk.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		641114131F6DC2395D0652CB /* SignInView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SignInView.swift; path = FitChekk/Features/Authentication/SignInView.swift; sourceTree = SOURCE_ROOT; };
+		6A4C501E99D7440E14FDE315 /* Spacing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Spacing.swift; sourceTree = "<group>"; };
+		6C5A4FD9EA06BC78177B2618 /* AuthService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AuthService.swift; path = FitChekk/Services/Authentication/AuthService.swift; sourceTree = SOURCE_ROOT; };
+		79A67E0D9BCC941710307D43 /* Cards.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Cards.swift; path = FitChekk/Shared/Components/Cards.swift; sourceTree = SOURCE_ROOT; };
+		82F6A1A7A2DDC32D3D80281E /* AuthServiceDTOs.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AuthServiceDTOs.swift; path = FitChekk/Services/Authentication/AuthServiceDTOs.swift; sourceTree = SOURCE_ROOT; };
+		86EE3FF38C37D7DD679EB04E /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		8B42E8B1B30F8BC2618EDCE9 /* Outfit.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Outfit.swift; path = FitChekk/Shared/Models/Outfit.swift; sourceTree = SOURCE_ROOT; };
+		8E828CBF1A52532CB565B300 /* Development.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Development.xcconfig; sourceTree = "<group>"; };
+		9BBDD30E2259BCCF60BA4CE1 /* AppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppView.swift; sourceTree = "<group>"; };
+		A301E7BA56CAFC55F7FABEEC /* Enums.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Enums.swift; path = FitChekk/Shared/Models/Enums.swift; sourceTree = SOURCE_ROOT; };
+		A69A956CF53F7E8C6007C13E /* EmptyStates.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = EmptyStates.swift; path = FitChekk/Shared/Components/EmptyStates.swift; sourceTree = SOURCE_ROOT; };
+		A6A6C1A96E238726F96AD397 /* AppFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFeature.swift; sourceTree = "<group>"; };
+		ADBE7E72594E494DC843624E /* AuthenticationFeature.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AuthenticationFeature.swift; path = FitChekk/Features/Authentication/AuthenticationFeature.swift; sourceTree = SOURCE_ROOT; };
+		AE20B526618A4654F897FCBE /* FitChekkTextFieldStyle.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = FitChekkTextFieldStyle.swift; path = FitChekk/Features/Authentication/Components/FitChekkTextFieldStyle.swift; sourceTree = SOURCE_ROOT; };
+		B5E2C08B3696C711FF0A8535 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		B623CBFE5AAC73D283B8A556 /* AppleSignInManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AppleSignInManager.swift; path = FitChekk/Services/Authentication/AppleSignInManager.swift; sourceTree = SOURCE_ROOT; };
+		D235FA2C2B0EDACF4900DCC7 /* Production.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Production.xcconfig; sourceTree = "<group>"; };
+		D638796769BAA9C425984004 /* Typography.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Typography.swift; sourceTree = "<group>"; };
+		D8BE2904279CAE4BC437ECB0 /* WardrobeItem.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = WardrobeItem.swift; path = FitChekk/Shared/Models/WardrobeItem.swift; sourceTree = SOURCE_ROOT; };
+		E9379529175FFDF4BC9F5147 /* SignUpView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SignUpView.swift; path = FitChekk/Features/Authentication/SignUpView.swift; sourceTree = SOURCE_ROOT; };
+		F0574093FACB89EF2CFBE9C3 /* FitChekkUITests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = FitChekkUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		FB16AF001031552EC58F21AE /* PlannerEntry.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PlannerEntry.swift; path = FitChekk/Shared/Models/PlannerEntry.swift; sourceTree = SOURCE_ROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		E5441389A2CDE4187A87C4B3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0B345065C758FCF9BD6BB1A3 /* ComposableArchitecture in Frameworks */,
+				F4BC835D69944D898AC43020 /* Supabase in Frameworks */,
+				38C2164CFFE423EBBE5A6F53 /* Dependencies in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		0403D02DA917B4749EB56EAE /* Outfits */ = {
+			isa = PBXGroup;
+			children = (
+							78D1FA161D69BEEE55FB9F1F /* OutfitsFeature.swift */,
+				B5E5EFB76173C7D48BB7C19C /* OutfitsView.swift */,
+				73A8AB032F83BCF3C150725E /* OutfitCreationFeature.swift */,
+				D6FDE5DC4BBB02277CC5A999 /* OutfitCreationView.swift */,
+				078CBF4CEA5CC498DC448B2D /* OutfitDetailFeature.swift */,
+				85B7042F7AF49AD5EF40E706 /* OutfitDetailView.swift */,
+				523B514D094CDBBA85481591 /* OutfitEditFeature.swift */,
+				7C327947C31B06DC25B59FF4 /* OutfitEditView.swift */,
+);
+			path = Outfits;
+			sourceTree = "<group>";
+		};
+		0E7E57A124F68001042C7218 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				B5E2C08B3696C711FF0A8535 /* Assets.xcassets */,
+				1A095644C5B261AE5B5AB420 /* Info.plist */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		1BC76B844C10CC2C4CBB467E /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		1C5152304DADB85258257D01 /* Subscription */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Subscription;
+			sourceTree = "<group>";
+		};
+		1C5817582E26471EFC6E3F38 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		3E09D188EC917DFDFCC78492 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				3E38855DCE859530F28596C8 /* User.swift */,
+				A301E7BA56CAFC55F7FABEEC /* Enums.swift */,
+				8B42E8B1B30F8BC2618EDCE9 /* Outfit.swift */,
+				FB16AF001031552EC58F21AE /* PlannerEntry.swift */,
+				492C93F2A08F4422795871BA /* UserPreferences.swift */,
+				D8BE2904279CAE4BC437ECB0 /* WardrobeItem.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		5DAFC95AC9D9D4CE994B1FBA /* FitChekk */ = {
+			isa = PBXGroup;
+			children = (
+				9EA7F951BF18FE3A58D164CC /* App */,
+				6C6CB1EBAE1E9EDC8B15CFB2 /* Features */,
+				0E7E57A124F68001042C7218 /* Resources */,
+				8C05D6333D67F5FA4D3FE20D /* Services */,
+				DBDB5B09C15D1887531FFC4E /* Shared */,
+				FADDB929D006812E3A24406C /* FitChekk */,
+			);
+			path = FitChekk;
+			sourceTree = "<group>";
+		};
+		5E51234A22EBEC293938E189 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		65AFB049F419413AF5C027C1 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				34DB691255077AA6637B4471 /* Buttons.swift */,
+				79A67E0D9BCC941710307D43 /* Cards.swift */,
+				A69A956CF53F7E8C6007C13E /* EmptyStates.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		661B2202953B001996676D9D /* Authentication */ = {
+			isa = PBXGroup;
+			children = (
+				6C5A4FD9EA06BC78177B2618 /* AuthService.swift */,
+				82F6A1A7A2DDC32D3D80281E /* AuthServiceDTOs.swift */,
+				B623CBFE5AAC73D283B8A556 /* AppleSignInManager.swift */,
+			);
+			path = Authentication;
+			sourceTree = "<group>";
+		};
+		6C6CB1EBAE1E9EDC8B15CFB2 /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				CEE087819D842BBF42E20950 /* Authentication */,
+				DCB9FC34C774506ED04851D8 /* Home */,
+				0403D02DA917B4749EB56EAE /* Outfits */,
+				84D0928B894473E5DDD2DD2A /* Planner */,
+				5E51234A22EBEC293938E189 /* Settings */,
+				D2AC17B623520334E3AB9C7F /* Wardrobe */,
+			);
+			path = Features;
+			sourceTree = "<group>";
+		};
+		6CBE81842AF6C85AF8916BB6 /* Configuration */ = {
+			isa = PBXGroup;
+			children = (
+				8E828CBF1A52532CB565B300 /* Development.xcconfig */,
+				D235FA2C2B0EDACF4900DCC7 /* Production.xcconfig */,
+			);
+			path = Configuration;
+			sourceTree = "<group>";
+		};
+		6CE6A24B3A7839BC7C52D494 /* FitChekkUITests */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = FitChekkUITests;
+			sourceTree = "<group>";
+		};
+		6ED89CF5B7F24BCA5981C5D4 /* FitChekkTests */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = FitChekkTests;
+			sourceTree = "<group>";
+		};
+		70DD5F422B8A230CA020C82E /* DesignSystem */ = {
+			isa = PBXGroup;
+			children = (
+				86EE3FF38C37D7DD679EB04E /* Colors.swift */,
+				6A4C501E99D7440E14FDE315 /* Spacing.swift */,
+				D638796769BAA9C425984004 /* Typography.swift */,
+			);
+			path = DesignSystem;
+			sourceTree = "<group>";
+		};
+		84D0928B894473E5DDD2DD2A /* Planner */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Planner;
+			sourceTree = "<group>";
+		};
+		87E3DE50C8C0107B2426C6DE /* AI */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = AI;
+			sourceTree = "<group>";
+		};
+		8C05D6333D67F5FA4D3FE20D /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				87E3DE50C8C0107B2426C6DE /* AI */,
+				661B2202953B001996676D9D /* Authentication */,
+				CC93F537CC00BB1BF929FC09 /* Data */,
+				A6553B808A5D5AFB6E4C06E4 /* Image */,
+				1C5152304DADB85258257D01 /* Subscription */,
+				E1BAA03EB759CD5EC8034960 /* Weather */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		9EA7F951BF18FE3A58D164CC /* App */ = {
+			isa = PBXGroup;
+			children = (
+				A6A6C1A96E238726F96AD397 /* AppFeature.swift */,
+				9BBDD30E2259BCCF60BA4CE1 /* AppView.swift */,
+				1CD535BC6ED675DC54A7081D /* FitChekkApp.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		A6553B808A5D5AFB6E4C06E4 /* Image */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Image;
+			sourceTree = "<group>";
+		};
+		B637A2C0FA74C92B0BCD02AD /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				1BC76B844C10CC2C4CBB467E /* Models */,
+			);
+			name = Shared;
+			sourceTree = "<group>";
+		};
+		CC93F537CC00BB1BF929FC09 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		CEE087819D842BBF42E20950 /* Authentication */ = {
+			isa = PBXGroup;
+			children = (
+				ADBE7E72594E494DC843624E /* AuthenticationFeature.swift */,
+				4012D7A9F90B242F1E9FEE45 /* AuthenticationView.swift */,
+				460C836B739F3C9DD3945D72 /* WelcomeView.swift */,
+				641114131F6DC2395D0652CB /* SignInView.swift */,
+				E9379529175FFDF4BC9F5147 /* SignUpView.swift */,
+				00976939BD80D6B6209E8CEF /* PasswordResetView.swift */,
+				D7C7C1DA1282CDCA3426BAD6 /* Components */,
+			);
+			path = Authentication;
+			sourceTree = "<group>";
+		};
+		D2AC17B623520334E3AB9C7F /* Wardrobe */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Wardrobe;
+			sourceTree = "<group>";
+		};
+		D7C7C1DA1282CDCA3426BAD6 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				3B3A263C5AFE2A92FE0D6143 /* ErrorBanner.swift */,
+				0A3C364C6C1E397CAEDC022F /* SocialAuthButtons.swift */,
+				AE20B526618A4654F897FCBE /* FitChekkTextFieldStyle.swift */,
+			);
+			name = Components;
+			path = Components;
+			sourceTree = "<group>";
+		};
+		D8276A44D201B56AC45515CA /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				4FC8F676C6A2DC577C8884CB /* FitChekk.app */,
+				462467CA3900AEFEF05BA8C5 /* FitChekkTests.xctest */,
+				F0574093FACB89EF2CFBE9C3 /* FitChekkUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		DBDB5B09C15D1887531FFC4E /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				65AFB049F419413AF5C027C1 /* Components */,
+				70DD5F422B8A230CA020C82E /* DesignSystem */,
+				1C5817582E26471EFC6E3F38 /* Extensions */,
+				3E09D188EC917DFDFCC78492 /* Models */,
+				E9CD381114F3143A20CFEB8F /* Utilities */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
+		DCB9FC34C774506ED04851D8 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		E1BAA03EB759CD5EC8034960 /* Weather */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Weather;
+			sourceTree = "<group>";
+		};
+		E9CD381114F3143A20CFEB8F /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		F5C31DA2153FC0DCFC2E449D = {
+			isa = PBXGroup;
+			children = (
+				6CBE81842AF6C85AF8916BB6 /* Configuration */,
+				5DAFC95AC9D9D4CE994B1FBA /* FitChekk */,
+				6ED89CF5B7F24BCA5981C5D4 /* FitChekkTests */,
+				6CE6A24B3A7839BC7C52D494 /* FitChekkUITests */,
+				D8276A44D201B56AC45515CA /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		FADDB929D006812E3A24406C /* FitChekk */ = {
+			isa = PBXGroup;
+			children = (
+				B637A2C0FA74C92B0BCD02AD /* Shared */,
+			);
+			name = FitChekk;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		127761F033E3AF512FB12202 /* FitChekkUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4E83B7F19EABD3A6DE3853EB /* Build configuration list for PBXNativeTarget "FitChekkUITests" */;
+			buildPhases = (
+				B6104C38F0EC12A966D9D1FE /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				5ADDCD90EC6F98BC56FDA6C4 /* PBXTargetDependency */,
+			);
+			name = FitChekkUITests;
+			productName = FitChekkUITests;
+			productReference = F0574093FACB89EF2CFBE9C3 /* FitChekkUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+		A0A63375418D1E6A443F3E93 /* FitChekk */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E4E7409456DE6B0438B19C09 /* Build configuration list for PBXNativeTarget "FitChekk" */;
+			buildPhases = (
+				35EE2AAB52DA11F54C33426A /* SwiftLint */,
+				66E56F6A7277834168FA728E /* Sources */,
+				520E4A31D6101130FC7B3ECE /* Resources */,
+				E5441389A2CDE4187A87C4B3 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = FitChekk;
+			packageProductDependencies = (
+				5A4136087E41C9687E15FFBE /* ComposableArchitecture */,
+				72150B5C4E30BE1E412F2C6E /* Supabase */,
+				0F277097ECB188CAF4FCC1CB /* Dependencies */,
+			);
+			productName = FitChekk;
+			productReference = 4FC8F676C6A2DC577C8884CB /* FitChekk.app */;
+			productType = "com.apple.product-type.application";
+		};
+		F37AA4181BC6CA804C2CA1FD /* FitChekkTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 68D5CB353F37A39D7ED743A4 /* Build configuration list for PBXNativeTarget "FitChekkTests" */;
+			buildPhases = (
+				7985219D7D7199E6AE5A48FD /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				48160B4F06F34F76A5CC5081 /* PBXTargetDependency */,
+			);
+			name = FitChekkTests;
+			productName = FitChekkTests;
+			productReference = 462467CA3900AEFEF05BA8C5 /* FitChekkTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		9C7E555D4818B261A7392B13 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+					127761F033E3AF512FB12202 = {
+						TestTargetID = A0A63375418D1E6A443F3E93;
+					};
+				};
+			};
+			buildConfigurationList = B228559E78FBA6064F01E5E4 /* Build configuration list for PBXProject "FitChekk" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = F5C31DA2153FC0DCFC2E449D;
+			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				38CD8F010F83FF431825135A /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
+				448F073EA9EB1C35C20202F7 /* XCRemoteSwiftPackageReference "swift-dependencies" */,
+				D08A203BF4791DCDD4413405 /* XCRemoteSwiftPackageReference "supabase-swift" */,
+			);
+			preferredProjectObjectVersion = 77;
+			productRefGroup = D8276A44D201B56AC45515CA /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				A0A63375418D1E6A443F3E93 /* FitChekk */,
+				F37AA4181BC6CA804C2CA1FD /* FitChekkTests */,
+				127761F033E3AF512FB12202 /* FitChekkUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		520E4A31D6101130FC7B3ECE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				17FEC92C6E330F0D64C98BC1 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		35EE2AAB52DA11F54C33426A /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\n  swiftlint lint --strict\nelse\n  echo \"warning: SwiftLint not installed\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		66E56F6A7277834168FA728E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E93A927C64269A712FE1CEA1 /* AppFeature.swift in Sources */,
+				3264D1FEE9E799AE746D2174 /* AppView.swift in Sources */,
+				1FA585B87ECADAF8BEFA4AA1 /* Colors.swift in Sources */,
+				C05862B06478C6AF4DBEA339 /* FitChekkApp.swift in Sources */,
+				86DE775218DB28FAC1791966 /* Spacing.swift in Sources */,
+				B291BBA6682B64379B2E023A /* Typography.swift in Sources */,
+				3D12426207690793FD20A657 /* AuthenticationFeature.swift in Sources */,
+				C2C5F1D1407BDBABA23CF508 /* AuthenticationView.swift in Sources */,
+				2849374732E4BF15BB9C538B /* WelcomeView.swift in Sources */,
+				D8A4745257E5B1350ED55D8D /* SignInView.swift in Sources */,
+				7B5AD6A9DF27DA77231EFD60 /* SignUpView.swift in Sources */,
+				C1BAB2F7B2790D07E868ECC9 /* PasswordResetView.swift in Sources */,
+				85645C3BB34A00A21FB4FDC2 /* ErrorBanner.swift in Sources */,
+				4F599569FDBECEA773852E53 /* SocialAuthButtons.swift in Sources */,
+				5B21C187B3C1C812CA0FE8BE /* FitChekkTextFieldStyle.swift in Sources */,
+				5DB938202835F1FB8F20D36D /* AuthService.swift in Sources */,
+				F8131676BF25C322FBE4ACB3 /* AuthServiceDTOs.swift in Sources */,
+				0347AE81E96B8E825846AD69 /* AppleSignInManager.swift in Sources */,
+				994B4CDF475B7ED136852542 /* User.swift in Sources */,
+				5ACB99F5099DA1AAF716BB58 /* Enums.swift in Sources */,
+				C25516D1425DD5FCDBC2A6E9 /* Outfit.swift in Sources */,
+				BFB59BD841D8832AD943A273 /* PlannerEntry.swift in Sources */,
+				D4DB38F6A4F880A2763A7425 /* UserPreferences.swift in Sources */,
+				AB3546E6CD5C22EE880F8CA1 /* WardrobeItem.swift in Sources */,
+				C04D7D35329F1F06FE9FC63D /* Buttons.swift in Sources */,
+				E989B6DC5E97B87216C9A12B /* Cards.swift in Sources */,
+				6E971470BAD771DCA94EE0E9 /* EmptyStates.swift in Sources */,
+							56A8F7308E42FEAD911DDA86 /* OutfitsFeature.swift in Sources */,
+				58BBBC89EDBC4FA50FF12130 /* OutfitsView.swift in Sources */,
+				C221FDFA09893C8AD77C9A7D /* OutfitCreationFeature.swift in Sources */,
+				A39F0A852E2667F5F6FC15DE /* OutfitCreationView.swift in Sources */,
+				0F33B69AC842C63AB957CC3B /* OutfitDetailFeature.swift in Sources */,
+				7D3A3E044F5DA09AD1C40738 /* OutfitDetailView.swift in Sources */,
+				C6DC5D8A5C13EDE09799B7EC /* OutfitEditFeature.swift in Sources */,
+				DFF322A29AC4EC3D0BFBDE75 /* OutfitEditView.swift in Sources */,
+				012E49AB700618C752E58976 /* OutfitCard.swift in Sources */,
+				823F167B69DA2F7C2477C159 /* WardrobeItemPickerView.swift in Sources */,
+);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7985219D7D7199E6AE5A48FD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B6104C38F0EC12A966D9D1FE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		48160B4F06F34F76A5CC5081 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A0A63375418D1E6A443F3E93 /* FitChekk */;
+			targetProxy = 30DA63B9E00A8FEA7541BA89 /* PBXContainerItemProxy */;
+		};
+		5ADDCD90EC6F98BC56FDA6C4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A0A63375418D1E6A443F3E93 /* FitChekk */;
+			targetProxy = 7DF23FB51FDC4A6C6377D18B /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		18DBA6C7B79E97D3E6072C7A /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D235FA2C2B0EDACF4900DCC7 /* Production.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 1.0.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.afpcreativ.fitchekk;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 6.0;
+			};
+			name = Release;
+		};
+		56DA0DE5FD9AD4F179FA28F5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8E828CBF1A52532CB565B300 /* Development.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 1.0.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.afpcreativ.fitchekk;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 6.0;
+			};
+			name = Debug;
+		};
+		74E0B1C375747EB9526A82F5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = FitChekk;
+			};
+			name = Release;
+		};
+		996885F2011390A54002D678 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = FitChekk;
+			};
+			name = Debug;
+		};
+		CF509B3B436B0E140ED31084 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FitChekk.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/FitChekk";
+			};
+			name = Debug;
+		};
+		D6B4183AC2E09594A38BF95C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = FitChekk/Resources/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.afpcreativ.fitchekk;
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 6;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		E62E3EB177DEC39C11D25512 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = FitChekk/Resources/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.afpcreativ.fitchekk;
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 6;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		F8A6FFEFBFA75DCC21DC755F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FitChekk.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/FitChekk";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		4E83B7F19EABD3A6DE3853EB /* Build configuration list for PBXNativeTarget "FitChekkUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				996885F2011390A54002D678 /* Debug */,
+				74E0B1C375747EB9526A82F5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		68D5CB353F37A39D7ED743A4 /* Build configuration list for PBXNativeTarget "FitChekkTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CF509B3B436B0E140ED31084 /* Debug */,
+				F8A6FFEFBFA75DCC21DC755F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		B228559E78FBA6064F01E5E4 /* Build configuration list for PBXProject "FitChekk" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				56DA0DE5FD9AD4F179FA28F5 /* Debug */,
+				18DBA6C7B79E97D3E6072C7A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		E4E7409456DE6B0438B19C09 /* Build configuration list for PBXNativeTarget "FitChekk" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D6B4183AC2E09594A38BF95C /* Debug */,
+				E62E3EB177DEC39C11D25512 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		38CD8F010F83FF431825135A /* XCRemoteSwiftPackageReference "swift-composable-architecture" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.15.0;
+			};
+		};
+		448F073EA9EB1C35C20202F7 /* XCRemoteSwiftPackageReference "swift-dependencies" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/swift-dependencies";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+		D08A203BF4791DCDD4413405 /* XCRemoteSwiftPackageReference "supabase-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/supabase/supabase-swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.5.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		0F277097ECB188CAF4FCC1CB /* Dependencies */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 448F073EA9EB1C35C20202F7 /* XCRemoteSwiftPackageReference "swift-dependencies" */;
+			productName = Dependencies;
+		};
+		5A4136087E41C9687E15FFBE /* ComposableArchitecture */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 38CD8F010F83FF431825135A /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
+			productName = ComposableArchitecture;
+		};
+		72150B5C4E30BE1E412F2C6E /* Supabase */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D08A203BF4791DCDD4413405 /* XCRemoteSwiftPackageReference "supabase-swift" */;
+			productName = Supabase;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 9C7E555D4818B261A7392B13 /* Project object */;
+}
