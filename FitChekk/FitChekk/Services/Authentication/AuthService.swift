@@ -320,12 +320,23 @@ final class LiveAuthService: AuthService, @unchecked Sendable {
             .value
 
         // Create default preferences
-        let defaultPreferences = UserPreferences(userId: authUserId)
-        let preferencesDTO = UserPreferencesDTO(from: defaultPreferences)
+        struct PreferencesInsert: Encodable {
+            let user_id: UUID
+            let style_preferences: [String]
+            let favorite_colors: [String]
+            let preferred_occasions: [String]
+        }
+        
+        let preferencesData = PreferencesInsert(
+            user_id: authUserId,
+            style_preferences: [],
+            favorite_colors: [],
+            preferred_occasions: []
+        )
 
         try await client
             .from("user_preferences")
-            .insert(preferencesDTO)
+            .insert(preferencesData)
             .execute()
 
         let user = userDTO.toUser()

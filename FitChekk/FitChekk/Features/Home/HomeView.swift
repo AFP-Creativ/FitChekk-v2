@@ -30,6 +30,9 @@ struct HomeView: View {
                     // Generate Outfit CTA
                     generateOutfitButton
                     
+                    // Create Manual Outfit
+                    createOutfitButton
+                    
                     // Recent Outfits
                     if !store.recentOutfits.isEmpty {
                         recentOutfitsSection
@@ -219,6 +222,41 @@ struct HomeView: View {
                 )
             )
             .clipShape(RoundedRectangle(cornerRadius: 12))
+            }
+        )
+        .disabled(store.wardrobe.count < 2)
+    }
+    
+    // MARK: - Create Outfit Button
+    
+    private var createOutfitButton: some View {
+        Button(
+            action: {
+                // Navigate to Outfits tab and trigger creation
+                // This would require AppFeature integration which we can skip for now
+                // Users can use the + button in Outfits tab
+            },
+            label: {
+                HStack {
+                    Image(systemName: "plus.circle")
+                        .font(.system(size: 20))
+                    
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text("Create Outfit")
+                            .font(Font.headlineMedium)
+                        
+                        Text("Build your outfit manually")
+                            .font(Font.captionRegular)
+                    }
+                    
+                    Spacer()
+                    
+                    Image(systemName: "chevron.right")
+                }
+                .foregroundColor(Color.textPrimary)
+                .padding(Spacing.md)
+                .background(Color.backgroundSecondary)
+                .clipShape(RoundedRectangle(cornerRadius: 12))
             }
         )
         .disabled(store.wardrobe.count < 2)

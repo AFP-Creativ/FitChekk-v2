@@ -23,10 +23,10 @@ struct AppFeature {
         // Navigation
         var selectedTab: Tab = .home
 
-        // Feature States (will be added as we build features)
+        // Feature States
         // var home: HomeFeature.State = .init()
         // var wardrobe: WardrobeFeature.State = .init()
-        // var outfits: OutfitsFeature.State = .init()
+        var outfits: OutfitsFeature.State = .init()
         // var planner: PlannerFeature.State = .init()
         // var settings: SettingsFeature.State = .init()
 
@@ -39,7 +39,7 @@ struct AppFeature {
 
     // MARK: - Actions
 
-    enum Action: Equatable {
+    enum Action {
         // Lifecycle
         case onAppear
         case checkAuthStatus
@@ -53,10 +53,10 @@ struct AppFeature {
         // Navigation
         case tabSelected(Tab)
 
-        // Feature Actions (will be added as we build features)
+        // Feature Actions
         // case home(HomeFeature.Action)
         // case wardrobe(WardrobeFeature.Action)
-        // case outfits(OutfitsFeature.Action)
+        case outfits(OutfitsFeature.Action)
         // case planner(PlannerFeature.Action)
         // case settings(SettingsFeature.Action)
     }
@@ -145,10 +145,17 @@ struct AppFeature {
             case let .tabSelected(tab):
                 state.selectedTab = tab
                 return .none
+                
+            case .outfits:
+                return .none
             }
         }
         .ifLet(\.$authentication, action: \.authentication) {
             AuthenticationFeature()
+        }
+        
+        Scope(state: \.outfits, action: \.outfits) {
+            OutfitsFeature()
         }
     }
 }

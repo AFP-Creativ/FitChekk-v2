@@ -115,6 +115,31 @@ enum Season: String, Codable, CaseIterable {
     }
 }
 
+// MARK: - Occasion Type
+enum OccasionType: String, Codable, CaseIterable {
+    case casual
+    case work
+    case dateNight
+    case party
+    case workout
+    case formal
+    case travel
+    case brunch
+    
+    var displayName: String {
+        switch self {
+        case .casual: return "Casual"
+        case .work: return "Work"
+        case .dateNight: return "Date Night"
+        case .party: return "Party"
+        case .workout: return "Workout"
+        case .formal: return "Formal"
+        case .travel: return "Travel"
+        case .brunch: return "Brunch"
+        }
+    }
+}
+
 // MARK: - Subscription Tier
 enum SubscriptionTier: String, Codable, CaseIterable {
     case free

@@ -59,14 +59,16 @@ struct AppView: View {
                 }
                 .tag(AppFeature.Tab.wardrobe)
 
-            PlaceholderFeatureView(title: "Outfits")
-                .tabItem {
-                    Label(
-                        AppFeature.Tab.outfits.title,
-                        systemImage: AppFeature.Tab.outfits.icon
-                    )
-                }
-                .tag(AppFeature.Tab.outfits)
+            OutfitsView(
+                store: store.scope(state: \.outfits, action: \.outfits)
+            )
+            .tabItem {
+                Label(
+                    AppFeature.Tab.outfits.title,
+                    systemImage: AppFeature.Tab.outfits.icon
+                )
+            }
+            .tag(AppFeature.Tab.outfits)
 
             PlaceholderFeatureView(title: "Planner")
                 .tabItem {

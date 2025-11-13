@@ -7,8 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		012E49AB700618C752E58976 /* OutfitCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E02333ACB9FB9C0BAC9F34 /* OutfitCard.swift */; };
 		0347AE81E96B8E825846AD69 /* AppleSignInManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B623CBFE5AAC73D283B8A556 /* AppleSignInManager.swift */; };
 		0B345065C758FCF9BD6BB1A3 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 5A4136087E41C9687E15FFBE /* ComposableArchitecture */; };
+		0F33B69AC842C63AB957CC3B /* OutfitDetailFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 078CBF4CEA5CC498DC448B2D /* OutfitDetailFeature.swift */; };
 		17FEC92C6E330F0D64C98BC1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B5E2C08B3696C711FF0A8535 /* Assets.xcassets */; };
 		1FA585B87ECADAF8BEFA4AA1 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86EE3FF38C37D7DD679EB04E /* Colors.swift */; };
 		2849374732E4BF15BB9C538B /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460C836B739F3C9DD3945D72 /* WelcomeView.swift */; };
@@ -16,24 +18,32 @@
 		38C2164CFFE423EBBE5A6F53 /* Dependencies in Frameworks */ = {isa = PBXBuildFile; productRef = 0F277097ECB188CAF4FCC1CB /* Dependencies */; };
 		3D12426207690793FD20A657 /* AuthenticationFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADBE7E72594E494DC843624E /* AuthenticationFeature.swift */; };
 		4F599569FDBECEA773852E53 /* SocialAuthButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3C364C6C1E397CAEDC022F /* SocialAuthButtons.swift */; };
+		56A8F7308E42FEAD911DDA86 /* OutfitsFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78D1FA161D69BEEE55FB9F1F /* OutfitsFeature.swift */; };
+		58BBBC89EDBC4FA50FF12130 /* OutfitsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E5EFB76173C7D48BB7C19C /* OutfitsView.swift */; };
 		5ACB99F5099DA1AAF716BB58 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = A301E7BA56CAFC55F7FABEEC /* Enums.swift */; };
 		5B21C187B3C1C812CA0FE8BE /* FitChekkTextFieldStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE20B526618A4654F897FCBE /* FitChekkTextFieldStyle.swift */; };
 		5DB938202835F1FB8F20D36D /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C5A4FD9EA06BC78177B2618 /* AuthService.swift */; };
 		6E971470BAD771DCA94EE0E9 /* EmptyStates.swift in Sources */ = {isa = PBXBuildFile; fileRef = A69A956CF53F7E8C6007C13E /* EmptyStates.swift */; };
 		7B5AD6A9DF27DA77231EFD60 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9379529175FFDF4BC9F5147 /* SignUpView.swift */; };
+		7D3A3E044F5DA09AD1C40738 /* OutfitDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B7042F7AF49AD5EF40E706 /* OutfitDetailView.swift */; };
+		823F167B69DA2F7C2477C159 /* WardrobeItemPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF3AE184EBD03E686E9D23F0 /* WardrobeItemPickerView.swift */; };
 		85645C3BB34A00A21FB4FDC2 /* ErrorBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B3A263C5AFE2A92FE0D6143 /* ErrorBanner.swift */; };
 		86DE775218DB28FAC1791966 /* Spacing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A4C501E99D7440E14FDE315 /* Spacing.swift */; };
 		994B4CDF475B7ED136852542 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E38855DCE859530F28596C8 /* User.swift */; };
+		A39F0A852E2667F5F6FC15DE /* OutfitCreationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6FDE5DC4BBB02277CC5A999 /* OutfitCreationView.swift */; };
 		AB3546E6CD5C22EE880F8CA1 /* WardrobeItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8BE2904279CAE4BC437ECB0 /* WardrobeItem.swift */; };
 		B291BBA6682B64379B2E023A /* Typography.swift in Sources */ = {isa = PBXBuildFile; fileRef = D638796769BAA9C425984004 /* Typography.swift */; };
 		BFB59BD841D8832AD943A273 /* PlannerEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB16AF001031552EC58F21AE /* PlannerEntry.swift */; };
 		C04D7D35329F1F06FE9FC63D /* Buttons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34DB691255077AA6637B4471 /* Buttons.swift */; };
 		C05862B06478C6AF4DBEA339 /* FitChekkApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CD535BC6ED675DC54A7081D /* FitChekkApp.swift */; };
 		C1BAB2F7B2790D07E868ECC9 /* PasswordResetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00976939BD80D6B6209E8CEF /* PasswordResetView.swift */; };
+		C221FDFA09893C8AD77C9A7D /* OutfitCreationFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73A8AB032F83BCF3C150725E /* OutfitCreationFeature.swift */; };
 		C25516D1425DD5FCDBC2A6E9 /* Outfit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B42E8B1B30F8BC2618EDCE9 /* Outfit.swift */; };
 		C2C5F1D1407BDBABA23CF508 /* AuthenticationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4012D7A9F90B242F1E9FEE45 /* AuthenticationView.swift */; };
+		C6DC5D8A5C13EDE09799B7EC /* OutfitEditFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 523B514D094CDBBA85481591 /* OutfitEditFeature.swift */; };
 		D4DB38F6A4F880A2763A7425 /* UserPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 492C93F2A08F4422795871BA /* UserPreferences.swift */; };
 		D8A4745257E5B1350ED55D8D /* SignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 641114131F6DC2395D0652CB /* SignInView.swift */; };
+		DFF322A29AC4EC3D0BFBDE75 /* OutfitEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C327947C31B06DC25B59FF4 /* OutfitEditView.swift */; };
 		E93A927C64269A712FE1CEA1 /* AppFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6A6C1A96E238726F96AD397 /* AppFeature.swift */; };
 		E989B6DC5E97B87216C9A12B /* Cards.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79A67E0D9BCC941710307D43 /* Cards.swift */; };
 		F4BC835D69944D898AC43020 /* Supabase in Frameworks */ = {isa = PBXBuildFile; productRef = 72150B5C4E30BE1E412F2C6E /* Supabase */; };
@@ -59,6 +69,7 @@
 
 /* Begin PBXFileReference section */
 		00976939BD80D6B6209E8CEF /* PasswordResetView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PasswordResetView.swift; path = FitChekk/Features/Authentication/PasswordResetView.swift; sourceTree = SOURCE_ROOT; };
+		078CBF4CEA5CC498DC448B2D /* OutfitDetailFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutfitDetailFeature.swift; sourceTree = "<group>"; };
 		0A3C364C6C1E397CAEDC022F /* SocialAuthButtons.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SocialAuthButtons.swift; path = FitChekk/Features/Authentication/Components/SocialAuthButtons.swift; sourceTree = SOURCE_ROOT; };
 		1A095644C5B261AE5B5AB420 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		1CD535BC6ED675DC54A7081D /* FitChekkApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitChekkApp.swift; sourceTree = "<group>"; };
@@ -70,14 +81,20 @@
 		462467CA3900AEFEF05BA8C5 /* FitChekkTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = FitChekkTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		492C93F2A08F4422795871BA /* UserPreferences.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = UserPreferences.swift; path = FitChekk/Shared/Models/UserPreferences.swift; sourceTree = SOURCE_ROOT; };
 		4FC8F676C6A2DC577C8884CB /* FitChekk.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = FitChekk.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		523B514D094CDBBA85481591 /* OutfitEditFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutfitEditFeature.swift; sourceTree = "<group>"; };
 		641114131F6DC2395D0652CB /* SignInView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SignInView.swift; path = FitChekk/Features/Authentication/SignInView.swift; sourceTree = SOURCE_ROOT; };
 		6A4C501E99D7440E14FDE315 /* Spacing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Spacing.swift; sourceTree = "<group>"; };
 		6C5A4FD9EA06BC78177B2618 /* AuthService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AuthService.swift; path = FitChekk/Services/Authentication/AuthService.swift; sourceTree = SOURCE_ROOT; };
+		73A8AB032F83BCF3C150725E /* OutfitCreationFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutfitCreationFeature.swift; sourceTree = "<group>"; };
+		78D1FA161D69BEEE55FB9F1F /* OutfitsFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutfitsFeature.swift; sourceTree = "<group>"; };
 		79A67E0D9BCC941710307D43 /* Cards.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Cards.swift; path = FitChekk/Shared/Components/Cards.swift; sourceTree = SOURCE_ROOT; };
+		7C327947C31B06DC25B59FF4 /* OutfitEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutfitEditView.swift; sourceTree = "<group>"; };
 		82F6A1A7A2DDC32D3D80281E /* AuthServiceDTOs.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AuthServiceDTOs.swift; path = FitChekk/Services/Authentication/AuthServiceDTOs.swift; sourceTree = SOURCE_ROOT; };
+		85B7042F7AF49AD5EF40E706 /* OutfitDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutfitDetailView.swift; sourceTree = "<group>"; };
 		86EE3FF38C37D7DD679EB04E /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		8B42E8B1B30F8BC2618EDCE9 /* Outfit.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Outfit.swift; path = FitChekk/Shared/Models/Outfit.swift; sourceTree = SOURCE_ROOT; };
 		8E828CBF1A52532CB565B300 /* Development.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Development.xcconfig; sourceTree = "<group>"; };
+		99E02333ACB9FB9C0BAC9F34 /* OutfitCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Components/OutfitCard.swift; sourceTree = "<group>"; };
 		9BBDD30E2259BCCF60BA4CE1 /* AppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppView.swift; sourceTree = "<group>"; };
 		A301E7BA56CAFC55F7FABEEC /* Enums.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Enums.swift; path = FitChekk/Shared/Models/Enums.swift; sourceTree = SOURCE_ROOT; };
 		A69A956CF53F7E8C6007C13E /* EmptyStates.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = EmptyStates.swift; path = FitChekk/Shared/Components/EmptyStates.swift; sourceTree = SOURCE_ROOT; };
@@ -85,10 +102,13 @@
 		ADBE7E72594E494DC843624E /* AuthenticationFeature.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AuthenticationFeature.swift; path = FitChekk/Features/Authentication/AuthenticationFeature.swift; sourceTree = SOURCE_ROOT; };
 		AE20B526618A4654F897FCBE /* FitChekkTextFieldStyle.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = FitChekkTextFieldStyle.swift; path = FitChekk/Features/Authentication/Components/FitChekkTextFieldStyle.swift; sourceTree = SOURCE_ROOT; };
 		B5E2C08B3696C711FF0A8535 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		B5E5EFB76173C7D48BB7C19C /* OutfitsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutfitsView.swift; sourceTree = "<group>"; };
 		B623CBFE5AAC73D283B8A556 /* AppleSignInManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AppleSignInManager.swift; path = FitChekk/Services/Authentication/AppleSignInManager.swift; sourceTree = SOURCE_ROOT; };
 		D235FA2C2B0EDACF4900DCC7 /* Production.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Production.xcconfig; sourceTree = "<group>"; };
 		D638796769BAA9C425984004 /* Typography.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Typography.swift; sourceTree = "<group>"; };
+		D6FDE5DC4BBB02277CC5A999 /* OutfitCreationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutfitCreationView.swift; sourceTree = "<group>"; };
 		D8BE2904279CAE4BC437ECB0 /* WardrobeItem.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = WardrobeItem.swift; path = FitChekk/Shared/Models/WardrobeItem.swift; sourceTree = SOURCE_ROOT; };
+		DF3AE184EBD03E686E9D23F0 /* WardrobeItemPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Components/WardrobeItemPickerView.swift; sourceTree = "<group>"; };
 		E9379529175FFDF4BC9F5147 /* SignUpView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SignUpView.swift; path = FitChekk/Features/Authentication/SignUpView.swift; sourceTree = SOURCE_ROOT; };
 		F0574093FACB89EF2CFBE9C3 /* FitChekkUITests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = FitChekkUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB16AF001031552EC58F21AE /* PlannerEntry.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PlannerEntry.swift; path = FitChekk/Shared/Models/PlannerEntry.swift; sourceTree = SOURCE_ROOT; };
@@ -111,6 +131,16 @@
 		0403D02DA917B4749EB56EAE /* Outfits */ = {
 			isa = PBXGroup;
 			children = (
+				78D1FA161D69BEEE55FB9F1F /* OutfitsFeature.swift */,
+				B5E5EFB76173C7D48BB7C19C /* OutfitsView.swift */,
+				73A8AB032F83BCF3C150725E /* OutfitCreationFeature.swift */,
+				D6FDE5DC4BBB02277CC5A999 /* OutfitCreationView.swift */,
+				078CBF4CEA5CC498DC448B2D /* OutfitDetailFeature.swift */,
+				85B7042F7AF49AD5EF40E706 /* OutfitDetailView.swift */,
+				523B514D094CDBBA85481591 /* OutfitEditFeature.swift */,
+				7C327947C31B06DC25B59FF4 /* OutfitEditView.swift */,
+				99E02333ACB9FB9C0BAC9F34 /* OutfitCard.swift */,
+				DF3AE184EBD03E686E9D23F0 /* WardrobeItemPickerView.swift */,
 			);
 			path = Outfits;
 			sourceTree = "<group>";
@@ -560,6 +590,16 @@
 				C04D7D35329F1F06FE9FC63D /* Buttons.swift in Sources */,
 				E989B6DC5E97B87216C9A12B /* Cards.swift in Sources */,
 				6E971470BAD771DCA94EE0E9 /* EmptyStates.swift in Sources */,
+				56A8F7308E42FEAD911DDA86 /* OutfitsFeature.swift in Sources */,
+				58BBBC89EDBC4FA50FF12130 /* OutfitsView.swift in Sources */,
+				C221FDFA09893C8AD77C9A7D /* OutfitCreationFeature.swift in Sources */,
+				A39F0A852E2667F5F6FC15DE /* OutfitCreationView.swift in Sources */,
+				0F33B69AC842C63AB957CC3B /* OutfitDetailFeature.swift in Sources */,
+				7D3A3E044F5DA09AD1C40738 /* OutfitDetailView.swift in Sources */,
+				C6DC5D8A5C13EDE09799B7EC /* OutfitEditFeature.swift in Sources */,
+				DFF322A29AC4EC3D0BFBDE75 /* OutfitEditView.swift in Sources */,
+				012E49AB700618C752E58976 /* OutfitCard.swift in Sources */,
+				823F167B69DA2F7C2477C159 /* WardrobeItemPickerView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

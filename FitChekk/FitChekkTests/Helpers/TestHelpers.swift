@@ -118,13 +118,62 @@ extension Outfit {
         id: UUID = TestConstants.testOutfitId1,
         userId: UUID = TestConstants.testUserId1,
         name: String = "Test Outfit",
-        style: OutfitStyle = .casual
+        occasion: String? = nil,
+        season: String? = nil,
+        notes: String? = nil,
+        aiGenerated: Bool = false,
+        aiReasoning: String? = nil,
+        aiStyleScore: Double? = nil,
+        itemIds: [UUID]? = nil
     ) -> Outfit {
         Outfit(
             id: id,
             userId: userId,
             name: name,
-            style: style
+            occasion: occasion,
+            season: season,
+            notes: notes,
+            aiGenerated: aiGenerated,
+            aiReasoning: aiReasoning,
+            aiStyleScore: aiStyleScore,
+            itemIds: itemIds ?? [TestConstants.testItemId1, TestConstants.testItemId2]
+        )
+    }
+    
+    /// Creates a sample AI-generated outfit
+    static func sampleAIOutfit(
+        name: String = "AI Generated Outfit",
+        occasion: String? = "casual",
+        styleScore: Double = 0.87
+    ) -> Outfit {
+        Outfit(
+            userId: TestConstants.testUserId1,
+            name: name,
+            occasion: occasion,
+            season: "summer",
+            aiGenerated: true,
+            aiReasoning: "This outfit combines comfort and style perfectly for the weather.",
+            aiStyleScore: styleScore,
+            weatherTempHigh: 75,
+            weatherTempLow: 62,
+            weatherCondition: "Sunny",
+            itemIds: [TestConstants.testItemId1, TestConstants.testItemId2]
+        )
+    }
+    
+    /// Creates a sample manual outfit
+    static func sampleManualOutfit(
+        name: String = "Manual Outfit",
+        occasion: String? = "work"
+    ) -> Outfit {
+        Outfit(
+            userId: TestConstants.testUserId1,
+            name: name,
+            occasion: occasion,
+            season: "fall",
+            notes: "Perfect for office meetings",
+            aiGenerated: false,
+            itemIds: [TestConstants.testItemId1, TestConstants.testItemId2]
         )
     }
 }
