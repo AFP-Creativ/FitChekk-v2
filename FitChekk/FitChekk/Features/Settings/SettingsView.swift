@@ -194,7 +194,7 @@ struct SettingsFeature {
                 return .merge(
                     .send(.loadUncategorizedCount),
                     .run { _ in
-                        if try? await authService.getCurrentUser() != nil {
+                        if (try? await authService.getCurrentUser()) != nil {
                             // Load user info (would be updated via state management in production)
                         }
                     }

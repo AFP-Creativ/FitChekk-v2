@@ -5,8 +5,8 @@
 //  TCA reducer for outfit collection management with filters and navigation
 //
 
-import SwiftUI
 import ComposableArchitecture
+import Dependencies
 import Foundation
 import UIKit
 
@@ -128,7 +128,14 @@ struct OutfitsFeature {
         case cancelDelete
         case deleteResponse(Result<Void, Error>)
     }
-    
+
+    // MARK: - Dependencies
+
+    @Dependency(\.authService) var authService
+    // Note: databaseService accessed inline in each .run closure due to Swift 6 macro issue
+
+    // MARK: - Reducer
+
     var body: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
@@ -144,23 +151,25 @@ struct OutfitsFeature {
             case .fetchOutfits:
                 state.isLoading = true
                 state.errorMessage = nil
-                
+
                 return .run { send in
-                    @Dependency(\.authService) var authService
-                    @Dependency(\.databaseService) var databaseService
-                    
-                    do {
-                        guard let user = try await authService.getCurrentUser() else {
-                            let userInfo = [NSLocalizedDescriptionKey: "Unauthorized"]
-                            let error = NSError(domain: "Outfits", code: 401, userInfo: userInfo)
+                    await withDependencies {
+                        $0.context = .live
+                    } operation: {
+                        do {
+                            guard let user = try await authService.getCurrentUser() else {
+                                let userInfo = [NSLocalizedDescriptionKey: "Unauthorized"]
+                                let error = NSError(domain: "Outfits", code: 401, userInfo: userInfo)
+                                await send(.outfitsResponse(.failure(error)))
+                                return
+                            }
+
+                            let database = LiveDatabaseService()
+                            let outfits = try await database.fetchOutfits(userId: user.id)
+                            await send(.outfitsResponse(.success(outfits)))
+                        } catch {
                             await send(.outfitsResponse(.failure(error)))
-                            return
                         }
-                        
-                        let outfits = try await databaseService.fetchOutfits(userId: user.id)
-                        await send(.outfitsResponse(.success(outfits)))
-                    } catch {
-                        await send(.outfitsResponse(.failure(error)))
                     }
                 }
                 
@@ -171,11 +180,11 @@ struct OutfitsFeature {
                 
             case let .outfitsResponse(.failure(error)):
                 state.isLoading = false
-                if let dbError = error as? DatabaseError {
-                    state.errorMessage = dbError.userFriendlyMessage
-                } else {
+                // if let dbError = error as? DatabaseError {
+                //     state.errorMessage = dbError.userFriendlyMessage
+                // } else {
                     state.errorMessage = "Failed to load outfits. Please try again."
-                }
+                // }
                 return .none
                 
             case let .filterByOccasion(occasion):
@@ -250,19 +259,17 @@ struct OutfitsFeature {
                 state.isLoading = true
                 
                 let outfitId = outfit.id
-                
+
                 return .run { send in
-                    @Dependency(\.authService) var authService
-                    @Dependency(\.databaseService) var databaseService
-                    
+                    @Dependency(\.databaseService) var db
                     do {
                         guard let user = try await authService.getCurrentUser() else {
                             let userInfo = [NSLocalizedDescriptionKey: "Unauthorized"]
                             let error = NSError(domain: "Outfits", code: 401, userInfo: userInfo)
                             throw error
                         }
-                        
-                        try await databaseService.deleteOutfit(outfitId)
+
+                        try await db.deleteOutfit(id: outfitId)
                         await send(.deleteResponse(.success(())))
                     } catch {
                         await send(.deleteResponse(.failure(error)))
@@ -282,11 +289,11 @@ struct OutfitsFeature {
             case let .deleteResponse(.failure(error)):
                 state.isLoading = false
                 state.outfitToDelete = nil
-                if let dbError = error as? DatabaseError {
-                    state.errorMessage = dbError.userFriendlyMessage
-                } else {
+                // if let dbError = error as? DatabaseError {
+                //     state.errorMessage = dbError.userFriendlyMessage
+                // } else {
                     state.errorMessage = "Failed to delete outfit. Please try again."
-                }
+                // }
                 return .none
             }
         }

@@ -35,6 +35,7 @@ protocol DatabaseService: Sendable {
 private enum DatabaseServiceKey: DependencyKey {
     static let liveValue: DatabaseService = LiveDatabaseService()
     static let testValue: DatabaseService = MockDatabaseService()
+    static let previewValue: DatabaseService = MockDatabaseService()
 }
 
 extension DependencyValues {
