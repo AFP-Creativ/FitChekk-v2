@@ -24,8 +24,8 @@ struct AppFeature {
         var selectedTab: Tab = .home
 
         // Feature States
-        // var home: HomeFeature.State = .init()
-        // var wardrobe: WardrobeFeature.State = .init()
+        var home: HomeFeature.State = .init()
+        var wardrobe: WardrobeFeature.State?
         var outfits: OutfitsFeature.State = .init()
         // var planner: PlannerFeature.State = .init()
         // var settings: SettingsFeature.State = .init()
@@ -54,8 +54,8 @@ struct AppFeature {
         case tabSelected(Tab)
 
         // Feature Actions
-        // case home(HomeFeature.Action)
-        // case wardrobe(WardrobeFeature.Action)
+        case home(HomeFeature.Action)
+        case wardrobe(WardrobeFeature.Action)
         case outfits(OutfitsFeature.Action)
         // case planner(PlannerFeature.Action)
         // case settings(SettingsFeature.Action)
@@ -121,6 +121,9 @@ struct AppFeature {
                 // Present authentication if not authenticated
                 if user == nil {
                     state.authentication = AuthenticationFeature.State()
+                    state.wardrobe = nil
+                } else if let user = user {
+                    state.wardrobe = WardrobeFeature.State(userId: user.id)
                 }
 
                 return .none
@@ -148,6 +151,12 @@ struct AppFeature {
                 
             case .outfits:
                 return .none
+                
+            case .home:
+                return .none
+
+            case .wardrobe:
+                return .none
             }
         }
         .ifLet(\.$authentication, action: \.authentication) {
@@ -156,6 +165,14 @@ struct AppFeature {
         
         Scope(state: \.outfits, action: \.outfits) {
             OutfitsFeature()
+        }
+        
+        Scope(state: \.home, action: \.home) {
+            HomeFeature()
+        }
+        
+        .ifLet(\.wardrobe, action: \.wardrobe) {
+            WardrobeFeature()
         }
     }
 }

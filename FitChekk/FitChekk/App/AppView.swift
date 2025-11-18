@@ -37,27 +37,42 @@ struct AppView: View {
 
     private var mainTabView: some View {
         TabView(selection: $store.selectedTab.sending(\.tabSelected)) {
-            PlaceholderFeatureView(title: "Home")
-                .tabItem {
-                    Label(
-                        AppFeature.Tab.home.title,
-                        systemImage: store.selectedTab == .home
-                            ? AppFeature.Tab.home.iconFilled
-                            : AppFeature.Tab.home.icon
-                    )
-                }
-                .tag(AppFeature.Tab.home)
+            HomeView(
+                store: store.scope(state: \.home, action: \.home)
+            )
+            .tabItem {
+                Label(
+                    AppFeature.Tab.home.title,
+                    systemImage: store.selectedTab == .home
+                        ? AppFeature.Tab.home.iconFilled
+                        : AppFeature.Tab.home.icon
+                )
+            }
+            .tag(AppFeature.Tab.home)
 
-            PlaceholderFeatureView(title: "Wardrobe")
-                .tabItem {
-                    Label(
-                        AppFeature.Tab.wardrobe.title,
-                        systemImage: store.selectedTab == .wardrobe
-                            ? AppFeature.Tab.wardrobe.iconFilled
-                            : AppFeature.Tab.wardrobe.icon
-                    )
-                }
-                .tag(AppFeature.Tab.wardrobe)
+            if let wardrobeStore = store.scope(state: \.wardrobe, action: \.wardrobe) {
+                WardrobeView(store: wardrobeStore)
+                    .tabItem {
+                        Label(
+                            AppFeature.Tab.wardrobe.title,
+                            systemImage: store.selectedTab == .wardrobe
+                                ? AppFeature.Tab.wardrobe.iconFilled
+                                : AppFeature.Tab.wardrobe.icon
+                        )
+                    }
+                    .tag(AppFeature.Tab.wardrobe)
+            } else {
+                Color.clear
+                    .tabItem {
+                        Label(
+                            AppFeature.Tab.wardrobe.title,
+                            systemImage: store.selectedTab == .wardrobe
+                                ? AppFeature.Tab.wardrobe.iconFilled
+                                : AppFeature.Tab.wardrobe.icon
+                        )
+                    }
+                    .tag(AppFeature.Tab.wardrobe)
+            }
 
             OutfitsView(
                 store: store.scope(state: \.outfits, action: \.outfits)

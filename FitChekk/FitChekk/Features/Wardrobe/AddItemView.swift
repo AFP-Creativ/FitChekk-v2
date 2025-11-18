@@ -91,7 +91,7 @@ struct AddItemView: View {
                         store.send(.cancelConfirmationDismissed)
                     }
                     Button("Discard", role: .destructive) {
-                        dismiss()
+                        store.send(.delegate(.cancelled))
                     }
                 },
                 message: {
@@ -523,12 +523,20 @@ struct AddItemFeature {
         case categorizationResponse(Result<CategorizationResult, Error>)
 
         case saveTapped
-        case saveComplete(WardrobeItem)
+        case saveResponse(Result<WardrobeItem, Error>)
         case cancelTapped
         case cancelConfirmationDismissed
 
         case clearError
         case setError(String)
+
+        // Delegate
+        case delegate(Delegate)
+
+        enum Delegate: Equatable {
+            case itemSaved(WardrobeItem, UIImage)
+            case cancelled
+        }
     }
 
     @Dependency(\.backgroundRemovalService) var backgroundRemovalService
@@ -699,7 +707,10 @@ struct AddItemFeature {
                 return .send(.setError(errorMessage))
 
             case .saveTapped:
-                guard state.selectedImage != nil else { return .none }
+                guard let image = state.selectedImage else { return .none }
+
+                state.isSaving = true
+                state.errorMessage = nil
 
                 // Create wardrobe item
                 let item = WardrobeItem(
@@ -716,10 +727,18 @@ struct AddItemFeature {
                     notes: state.notes.isEmpty ? nil : state.notes
                 )
 
-                return .send(.saveComplete(item))
+                return .send(.saveResponse(.success(item)))
 
-            case .saveComplete:
-                // Handled by parent
+            case let .saveResponse(.success(item)):
+                state.isSaving = false
+                guard let image = state.selectedImage else { return .none }
+                return .run { send in
+                    await send(.delegate(.itemSaved(item, image)))
+                }
+
+            case .saveResponse(.failure):
+                state.isSaving = false
+                state.errorMessage = "Failed to save item. Please try again."
                 return .none
 
             case .cancelTapped:
@@ -727,8 +746,8 @@ struct AddItemFeature {
                     state.showCancelConfirmation = true
                     return .none
                 } else {
-                    return .run { _ in
-                        await dismiss()
+                    return .run { send in
+                        await send(.delegate(.cancelled))
                     }
                 }
 
@@ -742,6 +761,9 @@ struct AddItemFeature {
 
             case let .setError(message):
                 state.errorMessage = message
+                return .none
+
+            case .delegate:
                 return .none
             }
         }

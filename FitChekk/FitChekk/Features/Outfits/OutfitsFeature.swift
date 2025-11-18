@@ -169,13 +169,9 @@ struct OutfitsFeature {
                 state.outfits = outfits
                 return .none
                 
-            case let .outfitsResponse(.failure(error)):
+            case .outfitsResponse(.failure):
                 state.isLoading = false
-                if let dbError = error as? DatabaseError {
-                    state.errorMessage = dbError.userFriendlyMessage
-                } else {
-                    state.errorMessage = "Failed to load outfits. Please try again."
-                }
+                state.errorMessage = "Failed to load outfits. Please try again."
                 return .none
                 
             case let .filterByOccasion(occasion):
@@ -256,13 +252,13 @@ struct OutfitsFeature {
                     @Dependency(\.databaseService) var databaseService
                     
                     do {
-                        guard let user = try await authService.getCurrentUser() else {
+                        guard try await authService.getCurrentUser() != nil else {
                             let userInfo = [NSLocalizedDescriptionKey: "Unauthorized"]
                             let error = NSError(domain: "Outfits", code: 401, userInfo: userInfo)
                             throw error
                         }
                         
-                        try await databaseService.deleteOutfit(outfitId)
+                        try await databaseService.deleteOutfit(id: outfitId)
                         await send(.deleteResponse(.success(())))
                     } catch {
                         await send(.deleteResponse(.failure(error)))
@@ -279,14 +275,10 @@ struct OutfitsFeature {
                 state.outfitToDelete = nil
                 return .send(.fetchOutfits)
                 
-            case let .deleteResponse(.failure(error)):
+            case .deleteResponse(.failure):
                 state.isLoading = false
                 state.outfitToDelete = nil
-                if let dbError = error as? DatabaseError {
-                    state.errorMessage = dbError.userFriendlyMessage
-                } else {
-                    state.errorMessage = "Failed to delete outfit. Please try again."
-                }
+                state.errorMessage = "Failed to delete outfit. Please try again."
                 return .none
             }
         }

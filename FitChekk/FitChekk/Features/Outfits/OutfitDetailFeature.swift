@@ -83,7 +83,7 @@ struct OutfitDetailFeature {
                 state.wardrobeItems = items
                 return .none
                 
-            case let .wardrobeItemsResponse(.failure(error)):
+            case .wardrobeItemsResponse(.failure):
                 state.isLoadingItems = false
                 state.errorMessage = "Failed to load items"
                 return .none
@@ -105,7 +105,7 @@ struct OutfitDetailFeature {
                 state.outfit = outfit
                 return .none
                 
-            case let .markAsWornResponse(.failure(error)):
+            case .markAsWornResponse(.failure):
                 state.isUpdating = false
                 state.errorMessage = "Failed to update outfit"
                 return .none
@@ -126,7 +126,7 @@ struct OutfitDetailFeature {
                 state.outfit = outfit
                 return .none
                 
-            case let .ratingResponse(.failure(error)):
+            case .ratingResponse(.failure):
                 state.isUpdating = false
                 state.errorMessage = "Failed to update rating"
                 return .none

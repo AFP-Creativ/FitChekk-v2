@@ -44,13 +44,8 @@ struct WardrobeView: View {
                 ),
                 prompt: "Search wardrobe..."
             )
-            .sheet(isPresented: .init(
-                get: { store.isAddItemSheetPresented },
-                set: { if !$0 { store.send(.dismissAddItem) } }
-            )) {
-                // TODO: AddItemView will be implemented next
-                Text("Add Item (Coming Soon)")
-                    .presentationDetents([.large])
+            .sheet(item: $store.scope(state: \.addItem, action: \.addItem)) { store in
+                AddItemView(store: store)
             }
             .sheet(isPresented: .init(
                 get: { store.isEditItemSheetPresented },

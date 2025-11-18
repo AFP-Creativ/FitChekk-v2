@@ -171,7 +171,7 @@ struct OutfitCreationFeature {
                     await dismiss()
                 }
                 
-            case let .saveResponse(.failure(error)):
+            case .saveResponse(.failure):
                 state.isSaving = false
                 state.errorMessage = "Failed to save outfit. Please try again."
                 return .none

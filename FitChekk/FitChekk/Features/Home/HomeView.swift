@@ -60,6 +60,24 @@ struct HomeView: View {
                 )
             }
         }
+        .sheet(item: $store.scope(state: \.outfitCreation, action: \.outfitCreation)) { store in
+            OutfitCreationView(store: store)
+        }
+        .alert(
+            "Not Enough Items",
+            isPresented: .init(
+                get: { store.showInsufficientItemsAlert },
+                set: { if !$0 { store.send(.dismissInsufficientItemsAlert) } }
+            ),
+            actions: {
+                Button("OK", role: .cancel) {
+                    store.send(.dismissInsufficientItemsAlert)
+                }
+            },
+            message: {
+                Text("You need at least 2 items in your wardrobe to create an outfit. Add some items first!")
+            }
+        )
         .onAppear {
             store.send(.onAppear)
         }
@@ -228,29 +246,27 @@ struct HomeView: View {
     }
     
     // MARK: - Create Outfit Button
-    
+
     private var createOutfitButton: some View {
         Button(
             action: {
-                // Navigate to Outfits tab and trigger creation
-                // This would require AppFeature integration which we can skip for now
-                // Users can use the + button in Outfits tab
+                store.send(.createOutfitTapped)
             },
             label: {
                 HStack {
                     Image(systemName: "plus.circle")
                         .font(.system(size: 20))
-                    
+
                     VStack(alignment: .leading, spacing: 4) {
                         Text("Create Outfit")
                             .font(Font.headlineMedium)
-                        
+
                         Text("Build your outfit manually")
                             .font(Font.captionRegular)
                     }
-                    
+
                     Spacer()
-                    
+
                     Image(systemName: "chevron.right")
                 }
                 .foregroundColor(Color.textPrimary)
@@ -259,7 +275,6 @@ struct HomeView: View {
                 .clipShape(RoundedRectangle(cornerRadius: 12))
             }
         )
-        .disabled(store.wardrobe.count < 2)
     }
     
     // MARK: - Recent Outfits
@@ -329,6 +344,8 @@ struct HomeFeature {
         var wardrobe: [WardrobeItem] = []
         var recentOutfits: [Outfit] = []
         var showingOutfitSuggestions = false
+        var showInsufficientItemsAlert = false
+        @Presents var outfitCreation: OutfitCreationFeature.State?
         
         var wardrobeCount: Int {
             wardrobe.count
@@ -352,6 +369,9 @@ struct HomeFeature {
         case dataLoaded(wardrobe: [WardrobeItem], outfits: [Outfit])
         case generateOutfitTapped
         case dismissOutfitSuggestions
+        case createOutfitTapped
+        case dismissInsufficientItemsAlert
+        case outfitCreation(PresentationAction<OutfitCreationFeature.Action>)
     }
     
     @Dependency(\.weatherService) var weatherService
@@ -419,7 +439,33 @@ struct HomeFeature {
             case .dismissOutfitSuggestions:
                 state.showingOutfitSuggestions = false
                 return .none
+                
+            case .createOutfitTapped:
+                guard state.wardrobe.count >= 2 else {
+                    state.showInsufficientItemsAlert = true
+                    return .none
+                }
+                state.outfitCreation = OutfitCreationFeature.State()
+                return .none
+
+            case .dismissInsufficientItemsAlert:
+                state.showInsufficientItemsAlert = false
+                return .none
+
+            case .outfitCreation(.presented(.delegate(.outfitSaved))):
+                state.outfitCreation = nil
+                return .send(.loadData)
+                
+            case .outfitCreation(.presented(.delegate(.cancelled))):
+                state.outfitCreation = nil
+                return .none
+                
+            case .outfitCreation:
+                return .none
             }
+        }
+        .ifLet(\.$outfitCreation, action: \.outfitCreation) {
+            OutfitCreationFeature()
         }
     }
 }

@@ -32,7 +32,7 @@ struct WardrobeFeature {
         var showRecentlyWornOnly = false
 
         // Sheet Presentations
-        var isAddItemSheetPresented = false
+        @Presents var addItem: AddItemFeature.State?
         var isEditItemSheetPresented = false
         var selectedItem: WardrobeItem?
 
@@ -83,8 +83,8 @@ struct WardrobeFeature {
         // Item CRUD
         case fetchItems
         case fetchItemsResponse(Result<[WardrobeItem], DatabaseError>)
-        case addItem(WardrobeItem, UIImage)
-        case addItemResponse(Result<WardrobeItem, DatabaseError>)
+        case saveNewItem(WardrobeItem, UIImage)
+        case saveNewItemResponse(Result<WardrobeItem, DatabaseError>)
         case updateItem(WardrobeItem, UIImage?)
         case updateItemResponse(Result<WardrobeItem, DatabaseError>)
         case deleteItem(WardrobeItem)
@@ -102,7 +102,7 @@ struct WardrobeFeature {
 
         // Navigation
         case addItemTapped
-        case dismissAddItem
+        case addItem(PresentationAction<AddItemFeature.Action>)
         case selectItem(WardrobeItem)
         case editItemTapped(WardrobeItem)
         case dismissEditItem
@@ -150,13 +150,13 @@ struct WardrobeFeature {
                 state.filteredItems = items
                 return .none
 
-            case let .fetchItemsResponse(.failure(error)):
+            case .fetchItemsResponse(.failure):
                 state.isLoading = false
-                state.errorMessage = error.userFriendlyMessage
+                state.errorMessage = "Failed to load wardrobe items. Please try again."
                 return .none
 
             // MARK: - Add Item
-            case let .addItem(item, image):
+            case let .saveNewItem(item, image):
                 state.isAddingItem = true
                 state.errorMessage = nil
 
@@ -185,19 +185,18 @@ struct WardrobeFeature {
                         // Save to database
                         return try await databaseService.createWardrobeItem(updatedItem)
                     }
-                    await send(.addItemResponse(result.mapError { $0 as? DatabaseError ?? .networkError }))
+                    await send(.saveNewItemResponse(result.mapError { $0 as? DatabaseError ?? .networkError }))
                 }
 
-            case let .addItemResponse(.success(item)):
+            case let .saveNewItemResponse(.success(item)):
                 state.isAddingItem = false
                 state.items.append(item)
                 state.filteredItems = state.items
-                state.isAddItemSheetPresented = false
                 return .none
 
-            case let .addItemResponse(.failure(error)):
+            case .saveNewItemResponse(.failure):
                 state.isAddingItem = false
-                state.errorMessage = error.userFriendlyMessage
+                state.errorMessage = "Failed to add item. Please try again."
                 return .none
 
             // MARK: - Update Item
@@ -255,9 +254,9 @@ struct WardrobeFeature {
                 state.selectedItem = nil
                 return .none
 
-            case let .updateItemResponse(.failure(error)):
+            case .updateItemResponse(.failure):
                 state.isUpdatingItem = false
-                state.errorMessage = error.userFriendlyMessage
+                state.errorMessage = "Failed to update item. Please try again."
                 return .none
 
             // MARK: - Delete Item
@@ -306,9 +305,9 @@ struct WardrobeFeature {
                 state.selectedItem = nil
                 return .none
 
-            case let .deleteItemResponse(.failure(error)):
+            case .deleteItemResponse(.failure):
                 state.isDeletingItem = false
-                state.errorMessage = error.userFriendlyMessage
+                state.errorMessage = "Failed to delete item. Please try again."
                 state.itemToDelete = nil
                 return .none
 
@@ -373,11 +372,18 @@ struct WardrobeFeature {
 
             // MARK: - Navigation
             case .addItemTapped:
-                state.isAddItemSheetPresented = true
+                state.addItem = AddItemFeature.State(userId: state.userId)
                 return .none
 
-            case .dismissAddItem:
-                state.isAddItemSheetPresented = false
+            case .addItem(.presented(.delegate(.itemSaved(let item, let image)))):
+                state.addItem = nil
+                return .send(.saveNewItem(item, image))
+
+            case .addItem(.presented(.delegate(.cancelled))):
+                state.addItem = nil
+                return .none
+
+            case .addItem:
                 return .none
 
             case let .selectItem(item):
@@ -408,6 +414,9 @@ struct WardrobeFeature {
                 return .none
             }
         }
+        .ifLet(\.$addItem, action: \.addItem) {
+            AddItemFeature()
+        }
     }
 }
 
@@ -426,17 +435,19 @@ extension WardrobeFeature.Action: Equatable {
              (.toggleRecentlyWornFilter, .toggleRecentlyWornFilter),
              (.clearFilters, .clearFilters),
              (.addItemTapped, .addItemTapped),
-             (.dismissAddItem, .dismissAddItem),
              (.dismissEditItem, .dismissEditItem),
              (.deselectItem, .deselectItem),
              (.clearError, .clearError):
             return true
+
+        case (.addItem, .addItem):
+            return true
             
         case let (.fetchItemsResponse(lhsResult), .fetchItemsResponse(rhsResult)):
             return lhsResult == rhsResult
-        case let (.addItem(lhsItem, _), .addItem(rhsItem, _)):
+        case let (.saveNewItem(lhsItem, _), .saveNewItem(rhsItem, _)):
             return lhsItem.id == rhsItem.id
-        case let (.addItemResponse(lhsResult), .addItemResponse(rhsResult)):
+        case let (.saveNewItemResponse(lhsResult), .saveNewItemResponse(rhsResult)):
             return lhsResult == rhsResult
         case let (.updateItem(lhsItem, _), .updateItem(rhsItem, _)):
             return lhsItem.id == rhsItem.id
@@ -468,27 +479,6 @@ extension WardrobeFeature.Action: Equatable {
             
         default:
             return false
-        }
-    }
-}
-
-// MARK: - DatabaseError Extension
-
-extension DatabaseError {
-    var userFriendlyMessage: String {
-        switch self {
-        case .notImplemented:
-            return "This feature isn't available yet"
-        case .notFound:
-            return "Item not found"
-        case .invalidData:
-            return "Something went wrong with the data"
-        case .networkError:
-            return "Check your internet connection and try again"
-        case .unauthorized:
-            return "You don't have permission to do that"
-        case .conflict:
-            return "This item already exists"
         }
     }
 }
